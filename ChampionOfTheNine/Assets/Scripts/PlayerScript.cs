@@ -12,6 +12,15 @@ public class PlayerScript : CharacterScript
 {
     #region Fields
 
+    [SerializeField]float moveSpeed;
+    [SerializeField]float jumpSpeed;
+    [SerializeField]Transform groundCheck;
+    [SerializeField]LayerMask whatIsGround;
+
+    Rigidbody2D rbody;
+    bool grounded = false;
+
+    const float GROUND_CHECK_RADIUS = 0.05f;
 
     #endregion
 
@@ -23,13 +32,14 @@ public class PlayerScript : CharacterScript
 
     #region Protected Methods
 
-    ///// <summary>
-    ///// Start is called once on object creation
-    ///// </summary>
-    //protected override void Start()
-    //{
-    //    base.Start();
-    //}
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+        rbody = GetComponent<Rigidbody2D>();
+    }
 
     #endregion
 
@@ -40,7 +50,30 @@ public class PlayerScript : CharacterScript
     /// </summary>
     private void Update()
     {
+        // Handles jumping
+        float vMovement = 0;
+        grounded = Physics2D.OverlapCircle(groundCheck.position, GROUND_CHECK_RADIUS, whatIsGround);
 
+        if (grounded && Input.GetButtonDown("Jump"))
+        {
+            //numberUpdatesJumpForce = 0;
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForceInitial));
+            vMovement = jumpSpeed;
+        }
+
+        // Handles horizontal movement
+        float hMovement = Input.GetAxis("Horizontal") * moveSpeed;
+        //if (hMovement != rbody.velocity.x)
+        //{ 
+            rbody.velocity = new Vector2(hMovement, rbody.velocity.y + vMovement); 
+        //}
+
+        
+        //else if (Input.GetButton("Jump") && numberUpdatesJumpForce <= numberUpdatesJumpForceMax)
+        //{
+        //    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForceBonus));
+        //    numberUpdatesJumpForce++;
+        //}
     }
 
     #endregion
