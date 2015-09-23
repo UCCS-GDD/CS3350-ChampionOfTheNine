@@ -53,27 +53,12 @@ public class PlayerScript : CharacterScript
         // Handles jumping
         float vMovement = 0;
         grounded = Physics2D.OverlapCircle(groundCheck.position, GROUND_CHECK_RADIUS, whatIsGround);
-
         if (grounded && Input.GetButtonDown("Jump"))
-        {
-            //numberUpdatesJumpForce = 0;
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForceInitial));
-            vMovement = jumpSpeed;
-        }
+        { vMovement = jumpSpeed; }
 
         // Handles horizontal movement
         float hMovement = Input.GetAxis("Horizontal") * moveSpeed;
-        //if (hMovement != rbody.velocity.x)
-        //{ 
-            rbody.velocity = new Vector2(hMovement, rbody.velocity.y + vMovement); 
-        //}
-
-        
-        //else if (Input.GetButton("Jump") && numberUpdatesJumpForce <= numberUpdatesJumpForceMax)
-        //{
-        //    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForceBonus));
-        //    numberUpdatesJumpForce++;
-        //}
+        rbody.velocity = new Vector2(hMovement, rbody.velocity.y + vMovement);
     }
 
     #endregion
