@@ -5,6 +5,7 @@ using System.Collections;
 /// Abstract parent script that controls projectiles
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class ProjScript : MonoBehaviour 
 {
     #region Fields
@@ -13,6 +14,8 @@ public abstract class ProjScript : MonoBehaviour
     protected bool hit = false;
     protected Vector2 targetPosition;
     protected string targetTag;
+    protected float moveSpeed;
+    Rigidbody2D rbody;
 
     #endregion
 
@@ -37,11 +40,32 @@ public abstract class ProjScript : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
 
         targetPosition = toPosition;
+        rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fromPosition"></param>
+    /// <param name="toPosition"></param>
+    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition)
+    {
+        rbody = GetComponent<Rigidbody2D>();
+        rbody.velocity = new Vector2(moveSpeed, 0);
+        SetLocationAndDirection(fromPosition, toPosition);
     }
 
     #endregion
 
     #region Protected Methods
+
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    protected virtual void Start()
+    {
+        
+    }
 
     /// <summary>
     /// Handles the projectile colliding with something
@@ -59,13 +83,18 @@ public abstract class ProjScript : MonoBehaviour
         { hit = true; }
     }
 
-    ///// <summary>
-    ///// Update is called once per frame
-    ///// </summary>
-    //protected virtual void Update()
-    //{
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
+    protected virtual void Update()
+    {
+        // Updates the projectile angle
+        float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);;
+        if (rbody.velocity.x < 0)
+        { shotAngle -= Mathf.PI; }
 
-    //}
+        transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * shotAngle);
+    }
 
     #endregion
 }

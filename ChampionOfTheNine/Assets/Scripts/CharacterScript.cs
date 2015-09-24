@@ -11,11 +11,11 @@ public abstract class CharacterScript : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]protected float maxHealth;
+    protected float maxHealth;
     protected float health;
     protected AudioSource audioSource;
 
-    public Image healthBar;
+    [SerializeField]Image healthBar;
 
     #endregion
 

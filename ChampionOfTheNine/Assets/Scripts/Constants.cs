@@ -10,4 +10,16 @@ public static class Constants
 {
     public const string ENEMY_TAG = "Enemy";
     public const int GROUND_LAYER = 8;
+    public const float GROUND_CHECK_RADIUS = 0.05f;
+
+    public const float RANGER_HEALTH = 100;
+    public const float RANGER_ENERGY = 100;
+    public const float RANGER_MOVE_SPEED = 4;
+    public const float RANGER_JUMP_SPEED = 4;
+    public const float RANGER_REGEN = 20;
+
+    public const float BASIC_ARROW_SPEED = 10;
+    public const float BASIC_ARROW_DAMAGE = 10;
+    public const float BASIC_ARROW_CD = 0.5f;
+    public const float BASIC_ARROW_COST = 5;
 }

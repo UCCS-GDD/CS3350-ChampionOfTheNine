@@ -6,14 +6,17 @@ using System.Collections;
 /// </summary>
 public abstract class PlayerProjScript : ProjScript
 {
-    #region Protected Methods
+    #region Public Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// 
     /// </summary>
-    protected virtual void Start()
+    /// <param name="fromPosition"></param>
+    /// <param name="toPosition"></param>
+    public override void Initialize(Vector2 fromPosition, Vector2 toPosition)
     {
         targetTag = Constants.ENEMY_TAG;
+        base.Initialize(fromPosition, toPosition);
     }
 
     #endregion
