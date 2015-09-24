@@ -18,6 +18,7 @@ public class PlayerScript : CharacterScript
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arrow;
+    [SerializeField]GameObject expArrow;
 
     float energy;
     float maxEnergy;
@@ -95,18 +96,29 @@ public class PlayerScript : CharacterScript
         { Energy = Mathf.Min(maxEnergy, energy + (Constants.RANGER_REGEN * Time.deltaTime)); }
 
         // Handles firing (change some of this later)
-        if (Input.GetAxis("Fire1") > 0 && !cooldownTimer.IsRunning && energy >= Constants.BASIC_ARROW_COST)
+        if (!cooldownTimer.IsRunning)
         {
-            // Creates the projectile
-            GameObject projectile = GameObject.Instantiate(arrow);
-            projectile.GetComponent<ProjScript>().Initialize(transform.position, MousePosition);
+            if (Input.GetAxis("Fire1") > 0 && energy >= Constants.BASIC_ARROW_COST)
+            {
+                // Creates the projectile
+                GameObject projectile = GameObject.Instantiate(arrow);
+                projectile.GetComponent<ProjScript>().Initialize(transform.position, MousePosition);
 
-            //// Plays sound
-            //audio.PlayOneShot(fireSound);
+                // Subtracts energy and starts the cooldown
+                energy -= Constants.BASIC_ARROW_COST;
+                cooldownTimer.Start();
+            }
+            // Handles firing (change some of this later)
+            if (Input.GetAxis("Fire2") > 0 && energy >= Constants.EXP_ARROW_COST)
+            {
+                // Creates the projectile
+                GameObject projectile = GameObject.Instantiate(expArrow);
+                projectile.GetComponent<ProjScript>().Initialize(transform.position, MousePosition);
 
-            // Subtracts energy and starts the cooldown
-            energy -= Constants.BASIC_ARROW_COST;
-            cooldownTimer.Start();
+                // Subtracts energy and starts the cooldown
+                energy -= Constants.EXP_ARROW_COST;
+                cooldownTimer.Start();
+            }
         }
         cooldownTimer.Update();
     }

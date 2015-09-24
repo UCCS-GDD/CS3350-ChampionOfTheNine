@@ -22,4 +22,9 @@ public static class Constants
     public const float BASIC_ARROW_DAMAGE = 10;
     public const float BASIC_ARROW_CD = 0.5f;
     public const float BASIC_ARROW_COST = 5;
+
+    public const float EXP_ARROW_SPEED = 9;
+    public const float EXP_ARROW_DAMAGE = 40;
+    public const float EXP_ARROW_CD = 0.1f;
+    public const float EXP_ARROW_COST = 30;
 }
