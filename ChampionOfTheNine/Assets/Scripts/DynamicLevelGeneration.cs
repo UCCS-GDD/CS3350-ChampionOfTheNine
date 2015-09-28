@@ -71,9 +71,22 @@ public class DynamicLevelGeneration : MonoBehaviour {
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void GenerateParallaxObjects()
+	{
+		//create a background and a foreground plane and place arbitrary objects at different location intervals
 	}
+
+	void GenerateBackgroundImage()
+	{
+		//Basically just going to load whatever image is selected by the random generator
+		//will tie in with the map details
+	}
+
+	void GenerateWeatherEffects()
+	{
+		//fog = Just going to add an image over the canvas and scale its alpha value.
+		//thunderstorm = need rain art, and ill simply have it loop over the canvas so it looks like rain is falling. Occasional bright flashes for lightning
+	}
+
 }
