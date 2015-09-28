@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 703f084f42bbb9f41adadda9f04ded60
+timeCreated: 1443465832
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - knight: {fileID: 102242, guid: c847e0869a5d6fe4d97be133871c93a5, type: 2}
+  - ranged: {fileID: 191596, guid: fa17b89e6cb2e914988fa948b00a8f9b, type: 2}
+  - mage: {fileID: 198380, guid: 84c11714a890d554797c56243edae730, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
