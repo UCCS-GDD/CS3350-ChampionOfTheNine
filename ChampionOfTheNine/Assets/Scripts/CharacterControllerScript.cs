@@ -20,6 +20,16 @@ public abstract class CharacterControllerScript : MonoBehaviour
 
     #endregion
 
+    #region Properties
+
+    /// <summary>
+    /// Returns the tag of this character's target
+    /// </summary>
+    public abstract string TargetTag
+    { get; }
+
+    #endregion
+
     #region Public Methods
 
     /// <summary>

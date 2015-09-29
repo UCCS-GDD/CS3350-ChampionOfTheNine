@@ -11,61 +11,33 @@ public abstract class ProjScript : MonoBehaviour
     #region Fields
 
     protected float damage;
-    protected bool hit = false;
-    protected Vector2 targetPosition;
-    protected string targetTag;
     protected float moveSpeed;
+    protected bool hit = false;
+    Vector2 targetPosition;
+    string targetTag;
     Rigidbody2D rbody;
 
     #endregion
 
     #region Public Methods
-
+    
     /// <summary>
-    /// Sets the projectile's position and direction
+    /// Initializes the projectile
     /// </summary>
     /// <param name="fromPosition">the position of the projectile</param>
     /// <param name="toPosition">the target position</param>
-    public void SetLocationAndDirection(Vector2 fromPosition, Vector2 toPosition)
-    {
-        // Calculates shot angle
-        float shotAngle = 0;
-        if (toPosition.x - fromPosition.x > 0)
-        { shotAngle = Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
-        else
-        { shotAngle = Mathf.PI - Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
-
-        // Sets position and direction
-        transform.position = fromPosition;
-        transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
-
-        targetPosition = toPosition;
-        rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
-    }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="fromPosition"></param>
-    /// <param name="toPosition"></param>
-    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition)
+    /// <param name="targetTag">the tag of the targeted characters</param>
+    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag)
     {
         rbody = GetComponent<Rigidbody2D>();
         rbody.velocity = new Vector2(moveSpeed, 0);
+        this.targetTag = targetTag;
         SetLocationAndDirection(fromPosition, toPosition);
     }
 
     #endregion
 
     #region Protected Methods
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected virtual void Start()
-    {
-        
-    }
 
     /// <summary>
     /// Handles the projectile colliding with something
@@ -94,6 +66,28 @@ public abstract class ProjScript : MonoBehaviour
         { shotAngle -= Mathf.PI; }
 
         transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * shotAngle);
+    }
+
+    /// <summary>
+    /// Sets the projectile's position and direction
+    /// </summary>
+    /// <param name="fromPosition">the position of the projectile</param>
+    /// <param name="toPosition">the target position</param>
+    protected void SetLocationAndDirection(Vector2 fromPosition, Vector2 toPosition)
+    {
+        // Calculates shot angle
+        float shotAngle = 0;
+        if (toPosition.x - fromPosition.x > 0)
+        { shotAngle = Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
+        else
+        { shotAngle = Mathf.PI - Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
+
+        // Sets position and direction
+        transform.position = fromPosition;
+        transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
+
+        targetPosition = toPosition;
+        rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
     }
 
     #endregion

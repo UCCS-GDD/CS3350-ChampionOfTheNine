@@ -27,6 +27,7 @@ public abstract class CharacterScript : MonoBehaviour
     protected float jumpSpeed;
     float health;
     float energy;
+    string targetTag;
 
     Rigidbody2D rbody;
 
@@ -114,6 +115,7 @@ public abstract class CharacterScript : MonoBehaviour
         // Registers for character controller input
         CharacterControllerScript controller = GetComponent<CharacterControllerScript>();
         controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move);
+        targetTag = controller.TargetTag;
     }
 
     /// <summary>
@@ -154,11 +156,10 @@ public abstract class CharacterScript : MonoBehaviour
         { 
             // Creates the projectile
             GameObject projectile = GameObject.Instantiate(prefab);
-            projectile.GetComponent<ProjScript>().Initialize(transform.position, Constants.MousePosition);
+            projectile.GetComponent<ProjScript>().Initialize(transform.position, Constants.MousePosition, targetTag);
 
-            // Subtracts energy and starts the global cooldown
+            // Subtracts energy
             energy -= energyCost;
-            gcTimer.Start();
         }
     }
 

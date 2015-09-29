@@ -17,15 +17,21 @@ public static class Constants
     public const float RANGER_MOVE_SPEED = 4;
     public const float RANGER_JUMP_SPEED = 4;
     public const float RANGER_REGEN = 20;
-    public const float RANGER_GCD = 0.5f;
+    public const float RANGER_GCD = 0.3f;
 
-    public const float BASIC_ARROW_SPEED = 10;
+    public const float BASIC_ARROW_SPEED = 11;
     public const float BASIC_ARROW_DAMAGE = 10;
     public const float BASIC_ARROW_COST = 5;
 
-    public const float EXP_ARROW_SPEED = 9;
+    public const float PIERCE_ARROW_SPEED = 25;
+    public const float PIERCE_ARROW_DAMAGE = 15;
+    public const float PIERCE_ARROW_COST = 12;
+    public const float PIERCE_SHOOT_WINDOW = 0.7f;
+    public const float PIERCE_SHOOT_CD = 0.1f;
+    public const float PIERCE_ABILITY_CD = 10f;
+
+    public const float EXP_ARROW_SPEED = 10;
     public const float EXP_ARROW_DAMAGE = 40;
-    public const float EXP_ARROW_CD = 0.1f;
     public const float EXP_ARROW_COST = 30;
 
     /// <summary>

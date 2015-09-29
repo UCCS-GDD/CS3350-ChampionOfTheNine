@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls exploding ranger arrows
 /// </summary>
-public class ExpArrowScript : PlayerProjScript
+public class ExpArrowScript : ProjScript
 {
     #region Fields
 
@@ -16,15 +16,16 @@ public class ExpArrowScript : PlayerProjScript
     #region Public Methods
 
     /// <summary>
-    /// 
+    /// Initializes the projectile
     /// </summary>
-    /// <param name="fromPosition"></param>
-    /// <param name="toPosition"></param>
-    public override void Initialize(Vector2 fromPosition, Vector2 toPosition)
+    /// <param name="fromPosition">the position of the projectile</param>
+    /// <param name="toPosition">the target position</param>
+    /// <param name="targetTag">the tag of the targeted characters</param>
+    public override void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag)
     {
         moveSpeed = Constants.EXP_ARROW_SPEED;
         damage = Constants.EXP_ARROW_DAMAGE;
-        base.Initialize(fromPosition, toPosition);
+        base.Initialize(fromPosition, toPosition, targetTag);
     }
 
     #endregion

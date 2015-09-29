@@ -8,6 +8,16 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerScript : CharacterControllerScript
 {
+    #region Properties
+
+    /// <summary>
+    /// Returns the tag of this character's target
+    /// </summary>
+    public override string TargetTag
+    { get { return Constants.ENEMY_TAG; } }
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>

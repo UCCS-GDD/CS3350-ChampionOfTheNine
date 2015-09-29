@@ -11,7 +11,12 @@ public class RogueScript : CharacterScript
     #region Fields
 
     [SerializeField]GameObject arrow;
+    [SerializeField]GameObject pierceArrow;
     [SerializeField]GameObject expArrow;
+
+    Timer pierceShootWindow;
+    Timer pierceShootCD;
+    Timer pierceAbilityCD;
 
     #endregion
 
@@ -28,12 +33,16 @@ public class RogueScript : CharacterScript
     /// </summary>
     protected override void Start()
     {
-        // Change this later
+        // Sets fields
         maxHealth = Constants.RANGER_HEALTH;
         moveSpeed = Constants.RANGER_MOVE_SPEED;
         jumpSpeed = Constants.RANGER_JUMP_SPEED;
         maxEnergy = Constants.RANGER_ENERGY;
         gcTimer = new Timer(Constants.RANGER_GCD);
+        pierceShootWindow = new Timer(Constants.PIERCE_SHOOT_WINDOW);
+        pierceShootCD = new Timer(Constants.PIERCE_SHOOT_CD);
+        pierceAbilityCD = new Timer(Constants.PIERCE_ABILITY_CD);
+        pierceShootWindow.Register(HandlePierceWindowFinishing);
         base.Start();
     }
 
@@ -51,6 +60,11 @@ public class RogueScript : CharacterScript
         // Updates energy
         if (Energy < maxEnergy)
         { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * Time.deltaTime)); }
+
+        // Updates timers
+        pierceShootCD.Update();
+        pierceAbilityCD.Update();
+        pierceShootWindow.Update();
     }
 
     /// <summary>
@@ -59,6 +73,7 @@ public class RogueScript : CharacterScript
     protected override void FireMainAbility() 
     {
         FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST);
+        gcTimer.Start();
     }
 
     /// <summary>
@@ -67,6 +82,7 @@ public class RogueScript : CharacterScript
     protected override void FireSecondaryAbility()
     {
         FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST);
+        gcTimer.Start();
     }
 
     /// <summary>
@@ -74,7 +90,17 @@ public class RogueScript : CharacterScript
     /// </summary>
     protected override void FirePowerAbility()
     {
+        // Fires piercing arrow ability if possible
+        if (!pierceAbilityCD.IsRunning && !pierceShootCD.IsRunning)
+        {
+            // Starts window if this is the first shot
+            if (!pierceShootWindow.IsRunning)
+            { pierceShootWindow.Start(); }
 
+            // Fires arrow
+            FireProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST);
+            pierceShootCD.Start();
+        }
     }
 
     /// <summary>
@@ -83,6 +109,14 @@ public class RogueScript : CharacterScript
     protected override void FireSpecialAbility()
     {
 
+    }
+
+    /// <summary>
+    /// Handles the pierce ability window finishing
+    /// </summary>
+    protected void HandlePierceWindowFinishing()
+    {
+        pierceAbilityCD.Start();
     }
 
     #endregion
