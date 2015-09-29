@@ -32,16 +32,16 @@ public class PierceArrowScript : ProjScript
 
     #region Protected Methods
 
-    ///// <summary>
-    ///// Handles the projectile colliding with something
-    ///// </summary>
-    ///// <param name="other">the other collider</param>
-    //protected override void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    base.OnTriggerEnter2D(other);
-    //    if (hit)
-    //    { Destroy(gameObject); }
-    //}
+    /// <summary>
+    /// Handles the projectile colliding with something
+    /// </summary>
+    /// <param name="other">the other collider</param>
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        base.OnTriggerEnter2D(other);
+        if (hit == HitType.Ground)
+        { Destroy(gameObject); }
+    }
 
     #endregion
 }

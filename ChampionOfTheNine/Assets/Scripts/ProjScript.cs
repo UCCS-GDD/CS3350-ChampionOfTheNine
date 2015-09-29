@@ -12,7 +12,7 @@ public abstract class ProjScript : MonoBehaviour
 
     protected float damage;
     protected float moveSpeed;
-    protected bool hit = false;
+    protected HitType hit = HitType.None;
     Vector2 targetPosition;
     string targetTag;
     Rigidbody2D rbody;
@@ -49,10 +49,10 @@ public abstract class ProjScript : MonoBehaviour
         if (other.gameObject.tag == targetTag)
         {
             other.gameObject.GetComponent<CharacterScript>().Damage(damage);
-            hit = true;
+            hit = HitType.Target;
         }
         else if (other.gameObject.layer == Constants.GROUND_LAYER)
-        { hit = true; }
+        { hit = HitType.Ground; }
     }
 
     /// <summary>

@@ -20,12 +20,6 @@ public class RogueScript : CharacterScript
 
     #endregion
 
-    #region Properties
-
-    
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>

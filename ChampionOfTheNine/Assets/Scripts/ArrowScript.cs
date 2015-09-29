@@ -39,7 +39,7 @@ public class ArrowScript : ProjScript
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
-        if (hit)
+        if (hit != HitType.None)
         { Destroy(gameObject); }
     }
 
