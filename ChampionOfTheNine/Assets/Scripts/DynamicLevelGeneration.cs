@@ -31,6 +31,11 @@ public class DynamicLevelGeneration : MonoBehaviour {
 		DrawMap ();
 	}
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="previous"></param>
+    /// <returns></returns>
 	int NextHeight(int previous)
 	{
 		//use weight to decide if we should change direction or not.
@@ -51,6 +56,9 @@ public class DynamicLevelGeneration : MonoBehaviour {
 		}
 	}
 
+    /// <summary>
+    /// 
+    /// </summary>
 	void DrawMap()
 	{
 		Transform groundParent = GameObject.Find ("Ground").transform;

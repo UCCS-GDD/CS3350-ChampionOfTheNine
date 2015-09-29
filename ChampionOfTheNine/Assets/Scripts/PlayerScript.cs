@@ -6,121 +6,34 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls the player
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(AudioListener))]
-public class PlayerScript : CharacterScript
+public class PlayerScript : CharacterControllerScript
 {
-    #region Fields
-
-    protected float moveSpeed;
-    protected float jumpSpeed;
-    [SerializeField]Transform groundCheck;
-    [SerializeField]LayerMask whatIsGround;
-    [SerializeField]GameObject arrow;
-    [SerializeField]GameObject expArrow;
-
-    float energy;
-    float maxEnergy;
-    [SerializeField]Image energyBar;
-
-    Rigidbody2D rbody;
-    bool grounded = false;
-
-    Timer cooldownTimer;
-
-    #endregion
-
-    #region Properties
-
-    /// <summary>
-    /// Gets and sets the character's energy, setting the energy bar appropriately
-    /// </summary>
-    private float Energy
-    {
-        get { return energy; }
-        set
-        {
-            energy = value;
-            energyBar.fillAmount = energy / maxEnergy;
-        }
-    }
-
-    /// <summary>
-    /// Gets the mouse position in world space
-    /// </summary>
-    public static Vector2 MousePosition
-    { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
-
-    #endregion
-
     #region Protected Methods
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected override void Start()
-    {
-        // Change this later
-        maxHealth = Constants.RANGER_HEALTH;
-        moveSpeed = Constants.RANGER_MOVE_SPEED;
-        jumpSpeed = Constants.RANGER_JUMP_SPEED;
-        maxEnergy = Constants.RANGER_ENERGY;
-        energy = maxEnergy;
-        rbody = GetComponent<Rigidbody2D>();
-        cooldownTimer = new Timer(Constants.BASIC_ARROW_CD);
-        base.Start();
-    }
-
-    #endregion
-
-    #region Private Methods
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    private void Update()
+    protected override void Update()
     {
-        // Handles jumping
-        float vMovement = 0;
-        grounded = Physics2D.OverlapCircle(groundCheck.position, Constants.GROUND_CHECK_RADIUS, whatIsGround);
-        if (grounded && Input.GetButtonDown("Jump"))
-        { vMovement = jumpSpeed; }
-
         // Handles horizontal movement
-        float hMovement = Input.GetAxis("Horizontal") * moveSpeed;
-        rbody.velocity = new Vector2(hMovement, rbody.velocity.y + vMovement);
+        movement(Input.GetAxis("Horizontal"));
 
-        // Updates energy
-        if (energy < maxEnergy)
-        { Energy = Mathf.Min(maxEnergy, energy + (Constants.RANGER_REGEN * Time.deltaTime)); }
+        // Handles jumping
+        if (Input.GetButtonDown("Jump") && character.Grounded)
+        { jumpAbility(); }
 
-        // Handles firing (change some of this later)
-        if (!cooldownTimer.IsRunning)
+        // Handles firing
+        if (!character.OnGlobalCooldown)
         {
-            if (Input.GetAxis("Fire1") > 0 && energy >= Constants.BASIC_ARROW_COST)
-            {
-                // Creates the projectile
-                GameObject projectile = GameObject.Instantiate(arrow);
-                projectile.GetComponent<ProjScript>().Initialize(transform.position, MousePosition);
-
-                // Subtracts energy and starts the cooldown
-                energy -= Constants.BASIC_ARROW_COST;
-                cooldownTimer.Start();
-            }
-            // Handles firing (change some of this later)
-            if (Input.GetAxis("Fire2") > 0 && energy >= Constants.EXP_ARROW_COST)
-            {
-                // Creates the projectile
-                GameObject projectile = GameObject.Instantiate(expArrow);
-                projectile.GetComponent<ProjScript>().Initialize(transform.position, MousePosition);
-
-                // Subtracts energy and starts the cooldown
-                energy -= Constants.EXP_ARROW_COST;
-                cooldownTimer.Start();
-            }
+            if (Input.GetAxis("SpecialFire") > 0)
+            { specialAbility(); }
+            if (Input.GetAxis("MainFire") > 0)
+            { mainAbility(); }
+            else if (Input.GetAxis("SecondaryFire") > 0)
+            { secondaryAbility(); }
+            else if (Input.GetAxis("PowerFire") > 0)
+            { powerAbility(); }
         }
-        cooldownTimer.Update();
     }
 
     #endregion
