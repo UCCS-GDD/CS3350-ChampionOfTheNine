@@ -13,7 +13,6 @@ public abstract class ProjScript : MonoBehaviour
     protected float damage;
     protected float moveSpeed;
     protected HitType hit = HitType.None;
-    Vector2 targetPosition;
     string targetTag;
     Rigidbody2D rbody;
 
@@ -29,10 +28,20 @@ public abstract class ProjScript : MonoBehaviour
     /// <param name="targetTag">the tag of the targeted characters</param>
     public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag)
     {
-        rbody = GetComponent<Rigidbody2D>();
-        rbody.velocity = new Vector2(moveSpeed, 0);
-        this.targetTag = targetTag;
+        Initialize(targetTag);
         SetLocationAndDirection(fromPosition, toPosition);
+    }
+
+    /// <summary>
+    /// Initializes the projectile
+    /// </summary>
+    /// <param name="position">the position of the projectile</param>
+    /// <param name="angle">the angle, in degrees</param>
+    /// <param name="targetTag">the tag of the targeted characters</param>
+    public virtual void Initialize(Vector2 position, float angle, string targetTag)
+    {
+        Initialize(targetTag);
+        SetLocationAndDirection(position, angle);
     }
 
     /// <summary>
@@ -56,6 +65,17 @@ public abstract class ProjScript : MonoBehaviour
     #endregion
 
     #region Protected Methods
+
+    /// <summary>
+    /// Initializes the projectile
+    /// </summary>
+    /// <param name="targetTag">the tag of the targeted characters</param>
+    protected virtual void Initialize(string targetTag)
+    {
+        rbody = GetComponent<Rigidbody2D>();
+        rbody.velocity = new Vector2(moveSpeed, 0);
+        this.targetTag = targetTag;
+    }
 
     /// <summary>
     /// Handles the projectile colliding with something
@@ -102,8 +122,22 @@ public abstract class ProjScript : MonoBehaviour
         transform.position = fromPosition;
         transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
 
-        targetPosition = toPosition;
         rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
+    }
+
+    /// <summary>
+    /// Sets the projectile's position and direction
+    /// </summary>
+    /// <param name="position">the position of the projectile</param>
+    /// <param name="angle">the angle, in degrees</param>
+    protected void SetLocationAndDirection(Vector2 position, float angle)
+    {
+        // Sets position and direction
+        transform.position = position;
+        Debug.Log(angle);
+        transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        rbody.velocity = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad) * moveSpeed, Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed);
     }
 
     #endregion

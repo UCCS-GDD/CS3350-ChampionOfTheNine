@@ -13,24 +13,18 @@ public class ExpArrowScript : ProjScript
 
     #endregion
 
-    #region Public Methods
+    #region Protected Methods
 
     /// <summary>
     /// Initializes the projectile
     /// </summary>
-    /// <param name="fromPosition">the position of the projectile</param>
-    /// <param name="toPosition">the target position</param>
     /// <param name="targetTag">the tag of the targeted characters</param>
-    public override void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag)
+    protected override void Initialize(string targetTag)
     {
         moveSpeed = Constants.EXP_ARROW_SPEED;
         damage = Constants.EXP_ARROW_DAMAGE;
-        base.Initialize(fromPosition, toPosition, targetTag);
+        base.Initialize(targetTag);
     }
-
-    #endregion
-
-    #region Protected Methods
 
     /// <summary>
     /// Handles the projectile colliding with something

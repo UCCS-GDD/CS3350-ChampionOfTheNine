@@ -9,16 +9,17 @@ using System.Text;
 public static class Constants
 {
     public const string ENEMY_TAG = "Enemy";
-    public const int GROUND_LAYER = 8;
+    public const string PLAYER_TAG = "Player";
+    public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
 
+    public const float RANGER_AI_RANGE = 100;
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
     public const float RANGER_JUMP_SPEED = 4;
     public const float RANGER_REGEN = 20;
     public const float RANGER_GCD = 0.3f;
-
     public const float RANGER_BOOST_CD = 30f;
     public const float RANGER_BOOST_TIME = 6f;
     public const float RANGER_BOOST_MOVE_MULT = 1.3f;
@@ -42,6 +43,8 @@ public static class Constants
     public const float EXP_ARROW_SPEED = 10;
     public const float EXP_ARROW_DAMAGE = 40;
     public const float EXP_ARROW_COST = 30;
+
+    public const float AI_SCAN_DELAY = 5;
 
     /// <summary>
     /// Gets the mouse position in world space

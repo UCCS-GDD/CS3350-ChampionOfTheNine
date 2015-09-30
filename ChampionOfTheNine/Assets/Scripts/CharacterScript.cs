@@ -15,10 +15,10 @@ public abstract class CharacterScript : MonoBehaviour
 {
     #region Fields
 
+    [SerializeField]protected Transform fireLocation;
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
     [SerializeField]Transform groundCheck;
-    [SerializeField]Transform fireLocation;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
@@ -150,7 +150,6 @@ public abstract class CharacterScript : MonoBehaviour
     {
         // Flips the character if needed
         float armAngle = angle;
-        Debug.Log(armAngle);
         if (transform.localScale.x != -1 && angle > 90 && angle < 270)
         { transform.localScale = new Vector3(-1, 1, 1); }
         else if (transform.localScale.x == -1)
@@ -187,7 +186,10 @@ public abstract class CharacterScript : MonoBehaviour
             // Creates the projectile
             GameObject projectile = GameObject.Instantiate(prefab);
             projScript = projectile.GetComponent<ProjScript>();
-            projScript.Initialize(fireLocation.position, Constants.MousePosition, targetTag);
+            float shotAngle = arm.transform.rotation.eulerAngles.z;
+            if (transform.localScale.x < 0)
+            { shotAngle = 180 - shotAngle; }
+            projScript.Initialize(fireLocation.position, shotAngle, targetTag);
 
             // Subtracts energy
             energy -= energyCost;

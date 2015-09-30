@@ -27,6 +27,36 @@ public class RogueScript : CharacterScript
 
     #endregion
 
+    #region Public Methods
+
+    /// <summary>
+    /// Calculates the angle at which the character should fire to hit the target position
+    /// </summary>
+    /// <param name="targetPosition">the target position</param>
+    /// <returns>the angle</returns>
+    public float GetPredictedShotAngle(Vector2 targetPosition, float arrowSpeed)
+    {
+        Vector2 disp = (Vector2)fireLocation.position - targetPosition;
+
+        // Calculates equation components
+        float speedSquared = Mathf.Pow(arrowSpeed, 2);
+        float topSqrt = Mathf.Sqrt(Mathf.Pow(speedSquared, 2) - (Physics2D.gravity.y * ((Physics2D.gravity.y * Mathf.Pow(disp.x, 2)) + 
+            (2 * disp.y * speedSquared))));
+        float bottom = Physics2D.gravity.y * disp.x;
+
+        // Calculates angles
+        float angle1 = Mathf.Atan((speedSquared + topSqrt) / bottom) * Mathf.Rad2Deg;
+        float angle2 = Mathf.Atan((speedSquared - topSqrt) / bottom) * Mathf.Rad2Deg;
+
+        // Picks and returns better angle
+        if (disp.x > 0)
+        { return Mathf.Max(angle1, angle2) + 180; }
+        else
+        { return Mathf.Min(angle1, angle2); }
+    }
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>

@@ -10,11 +10,11 @@ public abstract class CharacterControllerScript : MonoBehaviour
 {
     #region Fields
 
-    protected UseAbilityHandler jumpAbility;
-    protected UseAbilityHandler mainAbility;
-    protected UseAbilityHandler secondaryAbility;
-    protected UseAbilityHandler powerAbility;
-    protected UseAbilityHandler specialAbility;
+    protected ActionHandler jumpAbility;
+    protected ActionHandler mainAbility;
+    protected ActionHandler secondaryAbility;
+    protected ActionHandler powerAbility;
+    protected ActionHandler specialAbility;
     protected MovementHandler armDirection;
     protected MovementHandler movement;
     protected CharacterScript character;
@@ -43,8 +43,8 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// <param name="specialAbility">delegate to call on use special ability</param>
     /// <param name="movement">delegate to call on move</param>
     /// <param name="armDirection">delegate to call on change arm direction</param>
-    public void Register(UseAbilityHandler jumpAbility, UseAbilityHandler mainAbility, UseAbilityHandler secondaryAbility,
-        UseAbilityHandler powerAbility, UseAbilityHandler specialAbility, MovementHandler movement, MovementHandler armDirection)
+    public void Register(ActionHandler jumpAbility, ActionHandler mainAbility, ActionHandler secondaryAbility,
+        ActionHandler powerAbility, ActionHandler specialAbility, MovementHandler movement, MovementHandler armDirection)
     {
         this.jumpAbility = jumpAbility;
         this.mainAbility = mainAbility;
@@ -78,9 +78,9 @@ public abstract class CharacterControllerScript : MonoBehaviour
 #region Delegates
 
 /// <summary>
-/// Delegate for handling the use of an ability
+/// Delegate for handling an action
 /// </summary>
-public delegate void UseAbilityHandler();
+public delegate void ActionHandler();
 
 /// <summary>
 /// Delegate to handle movement
