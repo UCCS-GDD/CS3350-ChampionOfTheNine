@@ -9,6 +9,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CharacterControllerScript))]
 public abstract class CharacterScript : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public abstract class CharacterScript : MonoBehaviour
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
     [SerializeField]Transform groundCheck;
+    [SerializeField]Transform fireLocation;
     [SerializeField]LayerMask whatIsGround;
 
     protected AudioSource audioSource;
@@ -30,6 +32,7 @@ public abstract class CharacterScript : MonoBehaviour
     string targetTag;
 
     Rigidbody2D rbody;
+    Animator animator;
 
     #endregion
 
@@ -111,6 +114,7 @@ public abstract class CharacterScript : MonoBehaviour
         Energy = maxEnergy;
         audioSource = GetComponent<AudioSource>();
         rbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         // Registers for character controller input
         CharacterControllerScript controller = GetComponent<CharacterControllerScript>();
@@ -127,6 +131,10 @@ public abstract class CharacterScript : MonoBehaviour
         // Handles horizontal movement
         float movement = input * moveSpeed;
         rbody.velocity = new Vector2(movement, rbody.velocity.y);
+
+        // Flips if needed
+        if (Mathf.Abs(input) > 0 && Mathf.Sign(input) != transform.localScale.x)
+        { transform.localScale = new Vector3(Mathf.Sign(input), 1, 1); }
     }
 
     /// <summary>
@@ -143,6 +151,8 @@ public abstract class CharacterScript : MonoBehaviour
     protected virtual void Update()
     {
         gcTimer.Update();
+        animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
+        animator.SetBool("Grounded", Grounded);
     }
 
     /// <summary>
@@ -159,7 +169,7 @@ public abstract class CharacterScript : MonoBehaviour
             // Creates the projectile
             GameObject projectile = GameObject.Instantiate(prefab);
             projScript = projectile.GetComponent<ProjScript>();
-            projScript.Initialize(transform.position, Constants.MousePosition, targetTag);
+            projScript.Initialize(fireLocation.position, Constants.MousePosition, targetTag);
 
             // Subtracts energy
             energy -= energyCost;
