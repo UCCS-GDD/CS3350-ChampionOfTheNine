@@ -19,6 +19,15 @@ public static class Constants
     public const float RANGER_REGEN = 20;
     public const float RANGER_GCD = 0.3f;
 
+    public const float RANGER_BOOST_CD = 30f;
+    public const float RANGER_BOOST_TIME = 6f;
+    public const float RANGER_BOOST_MOVE_MULT = 1.3f;
+    public const float RANGER_BOOST_JUMP_MULT = 1.5f;
+    public const float RANGER_BOOST_CD_MULT = 0.7f;
+    public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.4f;
+    public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.4f;
+    public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
+
     public const float BASIC_ARROW_SPEED = 11;
     public const float BASIC_ARROW_DAMAGE = 10;
     public const float BASIC_ARROW_COST = 5;

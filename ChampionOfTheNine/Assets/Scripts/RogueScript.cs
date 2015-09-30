@@ -17,6 +17,13 @@ public class RogueScript : CharacterScript
     Timer pierceShootWindow;
     Timer pierceShootCD;
     Timer pierceAbilityCD;
+    Timer boostTimer;
+    Timer boostCD;
+
+    float cooldownMult = 1;
+    float arrowSpeedMult = 1;
+    float arrowDamageMult = 1;
+    float energyRegenMult = 1;
 
     #endregion
 
@@ -36,13 +43,29 @@ public class RogueScript : CharacterScript
         pierceShootWindow = new Timer(Constants.PIERCE_SHOOT_WINDOW);
         pierceShootCD = new Timer(Constants.PIERCE_SHOOT_CD);
         pierceAbilityCD = new Timer(Constants.PIERCE_ABILITY_CD);
+        boostTimer = new Timer(Constants.RANGER_BOOST_TIME);
+        boostCD = new Timer(Constants.RANGER_BOOST_CD);
+        boostTimer.Register(HandleBoostTimerFinishing);
         pierceShootWindow.Register(HandlePierceWindowFinishing);
         base.Start();
     }
 
-    #endregion
-
-    #region Protected Methods
+    /// <summary>
+    /// Fires a projectile attack
+    /// </summary>
+    /// <param name="prefab">the projectile prefab</param>
+    /// <param name="energyCost">the energy cost of the attack</param>
+    /// <returns>the projectile, if one was fired</returns>
+    protected override ProjScript FireProjectileAttack(GameObject prefab, float energyCost)
+    {
+        ProjScript projectile = base.FireProjectileAttack(prefab, energyCost);
+        if (projectile != null)
+        {
+            projectile.ChangeDamage(arrowDamageMult);
+            projectile.ChangeSpeed(arrowSpeedMult);
+        }
+        return projectile;
+    }
 
     /// <summary>
     /// Update is called once per frame
@@ -53,12 +76,13 @@ public class RogueScript : CharacterScript
 
         // Updates energy
         if (Energy < maxEnergy)
-        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * Time.deltaTime)); }
+        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
 
         // Updates timers
         pierceShootCD.Update();
         pierceAbilityCD.Update();
         pierceShootWindow.Update();
+        boostTimer.Update();
     }
 
     /// <summary>
@@ -102,7 +126,19 @@ public class RogueScript : CharacterScript
     /// </summary>
     protected override void FireSpecialAbility()
     {
+        if (!boostCD.IsRunning)
+        {
+            // Change multipliers
+            moveSpeed = Constants.RANGER_MOVE_SPEED * Constants.RANGER_BOOST_MOVE_MULT;
+            jumpSpeed = Constants.RANGER_JUMP_SPEED * Constants.RANGER_BOOST_JUMP_MULT;
+            cooldownMult = Constants.RANGER_BOOST_CD_MULT;
+            arrowSpeedMult = Constants.RANGER_BOOST_ARROW_SPEED_MULT;
+            arrowDamageMult = Constants.RANGER_BOOST_ARROW_DAMAGE_MULT;
+            energyRegenMult = Constants.RANGER_BOOST_ENERGY_REGEN_MULT;
 
+            boostTimer.Start();
+            boostCD.Start();
+        }
     }
 
     /// <summary>
@@ -111,6 +147,30 @@ public class RogueScript : CharacterScript
     protected void HandlePierceWindowFinishing()
     {
         pierceAbilityCD.Start();
+    }
+
+    /// <summary>
+    /// Handles the boost timer finishing
+    /// </summary>
+    protected void HandleBoostTimerFinishing()
+    {
+        // Change multipliers
+        moveSpeed = Constants.RANGER_MOVE_SPEED;
+        jumpSpeed = Constants.RANGER_JUMP_SPEED;
+        cooldownMult = 1;
+        arrowSpeedMult = 1;
+        arrowDamageMult = 1;
+        energyRegenMult = 1;
+    }
+
+    /// <summary>
+    /// Resets the cooldown timer lengths
+    /// </summary>
+    protected void UpdateTimerLengths()
+    {
+        gcTimer.TotalSeconds = Constants.RANGER_GCD * cooldownMult;
+        pierceShootCD.TotalSeconds = Constants.PIERCE_SHOOT_CD * cooldownMult;
+        pierceAbilityCD.TotalSeconds = Constants.PIERCE_ABILITY_CD * cooldownMult;
     }
 
     #endregion

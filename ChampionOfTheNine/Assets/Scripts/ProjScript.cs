@@ -35,6 +35,24 @@ public abstract class ProjScript : MonoBehaviour
         SetLocationAndDirection(fromPosition, toPosition);
     }
 
+    /// <summary>
+    /// Changes the speed of the projectile by the given multiplier
+    /// </summary>
+    /// <param name="multiplier">the speed multiplier</param>
+    public virtual void ChangeSpeed(float multiplier)
+    {
+        rbody.velocity *= multiplier;
+    }
+
+    /// <summary>
+    /// Changes the damage of the projectile by the given multiplier
+    /// </summary>
+    /// <param name="multiplier">the damage multiplier</param>
+    public virtual void ChangeDamage(float multiplier)
+    {
+        damage *= multiplier;
+    }
+
     #endregion
 
     #region Protected Methods

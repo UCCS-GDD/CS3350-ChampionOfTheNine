@@ -150,17 +150,21 @@ public abstract class CharacterScript : MonoBehaviour
     /// </summary>
     /// <param name="prefab">the projectile prefab</param>
     /// <param name="energyCost">the energy cost of the attack</param>
-    protected virtual void FireProjectileAttack(GameObject prefab, float energyCost)
+    /// <returns>the projectile, if one was fired</returns>
+    protected virtual ProjScript FireProjectileAttack(GameObject prefab, float energyCost)
     {
+        ProjScript projScript = null;
         if (energy >= energyCost)
         { 
             // Creates the projectile
             GameObject projectile = GameObject.Instantiate(prefab);
-            projectile.GetComponent<ProjScript>().Initialize(transform.position, Constants.MousePosition, targetTag);
+            projScript = projectile.GetComponent<ProjScript>();
+            projScript.Initialize(transform.position, Constants.MousePosition, targetTag);
 
             // Subtracts energy
             energy -= energyCost;
         }
+        return projScript;
     }
 
     /// <summary>
