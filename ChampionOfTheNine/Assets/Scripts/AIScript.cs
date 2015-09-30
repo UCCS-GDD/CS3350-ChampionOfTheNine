@@ -17,6 +17,18 @@ public abstract class AIScript : CharacterControllerScript
 
     #endregion
 
+    #region Public Methods
+
+    /// <summary>
+    /// Handles the character dying
+    /// </summary>
+    public override void Death()
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>
@@ -41,8 +53,11 @@ public abstract class AIScript : CharacterControllerScript
             if (Vector2.Distance(transform.position, target.transform.position) > targetRange)
             {
                 // Out of range, move towards target
-                if (Physics2D.Linecast(lineStart.position, lineEnd.position, Constants.GROUND_LAYER))
-                { jumpAbility(); }
+                if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << Constants.GROUND_LAYER) && character.Grounded)
+                {
+                    Debug.Log("jump");
+                    jumpAbility(); 
+                }
                 float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
                 movement(direction);
                 armDirection(90 - (direction * 135));

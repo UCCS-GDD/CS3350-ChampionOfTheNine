@@ -55,6 +55,11 @@ public abstract class CharacterControllerScript : MonoBehaviour
         this.armDirection = armDirection;
     }
 
+    /// <summary>
+    /// Handles the character dying
+    /// </summary>
+    public abstract void Death();
+
     #endregion
 
     #region Protected Methods

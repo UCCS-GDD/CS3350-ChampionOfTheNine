@@ -13,7 +13,8 @@ public static class Constants
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
 
-    public const float RANGER_AI_RANGE = 100;
+    public const float RANGER_AI_RANGE = 7;
+    public const float RANGER_AI_ANGLE_RANGE = 10;
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
@@ -41,7 +42,7 @@ public static class Constants
     public const float PIERCE_ABILITY_CD = 10f;
 
     public const float EXP_ARROW_SPEED = 10;
-    public const float EXP_ARROW_DAMAGE = 40;
+    public const float EXP_ARROW_DAMAGE = 20;
     public const float EXP_ARROW_COST = 30;
 
     public const float AI_SCAN_DELAY = 5;

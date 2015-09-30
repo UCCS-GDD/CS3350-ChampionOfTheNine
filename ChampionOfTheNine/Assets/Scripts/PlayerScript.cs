@@ -18,6 +18,18 @@ public class PlayerScript : CharacterControllerScript
 
     #endregion
 
+    #region Public Methods
+
+    /// <summary>
+    /// Handles the character dying
+    /// </summary>
+    public override void Death()
+    {
+        
+    }
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>
@@ -40,7 +52,7 @@ public class PlayerScript : CharacterControllerScript
         armDirection(armAngle * Mathf.Rad2Deg);
 
         // Handles firing
-        if (!character.OnGlobalCooldown)
+        if (!character.GCD.IsRunning)
         {
             if (Input.GetAxis("SpecialFire") > 0)
             { specialAbility(); }

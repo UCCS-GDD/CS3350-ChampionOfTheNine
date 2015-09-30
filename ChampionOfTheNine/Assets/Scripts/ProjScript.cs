@@ -13,7 +13,7 @@ public abstract class ProjScript : MonoBehaviour
     protected float damage;
     protected float moveSpeed;
     protected HitType hit = HitType.None;
-    string targetTag;
+    protected string targetTag;
     Rigidbody2D rbody;
 
     #endregion
@@ -134,7 +134,6 @@ public abstract class ProjScript : MonoBehaviour
     {
         // Sets position and direction
         transform.position = position;
-        Debug.Log(angle);
         transform.localRotation = Quaternion.Euler(0, 0, angle);
 
         rbody.velocity = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad) * moveSpeed, Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed);

@@ -34,9 +34,10 @@ public class ExpArrowScript : ProjScript
     {
         base.OnTriggerEnter2D(other);
         if (hit != HitType.None)
-        { 
+        {
+            ExplosionScript explosionScript = ((GameObject)Instantiate(explosion, transform.position, transform.localRotation)).GetComponent<ExplosionScript>();
+            explosionScript.Initialize(damage, targetTag);
             Destroy(gameObject);
-            Instantiate(explosion, transform.position, transform.localRotation);
         }
     }
 

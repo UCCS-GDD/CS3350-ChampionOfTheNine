@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Script for a rogue character
+/// Script for a ranger character
 /// </summary>
-public class RogueScript : CharacterScript
+public class RangerScript : CharacterScript
 {
     #region Fields
 

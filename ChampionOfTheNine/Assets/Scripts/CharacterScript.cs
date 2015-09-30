@@ -78,10 +78,10 @@ public abstract class CharacterScript : MonoBehaviour
     { get { return Physics2D.OverlapCircle(groundCheck.position, Constants.GROUND_CHECK_RADIUS, whatIsGround); } }
 
     /// <summary>
-    /// Gets whether or not the character is on the global cooldown
+    /// Gets the character's global cooldown
     /// </summary>
-    public bool OnGlobalCooldown
-    { get { return gcTimer.IsRunning; } }
+    public Timer GCD
+    { get { return gcTimer; } }
 
     /// <summary>
     /// Gets the character's arm object
@@ -101,6 +101,10 @@ public abstract class CharacterScript : MonoBehaviour
     {
         // Subtracts from the health
         Health -= amount;
+
+        // Checks for death
+        if (health <= 0)
+        { GetComponent<CharacterControllerScript>().Death(); }
     }
 
     #endregion
