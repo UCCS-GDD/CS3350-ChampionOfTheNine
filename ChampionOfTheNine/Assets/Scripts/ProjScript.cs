@@ -79,7 +79,7 @@ public abstract class ProjScript : MonoBehaviour
     protected virtual void Update()
     {
         // Updates the projectile angle
-        float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);;
+        float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);
         if (rbody.velocity.x < 0)
         { shotAngle -= Mathf.PI; }
 
@@ -94,11 +94,9 @@ public abstract class ProjScript : MonoBehaviour
     protected void SetLocationAndDirection(Vector2 fromPosition, Vector2 toPosition)
     {
         // Calculates shot angle
-        float shotAngle = 0;
-        if (toPosition.x - fromPosition.x > 0)
-        { shotAngle = Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
-        else
-        { shotAngle = Mathf.PI - Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition)); }
+        float shotAngle = Mathf.Asin((toPosition.y - fromPosition.y) / Vector2.Distance(toPosition, fromPosition));
+        if (toPosition.x - fromPosition.x < 0)
+        { shotAngle = Mathf.PI - shotAngle; }
 
         // Sets position and direction
         transform.position = fromPosition;

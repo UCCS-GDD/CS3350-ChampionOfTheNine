@@ -20,6 +20,7 @@ public abstract class CharacterScript : MonoBehaviour
     [SerializeField]Transform groundCheck;
     [SerializeField]Transform fireLocation;
     [SerializeField]LayerMask whatIsGround;
+    [SerializeField]GameObject arm;
 
     protected AudioSource audioSource;
     protected Timer gcTimer;
@@ -74,18 +75,19 @@ public abstract class CharacterScript : MonoBehaviour
     /// Gets whether or not the character is grounded
     /// </summary>
     public bool Grounded
-    {
-        get
-        {
-            return Physics2D.OverlapCircle(groundCheck.position, Constants.GROUND_CHECK_RADIUS, whatIsGround);
-        }
-    }
+    { get { return Physics2D.OverlapCircle(groundCheck.position, Constants.GROUND_CHECK_RADIUS, whatIsGround); } }
 
     /// <summary>
     /// Gets whether or not the character is on the global cooldown
     /// </summary>
     public bool OnGlobalCooldown
     { get { return gcTimer.IsRunning; } }
+
+    /// <summary>
+    /// Gets the character's arm object
+    /// </summary>
+    public GameObject Arm
+    { get { return arm; } }
 
     #endregion
 
@@ -118,7 +120,7 @@ public abstract class CharacterScript : MonoBehaviour
 
         // Registers for character controller input
         CharacterControllerScript controller = GetComponent<CharacterControllerScript>();
-        controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move);
+        controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move, SetArmAngle);
         targetTag = controller.TargetTag;
     }
 
@@ -131,10 +133,6 @@ public abstract class CharacterScript : MonoBehaviour
         // Handles horizontal movement
         float movement = input * moveSpeed;
         rbody.velocity = new Vector2(movement, rbody.velocity.y);
-
-        // Flips if needed
-        if (Mathf.Abs(input) > 0 && Mathf.Sign(input) != transform.localScale.x)
-        { transform.localScale = new Vector3(Mathf.Sign(input), 1, 1); }
     }
 
     /// <summary>
@@ -143,6 +141,26 @@ public abstract class CharacterScript : MonoBehaviour
     protected virtual void Jump()
     {
         rbody.velocity += new Vector2(0, jumpSpeed);
+    }
+
+    /// <summary>
+    /// Sets the character's arm angle
+    /// </summary>
+    protected virtual void SetArmAngle(float angle)
+    {
+        // Flips the character if needed
+        float armAngle = angle;
+        Debug.Log(armAngle);
+        if (transform.localScale.x != -1 && angle > 90 && angle < 270)
+        { transform.localScale = new Vector3(-1, 1, 1); }
+        else if (transform.localScale.x == -1)
+        {
+            armAngle = 180 - armAngle;
+            if (angle <= 90 || angle >= 270)
+            { transform.localScale = new Vector3(1, 1, 1); }
+        }
+
+        arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
     }
 
     /// <summary>

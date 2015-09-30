@@ -15,6 +15,7 @@ public abstract class CharacterControllerScript : MonoBehaviour
     protected UseAbilityHandler secondaryAbility;
     protected UseAbilityHandler powerAbility;
     protected UseAbilityHandler specialAbility;
+    protected MovementHandler armDirection;
     protected MovementHandler movement;
     protected CharacterScript character;
 
@@ -41,8 +42,9 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// <param name="powerAbility">delegate to call on use power ability</param>
     /// <param name="specialAbility">delegate to call on use special ability</param>
     /// <param name="movement">delegate to call on move</param>
-    public void Register(UseAbilityHandler jumpAbility, UseAbilityHandler mainAbility, UseAbilityHandler secondaryAbility, 
-        UseAbilityHandler powerAbility, UseAbilityHandler specialAbility, MovementHandler movement)
+    /// <param name="armDirection">delegate to call on change arm direction</param>
+    public void Register(UseAbilityHandler jumpAbility, UseAbilityHandler mainAbility, UseAbilityHandler secondaryAbility,
+        UseAbilityHandler powerAbility, UseAbilityHandler specialAbility, MovementHandler movement, MovementHandler armDirection)
     {
         this.jumpAbility = jumpAbility;
         this.mainAbility = mainAbility;
@@ -50,6 +52,7 @@ public abstract class CharacterControllerScript : MonoBehaviour
         this.powerAbility = powerAbility;
         this.specialAbility = specialAbility;
         this.movement = movement;
+        this.armDirection = armDirection;
     }
 
     #endregion

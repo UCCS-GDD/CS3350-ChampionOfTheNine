@@ -32,6 +32,13 @@ public class PlayerScript : CharacterControllerScript
         if (Input.GetButtonDown("Jump") && character.Grounded)
         { jumpAbility(); }
 
+        // Handles arm movement
+        Vector2 mousePosition = Constants.MousePosition;
+        float armAngle = Mathf.Asin((mousePosition.y - character.Arm.transform.position.y) / Vector2.Distance(mousePosition, character.Arm.transform.position));
+        if (mousePosition.x - character.Arm.transform.position.x < 0)
+        { armAngle = Mathf.PI - armAngle; }
+        armDirection(armAngle * Mathf.Rad2Deg);
+
         // Handles firing
         if (!character.OnGlobalCooldown)
         {
