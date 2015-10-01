@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// Enumeration for the types of hits a projectile can have
+/// Script that controls a lightning spell
 /// </summary>
-public enum HitType
+public class LightningSpellScript : ProjScript
 {
-    None,
-    Target,
-    Ground
 }

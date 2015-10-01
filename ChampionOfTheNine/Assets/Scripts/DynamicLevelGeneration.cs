@@ -8,7 +8,7 @@ public class DynamicLevelGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		elevationWeight = Random.Range (.25f, .50f);
-		Debug.Log (elevationWeight);
+        //Debug.Log (elevationWeight);
 
 		//creates "platform" for the castle on the left
 		for (int i = 0; i < 10; i++)

@@ -17,6 +17,16 @@ public abstract class AIScript : CharacterControllerScript
 
     #endregion
 
+    #region Properties
+
+    /// <summary>
+    /// Returns the tag of this character's target
+    /// </summary>
+    public override string TargetTag
+    { get { return Constants.PLAYER_TAG; } }
+
+    #endregion
+
     #region Public Methods
 
     /// <summary>
@@ -37,6 +47,7 @@ public abstract class AIScript : CharacterControllerScript
     protected override void Start()
     {
         base.Start();
+        character.simple = true;
         InvokeRepeating("FindTarget", Constants.AI_SCAN_DELAY, Constants.AI_SCAN_DELAY);
     }
 
@@ -54,10 +65,7 @@ public abstract class AIScript : CharacterControllerScript
             {
                 // Out of range, move towards target
                 if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << Constants.GROUND_LAYER) && character.Grounded)
-                {
-                    Debug.Log("jump");
-                    jumpAbility(); 
-                }
+                { jumpAbility(); }
                 float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
                 movement(direction);
                 armDirection(90 - (direction * 135));

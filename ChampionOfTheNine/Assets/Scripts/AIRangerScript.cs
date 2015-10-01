@@ -4,20 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Script that controls AI ranger characters
+/// Script that controls an AI ranger character
 /// </summary>
 public class AIRangerScript : AIScript
 {
-    #region Properties
-
-    /// <summary>
-    /// Returns the tag of this character's target
-    /// </summary>
-    public override string TargetTag
-    { get { return Constants.PLAYER_TAG; } }
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>
@@ -37,7 +27,7 @@ public class AIRangerScript : AIScript
         if (!character.GCD.IsRunning)
         {
             // 1/3 does nothing
-            float choice = Random.Range(0, 2);
+            float choice = Random.Range(0, 3);
             if (choice == 0)
             {
                 armDirection(((RangerScript)character).GetPredictedShotAngle(target.transform.position, Constants.BASIC_ARROW_SPEED) +
