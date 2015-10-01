@@ -25,7 +25,8 @@ public class Timer
 	public Timer(float seconds)
 	{
         // Sets the time and creates the finish event
-		this.totalSeconds = seconds;
+		totalSeconds = seconds;
+        elapsedSeconds = seconds;
 		timerFinishedEvent = new TimerFinishedEvent();
 	}
 

@@ -23,11 +23,11 @@
     <ShowAsAssociation>
       <Field Name="jumpAbility" />
       <Field Name="mainAbility" />
-      <Field Name="movement" />
-      <Field Name="powerAbility" />
       <Field Name="secondaryAbility" />
+      <Field Name="powerAbility" />
       <Field Name="specialAbility" />
       <Field Name="armDirection" />
+      <Field Name="movement" />
     </ShowAsAssociation>
   </Class>
   <Class Name="ExpArrowScript">
@@ -99,11 +99,11 @@
       <FileName>Assets\Scripts\RangerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="boostCD" />
-      <Field Name="boostTimer" />
+      <Field Name="pierceShootWindow" />
       <Field Name="pierceShootCD" />
       <Field Name="pierceAbilityCD" />
-      <Field Name="pierceShootWindow" />
+      <Field Name="boostTimer" />
+      <Field Name="boostCD" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Timer">
@@ -117,7 +117,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="TimerFinishedEvent">
-    <Position X="13.25" Y="10.25" Width="1.5" />
+    <Position X="13.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAABABAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>

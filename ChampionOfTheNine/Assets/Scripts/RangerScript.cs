@@ -13,10 +13,16 @@ public class RangerScript : CharacterScript
     [SerializeField]GameObject arrow;
     [SerializeField]GameObject pierceArrow;
     [SerializeField]GameObject expArrow;
+    [SerializeField]Image expCDBar;
+    [SerializeField]Image pierceCDBar;
+    [SerializeField]Image pierceBar;
+    [SerializeField]Image boostCDBar;
+    [SerializeField]Image boostBar;
 
     Timer pierceShootWindow;
     Timer pierceShootCD;
     Timer pierceAbilityCD;
+    Timer expArrowCD;
     Timer boostTimer;
     Timer boostCD;
 
@@ -75,6 +81,7 @@ public class RangerScript : CharacterScript
         pierceAbilityCD = new Timer(Constants.PIERCE_ABILITY_CD);
         boostTimer = new Timer(Constants.RANGER_BOOST_TIME);
         boostCD = new Timer(Constants.RANGER_BOOST_CD);
+        expArrowCD = new Timer(Constants.EXP_ARROW_CD);
         boostTimer.Register(HandleBoostTimerFinishing);
         pierceShootWindow.Register(HandlePierceWindowFinishing);
         base.Start();
@@ -85,10 +92,11 @@ public class RangerScript : CharacterScript
     /// </summary>
     /// <param name="prefab">the projectile prefab</param>
     /// <param name="energyCost">the energy cost of the attack</param>
+    /// <param name="cooldown">the cooldown timer to start</param>
     /// <returns>the projectile, if one was fired</returns>
-    protected override ProjScript FireProjectileAttack(GameObject prefab, float energyCost)
+    protected override ProjScript FireProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
     {
-        ProjScript projectile = base.FireProjectileAttack(prefab, energyCost);
+        ProjScript projectile = base.FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
         {
             projectile.ChangeDamage(arrowDamageMult);
@@ -108,11 +116,24 @@ public class RangerScript : CharacterScript
         if (Energy < maxEnergy)
         { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
 
-        // Updates timers
-        pierceShootCD.Update();
-        pierceAbilityCD.Update();
-        pierceShootWindow.Update();
-        boostTimer.Update();
+        // Simple rangers don't use any of these - change if we give more arrows to AI
+        if (!simple)
+        {
+            // Updates timers
+            pierceShootCD.Update();
+            pierceAbilityCD.Update();
+            pierceShootWindow.Update();
+            expArrowCD.Update();
+            boostTimer.Update();
+            boostCD.Update();
+
+            // Updates cooldown bars
+            expCDBar.fillAmount = 1 - (expArrowCD.ElapsedSeconds / expArrowCD.TotalSeconds);
+            pierceCDBar.fillAmount = 1 - (pierceAbilityCD.ElapsedSeconds / pierceAbilityCD.TotalSeconds);
+            boostCDBar.fillAmount = 1 - (boostCD.ElapsedSeconds / boostCD.TotalSeconds);
+            boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
+            pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
+        }
     }
 
     /// <summary>
@@ -120,8 +141,7 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility() 
     {
-        FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST);
-        gcTimer.Start();
+        FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gcTimer);
     }
 
     /// <summary>
@@ -129,8 +149,12 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireSecondaryAbility()
     {
-        FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST);
-        gcTimer.Start();
+        if (!expArrowCD.IsRunning)
+        {
+            ProjScript projectile = FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gcTimer);
+            if (projectile != null)
+            { expArrowCD.Start(); }
+        }
     }
 
     /// <summary>
@@ -146,8 +170,7 @@ public class RangerScript : CharacterScript
             { pierceShootWindow.Start(); }
 
             // Fires arrow
-            FireProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST);
-            pierceShootCD.Start();
+            FireProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD);
         }
     }
 

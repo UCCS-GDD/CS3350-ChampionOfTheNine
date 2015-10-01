@@ -13,19 +13,19 @@ public static class Constants
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
 
-    public const float RANGER_AI_RANGE = 7;
-    public const float RANGER_AI_ANGLE_RANGE = 10;
+    public const float RANGER_AI_RANGE = 8;
+    public const float RANGER_AI_ANGLE_RANGE = 15;
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
     public const float RANGER_JUMP_SPEED = 4;
     public const float RANGER_REGEN = 20;
-    public const float RANGER_GCD = 0.3f;
+    public const float RANGER_GCD = 0.2f;
     public const float RANGER_BOOST_CD = 30f;
     public const float RANGER_BOOST_TIME = 6f;
-    public const float RANGER_BOOST_MOVE_MULT = 1.3f;
-    public const float RANGER_BOOST_JUMP_MULT = 1.5f;
-    public const float RANGER_BOOST_CD_MULT = 0.7f;
+    public const float RANGER_BOOST_MOVE_MULT = 1.5f;
+    public const float RANGER_BOOST_JUMP_MULT = 1.3f;
+    public const float RANGER_BOOST_CD_MULT = 0.6f;
     public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.2f;
     public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
     public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
@@ -44,6 +44,7 @@ public static class Constants
     public const float EXP_ARROW_SPEED = 10;
     public const float EXP_ARROW_DAMAGE = 20;
     public const float EXP_ARROW_COST = 30;
+    public const float EXP_ARROW_CD = 1;
 
     public const float AI_SCAN_DELAY = 5;
 

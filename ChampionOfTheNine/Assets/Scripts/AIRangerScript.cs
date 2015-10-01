@@ -37,7 +37,7 @@ public class AIRangerScript : AIScript
         if (!character.GCD.IsRunning)
         {
             // 1/3 does nothing
-            float choice = Random.Range(0, 2);
+            float choice = Random.Range(0, 3);
             if (choice == 0)
             {
                 armDirection(((RangerScript)character).GetPredictedShotAngle(target.transform.position, Constants.BASIC_ARROW_SPEED) +

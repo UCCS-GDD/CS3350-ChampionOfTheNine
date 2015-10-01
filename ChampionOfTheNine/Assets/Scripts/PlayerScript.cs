@@ -52,17 +52,17 @@ public class PlayerScript : CharacterControllerScript
         armDirection(armAngle * Mathf.Rad2Deg);
 
         // Handles firing
-        if (!character.GCD.IsRunning)
-        {
-            if (Input.GetAxis("SpecialFire") > 0)
-            { specialAbility(); }
-            if (Input.GetAxis("MainFire") > 0)
-            { mainAbility(); }
-            else if (Input.GetAxis("SecondaryFire") > 0)
-            { secondaryAbility(); }
-            else if (Input.GetAxis("PowerFire") > 0)
-            { powerAbility(); }
-        }
+        if (Input.GetAxis("SpecialFire") > 0)
+        { specialAbility(); }
+        if (!character.GCD.IsRunning && Input.GetAxis("PowerFire") > 0)
+        { powerAbility(); }
+        if (!character.GCD.IsRunning && Input.GetAxis("SecondaryFire") > 0)
+        { secondaryAbility(); }
+        if (!character.GCD.IsRunning && Input.GetAxis("MainFire") > 0)
+        { mainAbility(); }
+
+        // Moves the camera
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
     }
 
     #endregion

@@ -18,6 +18,7 @@ public abstract class CharacterScript : MonoBehaviour
     [SerializeField]protected Transform fireLocation;
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
+    [SerializeField]Image[] gcdBars;
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
@@ -34,6 +35,8 @@ public abstract class CharacterScript : MonoBehaviour
 
     Rigidbody2D rbody;
     Animator animator;
+
+    public bool simple = false;  // Whether or not the character uses simplified functionality
 
     #endregion
 
@@ -171,7 +174,12 @@ public abstract class CharacterScript : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        gcTimer.Update();
+        if (gcTimer.IsRunning)
+        {
+            gcTimer.Update();
+            foreach (Image bar in gcdBars)
+            { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
+        }
         animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
         animator.SetBool("Grounded", Grounded);
     }
@@ -181,8 +189,9 @@ public abstract class CharacterScript : MonoBehaviour
     /// </summary>
     /// <param name="prefab">the projectile prefab</param>
     /// <param name="energyCost">the energy cost of the attack</param>
+    /// <param name="cooldown">the cooldown timer to start</param>
     /// <returns>the projectile, if one was fired</returns>
-    protected virtual ProjScript FireProjectileAttack(GameObject prefab, float energyCost)
+    protected virtual ProjScript FireProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
     {
         ProjScript projScript = null;
         if (energy >= energyCost)
@@ -195,8 +204,9 @@ public abstract class CharacterScript : MonoBehaviour
             { shotAngle = 180 - shotAngle; }
             projScript.Initialize(fireLocation.position, shotAngle, targetTag);
 
-            // Subtracts energy
+            // Subtracts energy and starts timer
             energy -= energyCost;
+            cooldown.Start();
         }
         return projScript;
     }
