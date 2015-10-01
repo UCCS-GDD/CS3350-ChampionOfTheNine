@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6e02ff2365567784297654655861356e
-timeCreated: 1443632692
+timeCreated: 1443732838
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -91,19 +91,19 @@ TextureImporter:
     - name: ranger_walk_3
       rect:
         serializedVersion: 2
-        x: 160
-        y: 123
-        width: 46
-        height: 110
+        x: 156
+        y: 122
+        width: 50
+        height: 111
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: ranger_walk_4
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 4
-        width: 46
+        width: 50
         height: 111
       alignment: 7
       pivot: {x: .5, y: 0}
@@ -122,18 +122,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 110
-        y: 4
-        width: 47
-        height: 111
+        y: 3
+        width: 46
+        height: 112
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: ranger_walk_7
       rect:
         serializedVersion: 2
-        x: 161
+        x: 158
         y: 4
-        width: 46
+        width: 49
         height: 111
       alignment: 7
       pivot: {x: .5, y: 0}
