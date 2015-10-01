@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// Enumeration for the types of hits a projectile can have
+/// Script that controls an ice spell
 /// </summary>
-public enum HitType
+public class IceSpellScript : ProjScript
 {
-    None,
-    Target,
-    Ground
 }

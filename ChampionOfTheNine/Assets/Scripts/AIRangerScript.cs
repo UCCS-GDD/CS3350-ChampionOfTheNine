@@ -4,20 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Script that controls AI ranger characters
+/// Script that controls an AI ranger character
 /// </summary>
 public class AIRangerScript : AIScript
 {
-    #region Properties
-
-    /// <summary>
-    /// Returns the tag of this character's target
-    /// </summary>
-    public override string TargetTag
-    { get { return Constants.PLAYER_TAG; } }
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>

@@ -17,6 +17,16 @@ public abstract class AIScript : CharacterControllerScript
 
     #endregion
 
+    #region Properties
+
+    /// <summary>
+    /// Returns the tag of this character's target
+    /// </summary>
+    public override string TargetTag
+    { get { return Constants.PLAYER_TAG; } }
+
+    #endregion
+
     #region Public Methods
 
     /// <summary>
