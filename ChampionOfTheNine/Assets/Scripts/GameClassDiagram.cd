@@ -54,15 +54,13 @@
       <FileName>Assets\Scripts\ArrowScript.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CharacterScript">
+  <Class Name="DamagableObjectScript">
     <Position X="10.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>hAQACACIEqAIAQRABQIFBAEAgIAAFIBAAAJAAAAQggg=</HashCode>
-      <FileName>Assets\Scripts\CharacterScript.cs</FileName>
+      <HashCode>AAAACACIACAAAAAAAAAAAAAAAAAAAAAgAAAAAAAQAAg=</HashCode>
+      <FileName>Assets\Scripts\DamagableObjectScript.cs</FileName>
+      <NewMemberFileName>Assets\Scripts\CharacterScript.cs</NewMemberFileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="gcTimer" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="Constants" Collapsed="true">
     <Position X="27.5" Y="0.5" Width="1.5" />
@@ -93,7 +91,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="RangerScript">
-    <Position X="13" Y="15.25" Width="1.5" />
+    <Position X="13" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAxAUCAAAiYIQACABEAAAgAAEIAAAABABIJEAAAKAAQ=</HashCode>
       <FileName>Assets\Scripts\RangerScript.cs</FileName>
@@ -108,7 +106,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Timer">
-    <Position X="14" Y="11" Width="1.5" />
+    <Position X="16" Y="19.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEQAEAAAADAAAAAAAAAAQAAAAAgBAAAAAQAAAAEAAAg=</HashCode>
       <FileName>Assets\Scripts\Timer.cs</FileName>
@@ -118,21 +116,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="TimerFinishedEvent">
-    <Position X="17" Y="11.75" Width="1.5" />
+    <Position X="19" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAABABAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WizardScript">
-    <Position X="8.5" Y="15.25" Width="1.5" />
+    <Position X="8.5" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAIAAAABAAABAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\WizardScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WarriorScript">
-    <Position X="10.75" Y="15.25" Width="1.5" />
+    <Position X="10.75" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAIAAAABAAABAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\WarriorScript.cs</FileName>
@@ -171,6 +169,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\AIWarriorScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterScript">
+    <Position X="10.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAQAAAAAEqAIAQRABQIFBAEAgIAAFIBgAAJAAAAQggg=</HashCode>
+      <FileName>Assets\Scripts\CharacterScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="HitType">
