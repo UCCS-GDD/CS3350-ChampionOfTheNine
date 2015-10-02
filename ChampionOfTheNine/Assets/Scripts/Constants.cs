@@ -46,6 +46,8 @@ public static class Constants
     public const float EXP_ARROW_COST = 30;
     public const float EXP_ARROW_CD = 1.2f;
 
+    public const float CASTLE_HEALTH = 1000;
+
     public const float AI_SCAN_DELAY = 5;
 
     /// <summary>

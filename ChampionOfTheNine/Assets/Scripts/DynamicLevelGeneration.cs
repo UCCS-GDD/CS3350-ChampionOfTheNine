@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DynamicLevelGeneration : MonoBehaviour {
+public class DynamicLevelGeneration : MonoBehaviour 
+{
+    [SerializeField]GameObject enemyCastle;
 	int[] levels = new int[100];
 	float elevationWeight = 1;
 
@@ -78,6 +80,9 @@ public class DynamicLevelGeneration : MonoBehaviour {
 				soil.transform.position = new Vector2(i, j);
 			}
 		}
+
+        // Spawns enemy castle
+        Instantiate(enemyCastle, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
 	}
 
 	void GenerateParallaxObjects()

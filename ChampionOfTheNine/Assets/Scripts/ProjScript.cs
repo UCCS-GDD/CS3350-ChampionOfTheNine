@@ -86,7 +86,7 @@ public abstract class ProjScript : MonoBehaviour
         // Checks for if enemy
         if (other.gameObject.tag == targetTag)
         {
-            other.gameObject.GetComponent<CharacterScript>().Damage(damage);
+            other.gameObject.GetComponent<DamagableObjectScript>().Damage(damage);
             hit = HitType.Target;
         }
         else if (other.gameObject.layer == Constants.GROUND_LAYER)

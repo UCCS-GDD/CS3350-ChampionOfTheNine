@@ -7,16 +7,13 @@ using System.Collections.Generic;
 /// Abstract parent class for character scripts
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CharacterControllerScript))]
-public abstract class CharacterScript : MonoBehaviour
+public abstract class CharacterScript : DamagableObjectScript
 {
     #region Fields
 
     [SerializeField]protected Transform fireLocation;
-    [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
     [SerializeField]Image[] gcdBars;
     [SerializeField]Transform groundCheck;
@@ -25,11 +22,9 @@ public abstract class CharacterScript : MonoBehaviour
 
     protected AudioSource audioSource;
     protected Timer gcTimer;
-    protected float maxHealth;
     protected float maxEnergy;
     protected float moveSpeed;
     protected float jumpSpeed;
-    float health;
     float energy;
     string targetTag;
 
@@ -41,22 +36,6 @@ public abstract class CharacterScript : MonoBehaviour
     #endregion
 
     #region Properties
-
-    /// <summary>
-    /// Gets and sets the character's health, setting the health bar appropriately
-    /// </summary>
-    protected float Health
-    {
-        get { return health; }
-        set
-        {
-            health = value;
-
-            // Sets health bar if it exists
-            if (healthBar != null)
-            { healthBar.fillAmount = health / maxHealth; }
-        }
-    }
 
     /// <summary>
     /// Gets and sets the character's energy, setting the energy bar appropriately
@@ -94,32 +73,14 @@ public abstract class CharacterScript : MonoBehaviour
 
     #endregion
 
-    #region Public Methods
-
-    /// <summary>
-    /// Damages the character by the given amount
-    /// </summary>
-    /// <param name="amount">the amount</param>
-    public virtual void Damage(float amount)
-    {
-        // Subtracts from the health
-        Health -= amount;
-
-        // Checks for death
-        if (health <= 0)
-        { GetComponent<CharacterControllerScript>().Death(); }
-    }
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    protected virtual void Start()
+    protected override void Start()
     {
-        Health = maxHealth;
+        base.Start();
         Energy = maxEnergy;
         audioSource = GetComponent<AudioSource>();
         rbody = GetComponent<Rigidbody2D>();
@@ -209,6 +170,14 @@ public abstract class CharacterScript : MonoBehaviour
             cooldown.Start();
         }
         return projScript;
+    }
+
+    /// <summary>
+    /// Handles the character dying
+    /// </summary>
+    protected override void Death()
+    {
+        GetComponent<CharacterControllerScript>().Death();
     }
 
     /// <summary>
