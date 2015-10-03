@@ -3,14 +3,25 @@ using System.Collections;
 
 public class DynamicLevelGeneration : MonoBehaviour 
 {
+	bool debugMode = true;
+
+
     [SerializeField]GameObject enemyCastle;
 	int[] levels = new int[100];
 	float elevationWeight = 1;
-
+	float heightDifferenceWeight = 1;
+	
 	// Use this for initialization
 	void Start () {
 		elevationWeight = Random.Range (.25f, .50f);
-        //Debug.Log (elevationWeight);
+		heightDifferenceWeight = Random.Range (0.00f, 1.2f);
+		elevationWeight = .25f;
+		heightDifferenceWeight = 1;
+
+		if (debugMode) {
+			Debug.Log ("Elevation weight: " + elevationWeight);
+			Debug.Log ("Height Difference Weight: " + heightDifferenceWeight);
+		}
 
 		//creates "platform" for the castle on the left
 		for (int i = 0; i < 10; i++)
@@ -43,7 +54,7 @@ public class DynamicLevelGeneration : MonoBehaviour
 		//use weight to decide if we should change direction or not.
 		if (Random.Range (0.00f, 1.00f) <= elevationWeight) {
 			//change direction
-			if (Random.Range (0.00f, 10.00f) >= (10 - previous))
+			if (Random.Range (0.00f, 10.00f) >= (previous * heightDifferenceWeight))
 			{
 				//go down
 				return previous - 1;
@@ -73,11 +84,11 @@ public class DynamicLevelGeneration : MonoBehaviour
 			newObject.transform.position = new Vector2(i, levels[i]);
 
 			//draws the blocks under the top
-			for (int j = 0; j < levels[i]; j++)
+			for (int j = 1; j <= 8; j++)
 			{
-				GameObject soil = Instantiate (Resources.Load ("Prefabs/rocks")) as GameObject;
+				GameObject soil = Instantiate (Resources.Load ("Prefabs/groundUnder")) as GameObject;
 				soil.transform.SetParent(groundParent);
-				soil.transform.position = new Vector2(i, j);
+				soil.transform.position = new Vector2(i, levels[i] - j);
 			}
 		}
 
