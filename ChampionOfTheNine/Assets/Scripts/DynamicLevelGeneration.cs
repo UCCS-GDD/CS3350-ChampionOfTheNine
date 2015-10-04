@@ -108,16 +108,17 @@ public class DynamicLevelGeneration : MonoBehaviour
 			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
 			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
 			newObject.transform.SetParent(GameObject.Find ("Background2").transform);
-			newObject.transform.position = new Vector2(horizontalPosition, verticalPosition);
+			newObject.transform.position = new Vector3(horizontalPosition, verticalPosition, 2);
 			newObject.transform.localScale = newObject.transform.localScale * Random.Range (Constants.CLOUD_SCALE_MIN, Constants.CLOUD_SCALE_MAX);
 		}
 
+		//generate clouds on background1
 		for (int i = 0; i < (int)(100 * Constants.CLOUD_DENSITY); i++) {
 			horizontalPosition = Random.Range (0, 100);
 			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
 			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
 			newObject.transform.SetParent(GameObject.Find ("Background1").transform);
-			newObject.transform.position = new Vector2(horizontalPosition, verticalPosition);
+			newObject.transform.position = new Vector3(horizontalPosition, verticalPosition, 1);
 			newObject.transform.localScale = newObject.transform.localScale * Random.Range (Constants.CLOUD_SCALE_MIN, Constants.CLOUD_SCALE_MAX);
 		}
 	}
