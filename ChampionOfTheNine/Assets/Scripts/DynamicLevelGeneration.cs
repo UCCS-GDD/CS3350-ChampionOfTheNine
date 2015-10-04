@@ -13,10 +13,10 @@ public class DynamicLevelGeneration : MonoBehaviour
 	
 	// Use this for initialization
 	void Start () {
-		elevationWeight = Random.Range (.25f, .50f);
-		heightDifferenceWeight = Random.Range (0.00f, 1.2f);
-		elevationWeight = .25f;
-		heightDifferenceWeight = 1;
+		//elevationWeight = Random.Range (.25f, .50f);
+		//heightDifferenceWeight = Random.Range (0.00f, 1.2f);
+		elevationWeight = Constants.ELEVATION_CHANGE_WEIGHT + Random.Range (-Constants.ELEVATION_CHANGE_OFFSET, Constants.ELEVATION_CHANGE_OFFSET);;
+		heightDifferenceWeight = Constants.HEIGHT_DIFFERENCE_WEIGHT + Random.Range (-Constants.HEIGHT_DIFFERENCE_OFFSET, Constants.HEIGHT_DIFFERENCE_OFFSET);
 
 		if (debugMode) {
 			Debug.Log ("Elevation weight: " + elevationWeight);
@@ -54,7 +54,7 @@ public class DynamicLevelGeneration : MonoBehaviour
 		//use weight to decide if we should change direction or not.
 		if (Random.Range (0.00f, 1.00f) <= elevationWeight) {
 			//change direction
-			if (Random.Range (0.00f, 10.00f) >= (previous * heightDifferenceWeight))
+			if (Random.Range (0.00f, 1.00f) >= (heightDifferenceWeight))
 			{
 				//go down
 				return previous - 1;
@@ -93,12 +93,33 @@ public class DynamicLevelGeneration : MonoBehaviour
 		}
 
         // Spawns enemy castle
-        Instantiate(enemyCastle, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
+		enemyCastle = Instantiate(enemyCastle, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation) as GameObject;
+		GenerateParallaxObjects ();
 	}
 
 	void GenerateParallaxObjects()
 	{
-		//create a background and a foreground plane and place arbitrary objects at different location intervals
+		float horizontalPosition = 0;
+		float verticalPosition = 0;
+
+		//generate clouds on background2
+		for (int i = 0; i < (int)(100 * Constants.CLOUD_DENSITY); i++) {
+			horizontalPosition = Random.Range (0, 100);
+			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
+			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
+			newObject.transform.SetParent(GameObject.Find ("Background2").transform);
+			newObject.transform.position = new Vector2(horizontalPosition, verticalPosition);
+			newObject.transform.localScale = newObject.transform.localScale * Random.Range (Constants.CLOUD_SCALE_MIN, Constants.CLOUD_SCALE_MAX);
+		}
+
+		for (int i = 0; i < (int)(100 * Constants.CLOUD_DENSITY); i++) {
+			horizontalPosition = Random.Range (0, 100);
+			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
+			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
+			newObject.transform.SetParent(GameObject.Find ("Background1").transform);
+			newObject.transform.position = new Vector2(horizontalPosition, verticalPosition);
+			newObject.transform.localScale = newObject.transform.localScale * Random.Range (Constants.CLOUD_SCALE_MIN, Constants.CLOUD_SCALE_MAX);
+		}
 	}
 
 	void GenerateBackgroundImage()

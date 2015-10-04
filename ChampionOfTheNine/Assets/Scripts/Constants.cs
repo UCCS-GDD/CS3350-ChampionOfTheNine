@@ -50,6 +50,17 @@ public static class Constants
 
     public const float AI_SCAN_DELAY = 5;
 
+	//dynamic map variables
+	public const float CLOUD_DENSITY = .5f;
+	public const float CLOUD_SCALE_MIN = .5f;
+	public const float CLOUD_SCALE_MAX = 1.5f;
+	//public const float TREE_DENSITY = 1;
+	public const float ELEVATION_CHANGE_WEIGHT = .35f; //low value = flatter map, high value = more change. 0 - 1
+	public const float ELEVATION_CHANGE_OFFSET = .1f;
+	public const float HEIGHT_DIFFERENCE_WEIGHT = .5f; //low value = downward direction, high value = upward direction. 0 - 1
+	public const float HEIGHT_DIFFERENCE_OFFSET = .4f;
+	public const float PARALLAX_SCALE = .01f;
+
     /// <summary>
     /// Gets the mouse position in world space
     /// </summary>
