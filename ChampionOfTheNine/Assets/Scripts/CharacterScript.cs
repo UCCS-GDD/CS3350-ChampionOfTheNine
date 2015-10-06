@@ -108,7 +108,7 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     protected virtual void Jump()
     {
-        rbody.velocity += new Vector2(0, jumpSpeed);
+        rbody.velocity = new Vector2(0, jumpSpeed);
     }
 
     /// <summary>
