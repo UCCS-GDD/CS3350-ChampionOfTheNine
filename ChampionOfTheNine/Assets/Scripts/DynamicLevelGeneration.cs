@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Script that handles dynamic level generation
+/// </summary>
 public class DynamicLevelGeneration : MonoBehaviour 
 {
 	bool debugMode = true;
 
 
     [SerializeField]GameObject enemyCastle;
-	int[] levels = new int[100];
+	int[] levels = new int[Constants.MAP_LENGTH];
 	float elevationWeight = 1;
 	float heightDifferenceWeight = 1;
 	
-	// Use this for initialization
+	/// <summary>
+	/// Start is called once on object creation
+	/// </summary>
 	void Start () {
 		//elevationWeight = Random.Range (.25f, .50f);
 		//heightDifferenceWeight = Random.Range (0.00f, 1.2f);
@@ -24,31 +29,32 @@ public class DynamicLevelGeneration : MonoBehaviour
 		}
 
 		//creates "platform" for the castle on the left
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < Constants.PLATFORM_LENGTH; i++)
 		{
-			levels[i] = 5;
+			levels[i] = Constants.BASE_LEVEL;
 		}
 
 		//fills in the rest of the aray.
-		for (int i = 10; i < 90; i++) 
+        int mapLengthMinusPlatform = Constants.MAP_LENGTH - Constants.PLATFORM_LENGTH;
+        for (int i = Constants.PLATFORM_LENGTH; i < mapLengthMinusPlatform; i++) 
 		{
 			levels[i] = NextHeight(levels[i - 1]);
 		}
 
 		//creates platform for right castle
-		for (int i = 90; i < 100; i++) 
+        for (int i = mapLengthMinusPlatform; i < Constants.MAP_LENGTH; i++) 
 		{
-			levels[i] = levels[89];
+            levels[i] = levels[mapLengthMinusPlatform - 1];
 		}
 
 		DrawMap ();
 	}
 
     /// <summary>
-    /// 
+    /// Gets the next height value based on the previous height, the weight, and randomness
     /// </summary>
-    /// <param name="previous"></param>
-    /// <returns></returns>
+    /// <param name="previous">the previous height</param>
+    /// <returns>the next height</returns>
 	int NextHeight(int previous)
 	{
 		//use weight to decide if we should change direction or not.
@@ -70,7 +76,7 @@ public class DynamicLevelGeneration : MonoBehaviour
 	}
 
     /// <summary>
-    /// 
+    /// Places objects to create the map based on the generated terrain levels
     /// </summary>
 	void DrawMap()
 	{
@@ -84,7 +90,7 @@ public class DynamicLevelGeneration : MonoBehaviour
 			newObject.transform.position = new Vector2(i, levels[i]);
 
 			//draws the blocks under the top
-			for (int j = 1; j <= 8; j++)
+			for (int j = 1; j <= Constants.SOIL_HEIGHT; j++)
 			{
 				GameObject soil = Instantiate (Resources.Load ("Prefabs/groundUnder")) as GameObject;
 				soil.transform.SetParent(groundParent);
@@ -97,14 +103,18 @@ public class DynamicLevelGeneration : MonoBehaviour
 		GenerateParallaxObjects ();
 	}
 
+    /// <summary>
+    /// Generates the parallax objects for the map
+    /// </summary>
 	void GenerateParallaxObjects()
 	{
 		float horizontalPosition = 0;
 		float verticalPosition = 0;
 
 		//generate clouds on background2
-		for (int i = 0; i < (int)(100 * Constants.CLOUD_DENSITY); i++) {
-			horizontalPosition = Random.Range (0, 100);
+		for (int i = 0; i < (int)(Constants.MAP_LENGTH * Constants.CLOUD_DENSITY); i++) 
+        {
+            horizontalPosition = Random.Range(0, Constants.MAP_LENGTH);
 			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
 			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
 			newObject.transform.SetParent(GameObject.Find ("Background2").transform);
@@ -113,8 +123,9 @@ public class DynamicLevelGeneration : MonoBehaviour
 		}
 
 		//generate clouds on background1
-		for (int i = 0; i < (int)(100 * Constants.CLOUD_DENSITY); i++) {
-			horizontalPosition = Random.Range (0, 100);
+        for (int i = 0; i < (int)(Constants.MAP_LENGTH * Constants.CLOUD_DENSITY); i++)
+        {
+            horizontalPosition = Random.Range(0, Constants.MAP_LENGTH);
 			verticalPosition = Random.Range ((float)levels[(int)horizontalPosition] - 10.00f, (float)levels[(int)horizontalPosition] + 20.00f);
 			GameObject newObject = Instantiate (Resources.Load ("Prefabs/Cloud" + Random.Range (1, 4).ToString())) as GameObject;
 			newObject.transform.SetParent(GameObject.Find ("Background1").transform);

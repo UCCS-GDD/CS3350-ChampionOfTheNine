@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Parallax : MonoBehaviour {	
+public class Parallax : MonoBehaviour 
+{	
 	GameObject player;
 	Vector3 playerLocation;
 
