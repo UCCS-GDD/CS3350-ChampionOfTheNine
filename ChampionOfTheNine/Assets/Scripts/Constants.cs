@@ -15,7 +15,7 @@ public static class Constants
     public const string SND_FOLDER = "Sounds/";
     public const float AI_SCAN_DELAY = 5;
     public const float PITCH_CHANGE = 0.2f;
-    public const float DARKNESS_TIMER = 2f;
+    public const float DARKNESS_TIMER = 3f;
 
     // Character sounds
     public const string CHAR_HIT_SND = "hurt";
@@ -65,7 +65,7 @@ public static class Constants
     public const float EXP_ARROW_CD = 1.2f;
 
     // Castles
-    public const float CASTLE_HEALTH = 8;
+    public const float CASTLE_HEALTH = 800;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
 
@@ -80,7 +80,7 @@ public static class Constants
 	public const float HEIGHT_DIFFERENCE_OFFSET = 0.4f;
 	public const float PARALLAX_SCALE = 0.01f;
     public const int PLATFORM_LENGTH = 10;
-    public const int MAP_LENGTH = 40;
+    public const int MAP_LENGTH = 80;
     public const int BASE_LEVEL = 5;
-    public const int SOIL_HEIGHT = 8;
+    public const int SOIL_HEIGHT = 9;
 }

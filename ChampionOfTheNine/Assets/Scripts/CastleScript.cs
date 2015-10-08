@@ -51,6 +51,9 @@ public class CastleScript : DamagableObjectScript
     {
         Utilities.PlaySoundPitched(audioSource, deathSound);
         spriteRenderer.sprite = destroyedSprite;
+
+        // Edit, this part currently only works if enemy castle
         gameObject.transform.FindChild("EnemySpawnLocation").GetComponent<EnemySpawner>().CancelInvoke();
+        PlayerScript.PlayerWon();
     }
 }

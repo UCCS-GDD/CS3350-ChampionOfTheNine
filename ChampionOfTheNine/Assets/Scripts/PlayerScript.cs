@@ -43,8 +43,11 @@ public class PlayerScript : CharacterControllerScript
     public static void PlayerWon()
     {
         PlayerScript pScript = GameObject.Find("Player").GetComponent<PlayerScript>();
-        pScript.victoryText.SetActive(true);
-        pScript.darknessTimer.Start();
+        if (!pScript.victoryText.activeSelf)
+        {
+            pScript.victoryText.SetActive(true);
+            pScript.darknessTimer.Start();
+        }
     }
 
     #endregion
