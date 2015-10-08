@@ -27,7 +27,7 @@ public static class Constants
     // Ranger class
     public const float RANGER_AI_RANGE = 9;
     public const float RANGER_AI_ANGLE_RANGE = 15;
-    public const int RANGER_AI_SHOT_THRESHOLD = 4;
+    public const int RANGER_AI_SHOT_THRESHOLD = 5;
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
