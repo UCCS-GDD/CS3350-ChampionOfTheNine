@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls menu UI
 /// </summary>
-public class UIScript : MonoBehaviour
+public class MenuUIScript : MonoBehaviour
 {
     #region Fields
 

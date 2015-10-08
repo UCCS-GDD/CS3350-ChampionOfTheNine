@@ -62,14 +62,14 @@
       <NewMemberFileName>Assets\Scripts\CharacterScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Constants">
+  <Class Name="Constants" Collapsed="true">
     <Position X="29.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gJgCQAAAQoMGjpAQBogAEMaChIEAAwCBCWAwQBcAQwA=</HashCode>
       <FileName>Assets\Scripts\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ExplosionScript">
+  <Class Name="ExplosionScript" Collapsed="true">
     <Position X="31.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAQAAAAAACAAgQBAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
@@ -93,7 +93,7 @@
   <Class Name="RangerScript">
     <Position X="13" Y="20" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAxAUCAAAiYIQACABEAAAgAAEIAAAABABIJEAAAKAAQ=</HashCode>
+      <HashCode>AAhAUCAAAiYIQACABEAAAgAAEIAAAABABIJEAAAKCAQ=</HashCode>
       <FileName>Assets\Scripts\RangerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -174,19 +174,19 @@
   <Class Name="CharacterScript">
     <Position X="10.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>hAQAAAAAkqAJCRRABQoFBAEAgIAABKBgAAJAAAAAggA=</HashCode>
+      <HashCode>hAAAAAAAkqAJCRRABQoFAgEAgIAABKBgAAJAAAAAigA=</HashCode>
       <FileName>Assets\Scripts\CharacterScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CastleScript">
     <Position X="15.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAACAAAAAAAAAAAAAAAAAgAAAAAAAIAAA=</HashCode>
       <FileName>Assets\Scripts\CastleScript.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Utilities">
-    <Position X="27.75" Y="0.5" Width="1.5" />
+  <Class Name="Utilities" Collapsed="true">
+    <Position X="29.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAA=</HashCode>
       <FileName>Assets\Scripts\Utilities.cs</FileName>
@@ -214,7 +214,7 @@
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="TimerFinishedEventHandler" Collapsed="true">
-    <Position X="26" Y="0.5" Width="1.5" />
+    <Position X="29.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>

@@ -75,7 +75,10 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected abstract void Update();
+    protected virtual void Update()
+    {
+        character.UpdateChar();
+    }
 
     #endregion
 }

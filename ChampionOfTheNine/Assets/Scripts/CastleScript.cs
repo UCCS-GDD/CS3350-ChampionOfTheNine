@@ -9,7 +9,8 @@ public class CastleScript : DamagableObjectScript
 {
     #region Fields
 
-
+    [SerializeField]Sprite destroyedSprite;
+    SpriteRenderer spriteRenderer;
 
     #endregion
 
@@ -29,6 +30,7 @@ public class CastleScript : DamagableObjectScript
         maxHealth = Constants.CASTLE_HEALTH;
         hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_HIT_SND);
         deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_DEATH_SND);
+        spriteRenderer = GetComponent<SpriteRenderer>();
         base.Start();
     }
 
@@ -47,7 +49,7 @@ public class CastleScript : DamagableObjectScript
     /// </summary>
     protected override void Death()
     {
-        AudioSource.PlayClipAtPoint(deathSound, transform.position);
-        Destroy(gameObject);
+        Utilities.PlaySoundPitched(audioSource, deathSound);
+        spriteRenderer.sprite = destroyedSprite;
     }
 }

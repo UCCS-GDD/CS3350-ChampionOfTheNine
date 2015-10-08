@@ -115,18 +115,17 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected override void Update()
+    public override void UpdateChar()
     {
-        base.Update();
+        base.UpdateChar();
 
         // Updates energy
         if (Energy < maxEnergy)
         { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
 
-        // Simple rangers don't use any of these - change if we give more arrows to AI
-        if (!simple)
-        {
-            // Updates timers
+        try 
+	    {	        
+		    // Updates timers
             pierceShootCD.Update();
             pierceAbilityCD.Update();
             pierceShootWindow.Update();
@@ -140,7 +139,8 @@ public class RangerScript : CharacterScript
             boostCDBar.fillAmount = 1 - (boostCD.ElapsedSeconds / boostCD.TotalSeconds);
             boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
             pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
-        }
+	    }
+	    catch (System.NullReferenceException) { }
     }
 
     /// <summary>

@@ -47,7 +47,6 @@ public abstract class AIScript : CharacterControllerScript
     protected override void Start()
     {
         base.Start();
-        character.simple = true;
         InvokeRepeating("FindTarget", Constants.AI_SCAN_DELAY, Constants.AI_SCAN_DELAY);
     }
 
@@ -56,6 +55,8 @@ public abstract class AIScript : CharacterControllerScript
     /// </summary>
     protected override void Update()
     {
+        base.Update();
+
         // Finds a new target if it doesn't have one
         if (target == null)
         { FindTarget(); }

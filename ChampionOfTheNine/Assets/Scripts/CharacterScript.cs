@@ -13,6 +13,7 @@ public abstract class CharacterScript : DamagableObjectScript
     #region Fields
 
     [SerializeField]protected Transform fireLocation;
+    [SerializeField]protected AudioSource walkAudio;
     [SerializeField]Image energyBar;
     [SerializeField]Image[] gcdBars;
     [SerializeField]Transform groundCheck;
@@ -35,8 +36,6 @@ public abstract class CharacterScript : DamagableObjectScript
     protected AudioClip secondaryAbilitySound;
     protected AudioClip powerAbilitySound;
     protected AudioClip specialAbilitySound;
-
-    public bool simple = false;  // Whether or not the character uses simplified functionality
 
     #endregion
 
@@ -78,6 +77,42 @@ public abstract class CharacterScript : DamagableObjectScript
 
     #endregion
 
+    #region Public Methods
+
+    /// <summary>
+    /// Updates the character; not called on normal update cycle, called by controller
+    /// </summary>
+    public virtual void UpdateChar()
+    {
+        if (gcTimer.IsRunning)
+        {
+            gcTimer.Update();
+            foreach (Image bar in gcdBars)
+            { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
+        }
+        animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
+
+        // Set jump animation/play sounds
+        if (Grounded)
+        {
+            if (!animator.GetBool("Grounded"))
+            {
+                animator.SetBool("Grounded", true);
+                Utilities.PlaySoundPitched(audioSource, landSound);
+            }
+        }
+        else
+        {
+            if (animator.GetBool("Grounded"))
+            {
+                animator.SetBool("Grounded", false);
+                Utilities.PlaySoundPitched(audioSource, jumpSound);
+            }
+        }
+    }
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>
@@ -89,7 +124,7 @@ public abstract class CharacterScript : DamagableObjectScript
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource.clip = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_WALK_SND);
+        walkAudio.clip = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_WALK_SND);
         hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_HIT_SND);
         deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_DEATH_SND);
         jumpSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_JUMP_SND);
@@ -108,13 +143,10 @@ public abstract class CharacterScript : DamagableObjectScript
     protected virtual void Move(float input)
     {
         // Plays/stops sound
-        if (Mathf.Abs(rbody.velocity.x) > 0)
-        {
-            if (input == 0 && audioSource.isPlaying)
-            { audioSource.Stop(); }
-            else if (!audioSource.isPlaying)
-            { audioSource.Play(); }
-        }
+        if (Mathf.Abs(rbody.velocity.x) > 0 && !walkAudio.isPlaying)
+        { walkAudio.Play(); }
+        else if (rbody.velocity.x == 0 && walkAudio.isPlaying)
+        { walkAudio.Stop(); }
 
         // Handles horizontal movement
         float movement = input * moveSpeed;
@@ -146,38 +178,6 @@ public abstract class CharacterScript : DamagableObjectScript
         }
 
         arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
-    }
-
-    /// <summary>
-    /// Updates the character
-    /// </summary>
-    protected virtual void Update()
-    {
-        if (gcTimer.IsRunning)
-        {
-            gcTimer.Update();
-            foreach (Image bar in gcdBars)
-            { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
-        }
-        animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
-
-        // Set jump animation/play sounds
-        if (Grounded)
-        {
-            if (!animator.GetBool("Grounded"))
-            {
-                animator.SetBool("Grounded", true);
-                Utilities.PlaySoundPitched(audioSource, landSound);
-            }
-        }
-        else
-        {
-            if (animator.GetBool("Grounded"))
-            {
-                animator.SetBool("Grounded", false);
-                Utilities.PlaySoundPitched(audioSource, jumpSound);
-            }
-        }
     }
 
     /// <summary>

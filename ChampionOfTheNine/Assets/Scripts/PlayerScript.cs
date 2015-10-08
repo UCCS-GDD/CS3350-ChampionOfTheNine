@@ -37,6 +37,8 @@ public class PlayerScript : CharacterControllerScript
     /// </summary>
     protected override void Update()
     {
+        base.Update();
+
         // Handles horizontal movement
         movement(Input.GetAxis("Horizontal"));
 

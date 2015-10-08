@@ -24,8 +24,9 @@ public static class Constants
     public const string CHAR_WALK_SND = "Walking";
 
     // Ranger class
-    public const float RANGER_AI_RANGE = 8;
+    public const float RANGER_AI_RANGE = 9;
     public const float RANGER_AI_ANGLE_RANGE = 15;
+    public const int RANGER_AI_SHOT_THRESHOLD = 4;
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
@@ -63,7 +64,7 @@ public static class Constants
     public const float EXP_ARROW_CD = 1.2f;
 
     // Castles
-    public const float CASTLE_HEALTH = 300;
+    public const float CASTLE_HEALTH = 800;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
 
@@ -78,7 +79,7 @@ public static class Constants
 	public const float HEIGHT_DIFFERENCE_OFFSET = 0.4f;
 	public const float PARALLAX_SCALE = 0.01f;
     public const int PLATFORM_LENGTH = 10;
-    public const int MAP_LENGTH = 100;
+    public const int MAP_LENGTH = 80;
     public const int BASE_LEVEL = 5;
     public const int SOIL_HEIGHT = 8;
 }
