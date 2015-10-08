@@ -45,7 +45,7 @@ public class PlayerScript : CharacterControllerScript
         { jumpAbility(); }
 
         // Handles arm movement
-        Vector2 mousePosition = Constants.MousePosition;
+        Vector2 mousePosition = Utilities.MousePosition;
         float armAngle = Mathf.Asin((mousePosition.y - character.Arm.transform.position.y) / Vector2.Distance(mousePosition, character.Arm.transform.position));
         if (mousePosition.x - character.Arm.transform.position.x < 0)
         { armAngle = Mathf.PI - armAngle; }

@@ -10,6 +10,7 @@ public abstract class ProjScript : MonoBehaviour
 {
     #region Fields
 
+    [SerializeField]protected AudioClip hitSound;
     protected float damage;
     protected float moveSpeed;
     protected HitType hit = HitType.None;

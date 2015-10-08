@@ -27,6 +27,8 @@ public class CastleScript : DamagableObjectScript
     protected override void Start()
     {
         maxHealth = Constants.CASTLE_HEALTH;
+        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_HIT_SND);
+        deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_DEATH_SND);
         base.Start();
     }
 
@@ -45,6 +47,7 @@ public class CastleScript : DamagableObjectScript
     /// </summary>
     protected override void Death()
     {
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
         Destroy(gameObject);
     }
 }

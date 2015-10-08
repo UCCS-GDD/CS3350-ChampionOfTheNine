@@ -7,12 +7,16 @@ using System.Collections.Generic;
 /// Abstract parent class for scripts for objects that can be damaged
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AudioSource))]
 public abstract class DamagableObjectScript : MonoBehaviour
 {
     #region Fields
 
     [SerializeField]Image healthBar;
-    
+
+    protected AudioSource audioSource;
+    protected AudioClip hitSound;
+    protected AudioClip deathSound;
     protected float maxHealth;
     float health;
     
@@ -46,8 +50,9 @@ public abstract class DamagableObjectScript : MonoBehaviour
     /// <param name="amount">the amount</param>
     public virtual void Damage(float amount)
     {
-        // Subtracts from the health
+        // Subtracts from the health and plays sound
         Health -= amount;
+        Utilities.PlaySoundPitched(audioSource, hitSound);
 
         // Checks for death
         if (health <= 0)
@@ -64,6 +69,7 @@ public abstract class DamagableObjectScript : MonoBehaviour
     protected virtual void Start()
     {
         Health = maxHealth;
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>

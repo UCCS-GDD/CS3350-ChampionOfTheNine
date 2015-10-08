@@ -84,6 +84,12 @@ public class RangerScript : CharacterScript
         expArrowCD = new Timer(Constants.EXP_ARROW_CD);
         boostTimer.Register(HandleBoostTimerFinishing);
         pierceShootWindow.Register(HandlePierceWindowFinishing);
+
+        // Loads sounds
+        mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SHOOT_SND);
+        secondaryAbilitySound = mainAbilitySound;
+        powerAbilitySound = mainAbilitySound;
+        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SPECIAL_SND);
         base.Start();
     }
 
@@ -99,6 +105,7 @@ public class RangerScript : CharacterScript
         ProjScript projectile = base.FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
         {
+            Utilities.PlaySoundPitched(audioSource, mainAbilitySound);
             projectile.ChangeDamage(arrowDamageMult);
             projectile.ChangeSpeed(arrowSpeedMult);
         }
@@ -189,6 +196,7 @@ public class RangerScript : CharacterScript
             arrowDamageMult = Constants.RANGER_BOOST_ARROW_DAMAGE_MULT;
             energyRegenMult = Constants.RANGER_BOOST_ENERGY_REGEN_MULT;
 
+            audioSource.PlayOneShot(specialAbilitySound);
             boostTimer.Start();
             boostCD.Start();
         }

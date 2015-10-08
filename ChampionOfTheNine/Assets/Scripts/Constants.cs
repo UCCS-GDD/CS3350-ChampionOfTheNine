@@ -12,6 +12,16 @@ public static class Constants
     public const string PLAYER_TAG = "Player";
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
+    public const string SND_FOLDER = "Sounds/";
+    public const float AI_SCAN_DELAY = 5;
+    public const float PITCH_CHANGE = 0.2f;
+
+    // Character sounds
+    public const string CHAR_HIT_SND = "hurt";
+    public const string CHAR_DEATH_SND = "hurt";
+    public const string CHAR_JUMP_SND = "jump";
+    public const string CHAR_LAND_SND = "land";
+    public const string CHAR_WALK_SND = "Walking";
 
     // Ranger class
     public const float RANGER_AI_RANGE = 8;
@@ -30,6 +40,8 @@ public static class Constants
     public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.2f;
     public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
     public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
+    public const string RANGER_SHOOT_SND = "arrowShoot";
+    public const string RANGER_SPECIAL_SND = "boost";
 
     // Basic arrow
     public const float BASIC_ARROW_SPEED = 13;
@@ -50,9 +62,10 @@ public static class Constants
     public const float EXP_ARROW_COST = 30;
     public const float EXP_ARROW_CD = 1.2f;
 
-    public const float CASTLE_HEALTH = 1000;
-
-    public const float AI_SCAN_DELAY = 5;
+    // Castles
+    public const float CASTLE_HEALTH = 300;
+    public const string CASTLE_HIT_SND = "hit";
+    public const string CASTLE_DEATH_SND = "explosion";
 
 	// Dynamic map constants
 	public const float CLOUD_DENSITY = 0.5f;
@@ -68,10 +81,4 @@ public static class Constants
     public const int MAP_LENGTH = 100;
     public const int BASE_LEVEL = 5;
     public const int SOIL_HEIGHT = 8;
-
-    /// <summary>
-    /// Gets the mouse position in world space
-    /// </summary>
-    public static Vector2 MousePosition
-    { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
 }

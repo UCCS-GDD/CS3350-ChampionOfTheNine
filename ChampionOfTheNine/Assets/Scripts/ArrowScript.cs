@@ -28,7 +28,10 @@ public class ArrowScript : ProjScript
     {
         base.OnTriggerEnter2D(other);
         if (hit != HitType.None)
-        { Destroy(gameObject); }
+        {
+            AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            Destroy(gameObject); 
+        }
     }
 
     #endregion

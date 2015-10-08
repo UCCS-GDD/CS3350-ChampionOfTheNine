@@ -28,7 +28,10 @@ public class PierceArrowScript : ProjScript
     {
         base.OnTriggerEnter2D(other);
         if (hit == HitType.Ground)
-        { Destroy(gameObject); }
+        {
+            AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            Destroy(gameObject); 
+        }
     }
 
     #endregion

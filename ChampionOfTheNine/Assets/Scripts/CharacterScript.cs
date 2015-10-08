@@ -7,7 +7,6 @@ using System.Collections.Generic;
 /// Abstract parent class for character scripts
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(CharacterControllerScript))]
 public abstract class CharacterScript : DamagableObjectScript
 {
@@ -20,7 +19,6 @@ public abstract class CharacterScript : DamagableObjectScript
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
-    protected AudioSource audioSource;
     protected Timer gcTimer;
     protected float maxEnergy;
     protected float moveSpeed;
@@ -30,6 +28,13 @@ public abstract class CharacterScript : DamagableObjectScript
 
     Rigidbody2D rbody;
     Animator animator;
+
+    protected AudioClip jumpSound;
+    protected AudioClip landSound;
+    protected AudioClip mainAbilitySound;
+    protected AudioClip secondaryAbilitySound;
+    protected AudioClip powerAbilitySound;
+    protected AudioClip specialAbilitySound;
 
     public bool simple = false;  // Whether or not the character uses simplified functionality
 
@@ -82,9 +87,13 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         base.Start();
         Energy = maxEnergy;
-        audioSource = GetComponent<AudioSource>();
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource.clip = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_WALK_SND);
+        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_HIT_SND);
+        deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_DEATH_SND);
+        jumpSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_JUMP_SND);
+        landSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_LAND_SND);
 
         // Registers for character controller input
         CharacterControllerScript controller = GetComponent<CharacterControllerScript>();
@@ -98,6 +107,15 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <param name="input">the movement input</param>
     protected virtual void Move(float input)
     {
+        // Plays/stops sound
+        if (Mathf.Abs(rbody.velocity.x) > 0)
+        {
+            if (input == 0 && audioSource.isPlaying)
+            { audioSource.Stop(); }
+            else if (!audioSource.isPlaying)
+            { audioSource.Play(); }
+        }
+
         // Handles horizontal movement
         float movement = input * moveSpeed;
         rbody.velocity = new Vector2(movement, rbody.velocity.y);
@@ -142,7 +160,24 @@ public abstract class CharacterScript : DamagableObjectScript
             { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
         }
         animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
-        animator.SetBool("Grounded", Grounded);
+
+        // Set jump animation/play sounds
+        if (Grounded)
+        {
+            if (!animator.GetBool("Grounded"))
+            {
+                animator.SetBool("Grounded", true);
+                Utilities.PlaySoundPitched(audioSource, landSound);
+            }
+        }
+        else
+        {
+            if (animator.GetBool("Grounded"))
+            {
+                animator.SetBool("Grounded", false);
+                Utilities.PlaySoundPitched(audioSource, jumpSound);
+            }
+        }
     }
 
     /// <summary>
@@ -177,6 +212,7 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     protected override void Death()
     {
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
         GetComponent<CharacterControllerScript>().Death();
     }
 
