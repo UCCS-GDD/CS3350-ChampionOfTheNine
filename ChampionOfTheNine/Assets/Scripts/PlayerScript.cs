@@ -8,6 +8,15 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerScript : CharacterControllerScript
 {
+    #region Fields
+
+    Timer darknessTimer;
+    [SerializeField]Image darkness;
+    [SerializeField]GameObject victoryText;
+    [SerializeField]GameObject defeatText;
+
+    #endregion
+
     #region Properties
 
     /// <summary>
@@ -28,9 +37,29 @@ public class PlayerScript : CharacterControllerScript
         
     }
 
+    /// <summary>
+    /// Handles the player winning
+    /// </summary>
+    public static void PlayerWon()
+    {
+        PlayerScript pScript = GameObject.Find("Player").GetComponent<PlayerScript>();
+        pScript.victoryText.SetActive(true);
+        pScript.darknessTimer.Start();
+    }
+
     #endregion
 
     #region Protected Methods
+
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+        darknessTimer = new Timer(Constants.DARKNESS_TIMER);
+        darknessTimer.Register(HandleDarknessTimerFinishing);
+    }
 
     /// <summary>
     /// Update is called once per frame
@@ -65,6 +94,24 @@ public class PlayerScript : CharacterControllerScript
 
         // Moves the camera
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
+
+        if (darknessTimer.IsRunning)
+        {
+            darknessTimer.Update();
+            darkness.color = new Color(0, 0, 0, darknessTimer.ElapsedSeconds / darknessTimer.TotalSeconds);
+        }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Handles the darkness timer finishing
+    /// </summary>
+    private void HandleDarknessTimerFinishing()
+    {
+        Application.LoadLevel("MainMenu");
     }
 
     #endregion
