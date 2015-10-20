@@ -13,6 +13,7 @@ public class DynamicLevelGeneration : MonoBehaviour
 	int[] levels = new int[Constants.MAP_LENGTH];
 	float elevationWeight = 1;
 	float heightDifferenceWeight = 1;
+	float timeOfDay = 0; // 0 - 1 values
 	
 	/// <summary>
 	/// Start is called once on object creation
@@ -22,10 +23,17 @@ public class DynamicLevelGeneration : MonoBehaviour
 		//heightDifferenceWeight = Random.Range (0.00f, 1.2f);
 		elevationWeight = Constants.ELEVATION_CHANGE_WEIGHT + Random.Range (-Constants.ELEVATION_CHANGE_OFFSET, Constants.ELEVATION_CHANGE_OFFSET);;
 		heightDifferenceWeight = Constants.HEIGHT_DIFFERENCE_WEIGHT + Random.Range (-Constants.HEIGHT_DIFFERENCE_OFFSET, Constants.HEIGHT_DIFFERENCE_OFFSET);
+		timeOfDay = Random.Range (0.00f, .75f);
+		if (timeOfDay < .35) {
+			timeOfDay = 0;
+		}
+
+		GameObject.Find ("Darkness").GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, timeOfDay);
 
 		if (debugMode) {
 			Debug.Log ("Elevation weight: " + elevationWeight);
 			Debug.Log ("Height Difference Weight: " + heightDifferenceWeight);
+			Debug.Log ("Time of day: " + timeOfDay);
 		}
 
 		//creates "platform" for the castle on the left
