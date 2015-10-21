@@ -13,6 +13,7 @@ public static class Constants
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
     public const string SND_FOLDER = "Sounds/";
+    public const string PREFAB_FOLDER = "Prefabs/";
     public const float AI_SCAN_DELAY = 5;
     public const float PITCH_CHANGE = 0.2f;
     public const float DARKNESS_TIMER = 3f;
@@ -83,4 +84,15 @@ public static class Constants
     public const int MAP_LENGTH = 80;
     public const int BASE_LEVEL = 5;
     public const int SOIL_HEIGHT = 9;
+    public const string GROUND_PREFAB = "ground";
+    public const string GROUND_UNDER_PREFAB = "groundUnder";
+
+    // Scene constants
+    public const string LEVEL_SCENE = "DynamicLevel";
+    public const string MAP_SCENE = "Map";
+    public const string MAIN_MENU_SCENE = "MainMenu";
+
+    // Animator constants
+    public const string GROUNDED_FLAG = "Grounded";
+    public const string XVELOCTIY_FLAG = "XVelocity";
 }

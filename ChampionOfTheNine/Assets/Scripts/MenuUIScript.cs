@@ -20,7 +20,7 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        Application.LoadLevel("DynamicLevel");
+        Application.LoadLevel(Constants.MAP_SCENE);
     }
 
     /// <summary>

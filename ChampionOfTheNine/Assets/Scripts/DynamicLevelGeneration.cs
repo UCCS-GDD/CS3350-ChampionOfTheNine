@@ -91,16 +91,18 @@ public class DynamicLevelGeneration : MonoBehaviour
 		Transform groundParent = GameObject.Find ("Ground").transform;
 
 		//draws each of the top blocks
+        GameObject groundPrefab = Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.GROUND_PREFAB);
+        GameObject groundUnderPrefab = Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.GROUND_UNDER_PREFAB);
 		for (int i = 0; i < levels.Length; i++) 
 		{
-			GameObject newObject = Instantiate (Resources.Load ("Prefabs/ground")) as GameObject;
+			GameObject newObject = Instantiate(groundPrefab) as GameObject;
 			newObject.transform.SetParent(groundParent);
 			newObject.transform.position = new Vector2(i, levels[i]);
 
 			//draws the blocks under the top
 			for (int j = 1; j <= Constants.SOIL_HEIGHT; j++)
 			{
-				GameObject soil = Instantiate (Resources.Load ("Prefabs/groundUnder")) as GameObject;
+                GameObject soil = Instantiate(groundUnderPrefab) as GameObject;
 				soil.transform.SetParent(groundParent);
 				soil.transform.position = new Vector2(i, levels[i] - j);
 			}

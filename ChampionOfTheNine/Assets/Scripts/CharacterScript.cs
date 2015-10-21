@@ -90,22 +90,22 @@ public abstract class CharacterScript : DamagableObjectScript
             foreach (Image bar in gcdBars)
             { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
         }
-        animator.SetFloat("XVelocity", Mathf.Abs(rbody.velocity.x));
+        animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
 
         // Set jump animation/play sounds
         if (Grounded)
         {
-            if (!animator.GetBool("Grounded"))
+            if (!animator.GetBool(Constants.GROUNDED_FLAG))
             {
-                animator.SetBool("Grounded", true);
+                animator.SetBool(Constants.GROUNDED_FLAG, true);
                 Utilities.PlaySoundPitched(audioSource, landSound);
             }
         }
         else
         {
-            if (animator.GetBool("Grounded"))
+            if (animator.GetBool(Constants.GROUNDED_FLAG))
             {
-                animator.SetBool("Grounded", false);
+                animator.SetBool(Constants.GROUNDED_FLAG, false);
                 Utilities.PlaySoundPitched(audioSource, jumpSound);
             }
         }
