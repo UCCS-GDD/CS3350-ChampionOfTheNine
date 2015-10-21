@@ -23,6 +23,14 @@ public class MenuUIScript : MonoBehaviour
         Application.LoadLevel("DynamicLevel");
     }
 
+    /// <summary>
+    /// Handles the quit button being pressed
+    /// </summary>
+    public void QuitButtonPressed()
+    {
+        Application.Quit();
+    }
+
     #endregion
 
     #region Private Methods
