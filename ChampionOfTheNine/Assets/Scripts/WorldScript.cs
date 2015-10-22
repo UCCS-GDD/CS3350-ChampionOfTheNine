@@ -6,6 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls the in-level world
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class WorldScript : MonoBehaviour
 {
     #region Fields
@@ -26,15 +27,12 @@ public class WorldScript : MonoBehaviour
 	//Time of day stuff
     Dictionary<SkyStateType, SkyState> skyStates;
     SkyStateType currSkyState;
+	AudioSource BGM;
 	[SerializeField]GameObject starrySky;
 	[SerializeField]SpriteRenderer sky;
     [SerializeField]SpriteRenderer darkness;
-	bool changeToDay = false, changeToNight = false;
-	AudioSource BGM;
-	AudioClip daySound;
-	AudioClip nightSound;
-	bool changeMusicToDay = false;
-	bool runOnce = true;
+	[SerializeField]AudioClip daySound;
+	[SerializeField]AudioClip nightSound;
 
     Timer skyTimer;
 
@@ -54,25 +52,27 @@ public class WorldScript : MonoBehaviour
         player = GameObject.Find(Constants.PLAYER_TAG);
         playerLocation = player.transform.position;
 
+        // Sets up the sky state dictionary
         currSkyState = SkyStateType.Day;
         skyStates = new Dictionary<SkyStateType, SkyState>();
-        skyStates.Add(SkyStateType.Dawn, new SkyState(SkyStateType.DawnToDay, Constants.ORANGE_SKY_COLOR, Constants.ORANGE_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.DawnToDay, new SkyState(SkyStateType.Day, Constants.ORANGE_SKY_COLOR, Constants.DAY_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.FADE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.DAY_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.Day, new SkyState(SkyStateType.DayToDusk, Constants.DAY_SKY_COLOR, Constants.DAY_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.DAY_TIME_PCT, Constants.DAY_DARKNESS_COLOR, Constants.DAY_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.DayToDusk, new SkyState(SkyStateType.Dusk, Constants.DAY_SKY_COLOR, Constants.ORANGE_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.FADE_TIME_PCT, Constants.DAY_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.Dusk, new SkyState(SkyStateType.DuskToNight, Constants.ORANGE_SKY_COLOR, Constants.ORANGE_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.DuskToNight, new SkyState(SkyStateType.Night, Constants.ORANGE_SKY_COLOR, Constants.NIGHT_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.NIGHT_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.Night, new SkyState(SkyStateType.NightToDawn, Constants.NIGHT_SKY_COLOR, Constants.NIGHT_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.NIGHT_TIME_PCT, Constants.NIGHT_DARKNESS_COLOR, Constants.NIGHT_DARKNESS_COLOR));
-        skyStates.Add(SkyStateType.NightToDawn, new SkyState(SkyStateType.Dawn, Constants.NIGHT_SKY_COLOR, Constants.ORANGE_SKY_COLOR,
-            Constants.CYCLE_TIME * Constants.FADE_TIME_PCT, Constants.NIGHT_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
+        skyStates.Add(SkyStateType.Dawn, new SkyState(SkyStateType.DawnToDay, Constants.ORANGE_SKY_COLOR, Constants.ORANGE_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR, Constants.BGM_MAX_VOLUME, 0, daySound));
+        skyStates.Add(SkyStateType.DawnToDay, new SkyState(SkyStateType.Day, Constants.ORANGE_SKY_COLOR, Constants.DAY_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.FADE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.DAY_DARKNESS_COLOR, 0, Constants.BGM_MAX_VOLUME));
+        skyStates.Add(SkyStateType.Day, new SkyState(SkyStateType.DayToDusk, Constants.DAY_SKY_COLOR, Constants.DAY_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.DAY_TIME_PCT, Constants.DAY_DARKNESS_COLOR, Constants.DAY_DARKNESS_COLOR));
+        skyStates.Add(SkyStateType.DayToDusk, new SkyState(SkyStateType.Dusk, Constants.DAY_SKY_COLOR, Constants.ORANGE_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.FADE_TIME_PCT, Constants.DAY_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
+        skyStates.Add(SkyStateType.Dusk, new SkyState(SkyStateType.DuskToNight, Constants.ORANGE_SKY_COLOR, Constants.ORANGE_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR, Constants.BGM_MAX_VOLUME, 0, nightSound));
+        skyStates.Add(SkyStateType.DuskToNight, new SkyState(SkyStateType.Night, Constants.ORANGE_SKY_COLOR, Constants.NIGHT_SKY_COLOR, Constants.CYCLE_TIME *
+            Constants.ORANGE_TIME_PCT, Constants.ORANGE_DARKNESS_COLOR, Constants.NIGHT_DARKNESS_COLOR, 0, Constants.BGM_MAX_VOLUME));
+        skyStates.Add(SkyStateType.Night, new SkyState(SkyStateType.NightToDawn, Constants.NIGHT_SKY_COLOR, Constants.NIGHT_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.NIGHT_TIME_PCT, Constants.NIGHT_DARKNESS_COLOR, Constants.NIGHT_DARKNESS_COLOR));
+        skyStates.Add(SkyStateType.NightToDawn, new SkyState(SkyStateType.Dawn, Constants.NIGHT_SKY_COLOR, Constants.ORANGE_SKY_COLOR, Constants.CYCLE_TIME * 
+            Constants.FADE_TIME_PCT, Constants.NIGHT_DARKNESS_COLOR, Constants.ORANGE_DARKNESS_COLOR));
 
+        // Starts the sky timer
         skyTimer = new Timer(skyStates[currSkyState].TimeInState);
         skyTimer.Register(SkyTimerFinished);
         skyTimer.Start();
@@ -80,10 +80,8 @@ public class WorldScript : MonoBehaviour
         parallaxBackgrounds = GameObject.FindGameObjectsWithTag(Constants.PARALLAX_BACKGROUND_TAG);
         starrySky.transform.rotation = Quaternion.Euler(0, 0, Constants.SKY_START_ROT);
         
-        BGM = GameObject.Find("_BGMsound").GetComponent<AudioSource>();
+        BGM = GetComponent<AudioSource>();
         BGM.volume = Constants.BGM_MAX_VOLUME;
-        daySound = Resources.Load<AudioClip>("Sounds/LordOfTheLand");
-        nightSound = Resources.Load<AudioClip>("Sounds/crickets");
 
         elevationWeight = Constants.ELEVATION_CHANGE_WEIGHT + Random.Range(-Constants.ELEVATION_CHANGE_OFFSET, Constants.ELEVATION_CHANGE_OFFSET); ;
         heightDifferenceWeight = Constants.HEIGHT_DIFFERENCE_WEIGHT + Random.Range(-Constants.HEIGHT_DIFFERENCE_OFFSET, Constants.HEIGHT_DIFFERENCE_OFFSET);
@@ -123,112 +121,10 @@ public class WorldScript : MonoBehaviour
         // Updates the sky
         skyTimer.Update();
         starrySky.transform.Rotate(0, 0, -360 * (Time.deltaTime / Constants.CYCLE_TIME));
-        darkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, skyTimer.ElapsedSeconds / skyTimer.TotalSeconds);
-        sky.color = Color.Lerp(skyStates[currSkyState].StartSkyColor, skyStates[currSkyState].EndSkyColor, skyTimer.ElapsedSeconds / skyTimer.TotalSeconds);
-
-        ////moves the sunMoon back and forth and changes direction if it reaches distance to travel from middle
-        //if (sunMoon.GetComponent<SpriteRenderer>().sprite == sun)
-        //{
-        //    starrySky.transform.Rotate(0, 0, -Constants.STAR_ROTATION_SPEED * Time.deltaTime);
-        //    //sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((cameraHalfWidth * Time.deltaTime) / Constants.QUARTER_CYCLE), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
-        //    if (sunMoon.transform.localPosition.x > cameraHalfWidth)
-        //    {
-        //        sunMoon.GetComponent<SpriteRenderer>().sprite = moon;
-        //    }
-        //}
-        //else if (sunMoon.GetComponent<SpriteRenderer>().sprite == moon)
-        //{
-        //    starrySky.transform.Rotate(0, 0, Constants.STAR_ROTATION_SPEED * Time.deltaTime);
-        //    //sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((cameraHalfWidth * Time.deltaTime) / Constants.QUARTER_CYCLE), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
-        //    if (sunMoon.transform.localPosition.x < -cameraHalfWidth)
-        //    {
-        //        sunMoon.GetComponent<SpriteRenderer>().sprite = sun;
-        //    }
-        //}
-
-        ////Check to see if we should start changing to day or night
-        //if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun && sunMoon.transform.localPosition.x > cameraHalfWidth - Constants.DISTANCE_TO_START_CHANGE) {
-        //    changeToNight = true;
-        //} else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon && sunMoon.transform.localPosition.x < -cameraHalfWidth + Constants.DISTANCE_TO_START_CHANGE) {
-        //    changeToDay = true;
-        //}
-
-        ////if we should change, change accordingly.
-        //if (changeToDay) {
-        //    if (runOnce)
-        //    {
-        //        runOnce = false;
-        //        changeMusicToDay = true;
-        //        InvokeRepeating ("ChangeMusic", 0, .1f);
-        //    }
-        //    if (BGM.clip == nightSound)
-        //    {
-        //        BGM.volume -= Constants.BGM_MAX_VOLUME / 5;
-        //    }
-        //    else if (BGM.clip == daySound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 5))
-        //    {
-        //        BGM.volume += Constants.BGM_MAX_VOLUME / 5;
-        //    }
-        //    if (BGM.volume == 0)
-        //    {
-        //        BGM.clip = daySound;
-        //    }
-
-        //    if (darkness.GetComponent<SpriteRenderer>().color.a > Constants.MIN_DARKNESS_ALPHA + (1 / Constants.QUARTER_CYCLE))
-        //    {
-        //        darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, darkness.GetComponent<SpriteRenderer>().color.a - (1 / Constants.QUARTER_CYCLE));
-        //    } else
-        //    {
-        //        darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, Constants.MIN_DARKNESS_ALPHA);
-        //    }
-        //    if (daySky.GetComponent<SpriteRenderer>().color.a < (1 - (1 / Constants.QUARTER_CYCLE)))
-        //    {
-        //        daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, daySky.GetComponent<SpriteRenderer>().color.a + (1 / Constants.QUARTER_CYCLE));
-        //    }
-        //    else
-        //    {
-        //        daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-        //        changeToDay = false;
-        //        runOnce = true;
-        //    }
-        //} else if (changeToNight) {
-        //    if (runOnce)
-        //    {
-        //        runOnce = false;
-        //        changeMusicToDay = false;
-        //        InvokeRepeating ("ChangeMusic", 0, .1f);
-        //    }
-        //    if (BGM.clip == daySound)
-        //    {
-        //        BGM.volume -= Constants.BGM_MAX_VOLUME / 5;
-        //    }
-        //    else if (BGM.clip == nightSound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 5))
-        //    {
-        //        BGM.volume += Constants.BGM_MAX_VOLUME / 5;
-        //    }
-        //    if (BGM.volume == 0)
-        //    {
-        //        BGM.clip = nightSound;
-        //    }
-
-        //    //if (darkness.GetComponent<SpriteRenderer>().color.a < Constants.MAX_DARKNESS_ALPHA - (1 / Constants.QUARTER_CYCLE))
-        //    //{
-        //    //    darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, darkness.GetComponent<SpriteRenderer>().color.a + (1 / Constants.QUARTER_CYCLE));
-        //    //} else
-        //    //{
-        //    //    darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, Constants.MAX_DARKNESS_ALPHA);
-        //    //}
-        //    //if (daySky.GetComponent<SpriteRenderer>().color.a > (1 / Constants.QUARTER_CYCLE))
-        //    //{
-        //    //    daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, daySky.GetComponent<SpriteRenderer>().color.a - (1 / Constants.QUARTER_CYCLE));
-        //    //}
-        //    else
-        //    {
-        //        daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-        //        changeToNight = false;
-        //        runOnce = true;
-        //    }
-        //}
+        float timePct = skyTimer.ElapsedSeconds / skyTimer.TotalSeconds;
+        darkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, timePct);
+        sky.color = Color.Lerp(skyStates[currSkyState].StartSkyColor, skyStates[currSkyState].EndSkyColor, timePct);
+        BGM.volume = Mathf.Lerp(skyStates[currSkyState].StartVolume, skyStates[currSkyState].EndVolume, timePct);
     }
 
     /// <summary>
@@ -287,55 +183,6 @@ public class WorldScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Changes the background music
-    /// </summary>
-    private void ChangeMusic()
-    {
-        if (changeMusicToDay)
-        {
-            if (BGM.clip == nightSound)
-            {
-                BGM.volume -= Constants.BGM_MAX_VOLUME / 20;
-            }
-            else if (BGM.clip == daySound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 20))
-            {
-                BGM.volume += Constants.BGM_MAX_VOLUME / 20;
-            }
-            else
-            {
-                CancelInvoke("ChangeMusic");
-            }
-            if (BGM.volume <= .05f)
-            {
-                BGM.Stop();
-                BGM.clip = daySound;
-                BGM.Play();
-            }
-        }
-        else
-        {
-            if (BGM.clip == daySound)
-            {
-                BGM.volume -= Constants.BGM_MAX_VOLUME / 20;
-            }
-            else if (BGM.clip == nightSound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 20))
-            {
-                BGM.volume += Constants.BGM_MAX_VOLUME / 20;
-            }
-            else
-            {
-                CancelInvoke("ChangeMusic");
-            }
-            if (BGM.volume <= .05f)
-            {
-                BGM.Stop();
-                BGM.clip = nightSound;
-                BGM.Play();
-            }
-        }
-    }
-
-    /// <summary>
     /// Gets the next height value based on the previous height, the weight, and randomness
     /// </summary>
     /// <param name="previous">the previous height</param>
@@ -354,6 +201,15 @@ public class WorldScript : MonoBehaviour
     /// </summary>
     private void SkyTimerFinished()
     {
+        // Changes background sound if needed
+        if (skyStates[currSkyState].EndAudio != null)
+        {
+            BGM.Stop();
+            BGM.clip = skyStates[currSkyState].EndAudio;
+            BGM.Play();
+        }
+
+        // Switches state and restarts timer
         currSkyState = skyStates[currSkyState].NextState;
         skyTimer.TotalSeconds = skyStates[currSkyState].TimeInState;
         skyTimer.Start();

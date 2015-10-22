@@ -95,19 +95,19 @@ public static class Constants
 	// Time of Day Constants
     // Cycle time is the time in seconds it takes for a full light/darkness cycle to occur
     // Percentages need to add to 0.5 with x2 orange times and x4 fade times
-	public const float CYCLE_TIME = 30; 
+	public const float CYCLE_TIME = 90; 
     public const float DAY_TIME_PCT = 0.139f;
     public const float ORANGE_TIME_PCT = 0.025f;
     public const float FADE_TIME_PCT = 0.02f;
     public const float NIGHT_TIME_PCT = 0.5f - DAY_TIME_PCT - (ORANGE_TIME_PCT * 2) - (FADE_TIME_PCT * 4);
     public const float SKY_START_ROT = (DAY_TIME_PCT * 180);
-	public const float BGM_MAX_VOLUME = .6f;
+	public const float BGM_MAX_VOLUME = 0.5f;
     public static Color DAY_SKY_COLOR = new Color(0.23f, 0.71f, 1, 1);
     public static Color ORANGE_SKY_COLOR = new Color(1, 0.55f, 0.14f, 1);
     public static Color NIGHT_SKY_COLOR = new Color(0, 0, 0, 0);
     public static Color DAY_DARKNESS_COLOR = new Color(0, 0, 0, 0);
-    public static Color ORANGE_DARKNESS_COLOR = new Color(0, 0, 0, 0.1f);
-    public static Color NIGHT_DARKNESS_COLOR = new Color(0, 0, 0, 0.6f);
+    public static Color ORANGE_DARKNESS_COLOR = new Color(0, 0, 0, 0.2f);
+    public static Color NIGHT_DARKNESS_COLOR = new Color(0, 0, 0, 0.5f);
 
     // Scene constants
     public const string LEVEL_SCENE = "DynamicLevel";

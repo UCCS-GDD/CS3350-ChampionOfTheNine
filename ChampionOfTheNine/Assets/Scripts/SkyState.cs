@@ -13,9 +13,12 @@ public class SkyState
     SkyStateType nextState;
     Color startSkyColor;
     Color endSkyColor;
-    float timeInState;
     Color startDarkness;
     Color endDarkness;
+    float timeInState;
+    float startVolume;
+    float endVolume;
+    AudioClip endAudio;
 
     #endregion
 
@@ -24,7 +27,8 @@ public class SkyState
     /// <summary>
     /// Constructor
     /// </summary>
-    public SkyState(SkyStateType nextState, Color startSkyColor, Color endSkyColor, float timeInState, Color startDarkness, Color endDarkness)
+    public SkyState(SkyStateType nextState, Color startSkyColor, Color endSkyColor, float timeInState, Color startDarkness, Color endDarkness,
+        float startVolume = Constants.BGM_MAX_VOLUME, float endVolume = Constants.BGM_MAX_VOLUME, AudioClip endAudio = null)
     {
         this.nextState = nextState;
         this.startSkyColor = startSkyColor;
@@ -32,6 +36,9 @@ public class SkyState
         this.timeInState = timeInState;
         this.startDarkness = startDarkness;
         this.endDarkness = endDarkness;
+        this.startVolume = startVolume;
+        this.endVolume = endVolume;
+        this.endAudio = endAudio;
     }
 
     #endregion
@@ -84,6 +91,24 @@ public class SkyState
     public Color EndDarkness
     {
         get { return endDarkness; }
+    }
+
+    public float StartVolume
+    {
+        get { return startVolume; }
+        set { startVolume = value; }
+    }
+
+    public float EndVolume
+    {
+        get { return endVolume; }
+        set { endVolume = value; }
+    }
+
+    public AudioClip EndAudio
+    {
+        get { return endAudio; }
+        set { endAudio = value; }
     }
 
     #endregion
