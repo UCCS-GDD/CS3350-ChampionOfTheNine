@@ -13,27 +13,46 @@ public class DynamicLevelGeneration : MonoBehaviour
 	int[] levels = new int[Constants.MAP_LENGTH];
 	float elevationWeight = 1;
 	float heightDifferenceWeight = 1;
-	float timeOfDay = 0; // 0 - 1 values
+
+	//Time of day stuff
+	GameObject starrySky;
+	GameObject daySky;
+	GameObject sunMoon;
+	GameObject darkness;
+	Sprite sun;
+	Sprite moon;
+	bool changeToDay = false, changeToNight = false;
+	AudioSource BGM;
+	AudioClip daySound;
+	AudioClip nightSound;
+	bool changeMusicToDay = false;
+	bool runOnce = true;
+
+
 	
 	/// <summary>
 	/// Start is called once on object creation
 	/// </summary>
 	void Start () {
-		//elevationWeight = Random.Range (.25f, .50f);
-		//heightDifferenceWeight = Random.Range (0.00f, 1.2f);
+		starrySky = GameObject.Find ("starrySky");
+		daySky = GameObject.Find ("daySky");
+		sunMoon = GameObject.Find ("sunMoon");
+		darkness = GameObject.Find ("darkness");
+		sun = Resources.Load<Sprite> ("Sprites/Level/sun");
+		moon = Resources.Load<Sprite> ("Sprites/Level/moon");
+		BGM = GameObject.Find ("_BGMsound").GetComponent<AudioSource> ();
+		BGM.volume = Constants.BGM_MAX_VOLUME;
+		daySound = Resources.Load<AudioClip> ("Sounds/LordOfTheLand");
+		nightSound = Resources.Load<AudioClip> ("Sounds/crickets");
+		InvokeRepeating ("HandleTimeOfDay", 0, .1f);
+
 		elevationWeight = Constants.ELEVATION_CHANGE_WEIGHT + Random.Range (-Constants.ELEVATION_CHANGE_OFFSET, Constants.ELEVATION_CHANGE_OFFSET);;
 		heightDifferenceWeight = Constants.HEIGHT_DIFFERENCE_WEIGHT + Random.Range (-Constants.HEIGHT_DIFFERENCE_OFFSET, Constants.HEIGHT_DIFFERENCE_OFFSET);
-		timeOfDay = Random.Range (0.00f, .75f);
-		if (timeOfDay < .35) {
-			timeOfDay = 0;
-		}
-
-		GameObject.Find ("Darkness").GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, timeOfDay);
+		
 
 		if (debugMode) {
 			Debug.Log ("Elevation weight: " + elevationWeight);
 			Debug.Log ("Height Difference Weight: " + heightDifferenceWeight);
-			Debug.Log ("Time of day: " + timeOfDay);
 		}
 
 		//creates "platform" for the castle on the left
@@ -144,10 +163,147 @@ public class DynamicLevelGeneration : MonoBehaviour
 		}
 	}
 
-	void GenerateBackgroundImage()
+	//Goes off every .1 seconds
+	void HandleTimeOfDay()
 	{
-		//Basically just going to load whatever image is selected by the random generator
-		//will tie in with the map details
+		//simply rotates the stars to look better
+		starrySky.transform.Rotate (0, 0, Constants.STAR_ROTATION_SPEED);
+
+		//moves the sunMoon back and forth and changes direction if it reaches distance to travel from middle
+		if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun) {
+			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE * 2) / (Constants.LENGTH_OF_CYCLE * 10)), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+			if (sunMoon.transform.localPosition.x > Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE)
+			{
+				sunMoon.GetComponent<SpriteRenderer> ().sprite = moon;
+			}
+		}
+		else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon) {
+			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE * 2) / (Constants.LENGTH_OF_CYCLE * 10)), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+			if (sunMoon.transform.localPosition.x < -Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE)
+			{
+				sunMoon.GetComponent<SpriteRenderer> ().sprite = sun;
+			}
+		}
+
+		//Check to see if we should start changing to day or night
+		if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun && sunMoon.transform.localPosition.x > Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE - Constants.DISTANCE_TO_START_CHANGE) {
+			changeToNight = true;
+		} else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon && sunMoon.transform.localPosition.x < -Constants.DISTANCE_TO_TRAVEL_FROM_MIDDLE + Constants.DISTANCE_TO_START_CHANGE) {
+			changeToDay = true;
+		}
+
+		//if we should change, change accordingly.
+		if (changeToDay) {
+			if (runOnce)
+			{
+				runOnce = false;
+				changeMusicToDay = true;
+				InvokeRepeating ("ChangeMusic", 0, .1f);
+			}
+			if (BGM.clip == nightSound)
+			{
+				BGM.volume -= Constants.BGM_MAX_VOLUME / 5;
+			}
+			else if (BGM.clip == daySound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 5))
+			{
+				BGM.volume += Constants.BGM_MAX_VOLUME / 5;
+			}
+			if (BGM.volume == 0)
+			{
+				BGM.clip = daySound;
+			}
+
+			if (darkness.GetComponent<SpriteRenderer>().color.a > Constants.MIN_DARKNESS_ALPHA + (1 / Constants.LENGTH_OF_CYCLE))
+			{
+				darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, darkness.GetComponent<SpriteRenderer>().color.a - (1 / Constants.LENGTH_OF_CYCLE));
+			} else
+			{
+				darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, Constants.MIN_DARKNESS_ALPHA);
+			}
+			if (daySky.GetComponent<SpriteRenderer>().color.a < (1 - (1 / Constants.LENGTH_OF_CYCLE)))
+			{
+				daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, daySky.GetComponent<SpriteRenderer>().color.a + (1 / Constants.LENGTH_OF_CYCLE));
+			}
+			else
+			{
+				daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+				changeToDay = false;
+				runOnce = true;
+			}
+		} else if (changeToNight) {
+			if (runOnce)
+			{
+				runOnce = false;
+				changeMusicToDay = false;
+				InvokeRepeating ("ChangeMusic", 0, .1f);
+			}
+			if (BGM.clip == daySound)
+			{
+				BGM.volume -= Constants.BGM_MAX_VOLUME / 5;
+			}
+			else if (BGM.clip == nightSound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 5))
+			{
+				BGM.volume += Constants.BGM_MAX_VOLUME / 5;
+			}
+			if (BGM.volume == 0)
+			{
+				BGM.clip = nightSound;
+			}
+
+			if (darkness.GetComponent<SpriteRenderer>().color.a < Constants.MAX_DARKNESS_ALPHA - (1 / Constants.LENGTH_OF_CYCLE))
+			{
+				darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, darkness.GetComponent<SpriteRenderer>().color.a + (1 / Constants.LENGTH_OF_CYCLE));
+			} else
+			{
+				darkness.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, Constants.MAX_DARKNESS_ALPHA);
+			}
+			if (daySky.GetComponent<SpriteRenderer>().color.a > (1 / Constants.LENGTH_OF_CYCLE))
+			{
+				daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, daySky.GetComponent<SpriteRenderer>().color.a - (1 / Constants.LENGTH_OF_CYCLE));
+			}
+			else
+			{
+				daySky.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+				changeToNight = false;
+				runOnce = true;
+			}
+		}
+	}
+
+	void ChangeMusic()
+	{
+		if (changeMusicToDay) {
+			if (BGM.clip == nightSound) {
+				BGM.volume -= Constants.BGM_MAX_VOLUME / 20;
+			} else if (BGM.clip == daySound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 20)) {
+				BGM.volume += Constants.BGM_MAX_VOLUME / 20;
+			} else {
+				CancelInvoke ("ChangeMusic");
+			}
+			if (BGM.volume <= .05f) {
+				BGM.Stop ();
+				BGM.clip = daySound;
+				BGM.Play ();
+			}
+		} else {
+			if (BGM.clip == daySound)
+			{
+				BGM.volume -= Constants.BGM_MAX_VOLUME / 20;
+			}
+			else if (BGM.clip == nightSound && BGM.volume <= Constants.BGM_MAX_VOLUME - (Constants.BGM_MAX_VOLUME / 20))
+			{
+				BGM.volume += Constants.BGM_MAX_VOLUME / 20;
+			}
+			else {
+				CancelInvoke ("ChangeMusic");
+			}
+			if (BGM.volume <= .05f)
+			{
+				BGM.Stop ();
+				BGM.clip = nightSound;
+				BGM.Play ();
+			}
+		}
 	}
 
 	void GenerateWeatherEffects()

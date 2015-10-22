@@ -74,7 +74,6 @@ public static class Constants
 	public const float CLOUD_DENSITY = 0.5f;
 	public const float CLOUD_SCALE_MIN = 0.5f;
 	public const float CLOUD_SCALE_MAX = 1.5f;
-	//public const float TREE_DENSITY = 1;
 	public const float ELEVATION_CHANGE_WEIGHT = 0.35f; // low value = flatter map, high value = more change. 0 - 1
 	public const float ELEVATION_CHANGE_OFFSET = 0.1f;
 	public const float HEIGHT_DIFFERENCE_WEIGHT = 0.5f; // low value = downward direction, high value = upward direction. 0 - 1
@@ -86,6 +85,16 @@ public static class Constants
     public const int SOIL_HEIGHT = 9;
     public const string GROUND_PREFAB = "ground";
     public const string GROUND_UNDER_PREFAB = "groundUnder";
+
+	// Time of Day Constants
+	public const float MIN_DARKNESS_ALPHA = 0;
+	public const float MAX_DARKNESS_ALPHA = .75f;
+	public const float STAR_ROTATION_SPEED = .25f;
+	public const float LENGTH_OF_CYCLE = 25; //in seconds, amount of time it takes for a full light "OR" darkness cycle to occur
+	public const float DISTANCE_TO_START_CHANGE = 1f;
+	public const float DISTANCE_TO_TRAVEL_FROM_MIDDLE = 13f;
+	public const float BGM_MAX_VOLUME = .6f;
+
 
     // Scene constants
     public const string LEVEL_SCENE = "DynamicLevel";
