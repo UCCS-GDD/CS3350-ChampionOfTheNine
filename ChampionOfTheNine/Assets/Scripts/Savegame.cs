@@ -13,6 +13,7 @@ public class Savegame
     #region Fields
 
     Dictionary<int, KingdomName> kingdomLocations;
+
     Dictionary<KingdomName, KingdomStatus> kingdomStatuses;
 
     #endregion
@@ -32,7 +33,22 @@ public class Savegame
 
     #region Properties
 
-    
+    /// <summary>
+    /// Gets the saved kingdom statuses
+    /// </summary>
+    public Dictionary<KingdomName, KingdomStatus> KingdomStatuses
+    {
+        get { return kingdomStatuses; }
+    }
+
+    /// <summary>
+    /// Gets the saved kingdom locations
+    /// </summary>
+    public Dictionary<int, KingdomName> KingdomLocations
+    {
+        get { return kingdomLocations; }
+        set { kingdomLocations = value; }
+    }
 
     #endregion
 
