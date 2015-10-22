@@ -27,6 +27,15 @@ public class SkyState
     /// <summary>
     /// Constructor
     /// </summary>
+    /// <param name="nextState">the state after this state</param>
+    /// <param name="startSkyColor">the starting sky color for this state</param>
+    /// <param name="endSkyColor">the ending sky color for this state</param>
+    /// <param name="timeInState">the time to spend in this state</param>
+    /// <param name="startDarkness">the starting darkness color for this state</param>
+    /// <param name="endDarkness">the ending darkness color for this state</param>
+    /// <param name="startVolume">the starting background volume for this state (defaults to maximum)</param>
+    /// <param name="endVolume">the ending background volume for this state (defaults to maximum)</param>
+    /// <param name="endAudio">the background sound to switch to at the end of this state (default to null, no change)</param>
     public SkyState(SkyStateType nextState, Color startSkyColor, Color endSkyColor, float timeInState, Color startDarkness, Color endDarkness,
         float startVolume = Constants.BGM_MAX_VOLUME, float endVolume = Constants.BGM_MAX_VOLUME, AudioClip endAudio = null)
     {
@@ -62,7 +71,7 @@ public class SkyState
     }
 
     /// <summary>
-    /// Gets the time spent in this state
+    /// Gets the time to spend in this state
     /// </summary>
     public float TimeInState
     {
@@ -78,7 +87,7 @@ public class SkyState
     }
 
     /// <summary>
-    /// The starting darkness alpha for this state
+    /// Gets the starting darkness color for this state
     /// </summary>
     public Color StartDarkness
     {
@@ -86,36 +95,36 @@ public class SkyState
     }
 
     /// <summary>
-    /// The ending darkness alpha for this state
+    /// Gets the ending darkness color for this state
     /// </summary>
     public Color EndDarkness
     {
         get { return endDarkness; }
     }
 
+    /// <summary>
+    /// Gets the starting background volume for this state
+    /// </summary>
     public float StartVolume
     {
         get { return startVolume; }
-        set { startVolume = value; }
     }
 
+    /// <summary>
+    /// Gets the ending background volume for this state
+    /// </summary>
     public float EndVolume
     {
         get { return endVolume; }
-        set { endVolume = value; }
     }
 
+    /// <summary>
+    /// Gets the background sound to switch to at the end of this state
+    /// </summary>
     public AudioClip EndAudio
     {
         get { return endAudio; }
-        set { endAudio = value; }
     }
-
-    #endregion
-
-    #region Public Methods
-
-
 
     #endregion
 }

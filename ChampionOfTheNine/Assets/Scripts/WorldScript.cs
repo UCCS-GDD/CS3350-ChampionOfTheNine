@@ -11,30 +11,27 @@ public class WorldScript : MonoBehaviour
 {
     #region Fields
 
-    GameObject player;
-    Vector3 playerLocation;
+    bool debugMode = true;  // Turn this off for releases
 
-    GameObject[] parallaxBackgrounds;
-
-    bool debugMode = true;
-
-    [SerializeField]GameObject[] cloudPrefabs;
-    [SerializeField]GameObject enemyCastle;
-	int[] levels = new int[Constants.MAP_LENGTH];
-	float elevationWeight = 1;
-	float heightDifferenceWeight = 1;
-
-	//Time of day stuff
-    Dictionary<SkyStateType, SkyState> skyStates;
-    SkyStateType currSkyState;
-	AudioSource BGM;
-	[SerializeField]GameObject starrySky;
+    [SerializeField]GameObject starrySky;
 	[SerializeField]SpriteRenderer sky;
     [SerializeField]SpriteRenderer darkness;
 	[SerializeField]AudioClip daySound;
 	[SerializeField]AudioClip nightSound;
+    [SerializeField]GameObject enemyCastle;
+    [SerializeField]GameObject[] cloudPrefabs;
 
+    GameObject player;
+    Vector3 playerLocation;
+    Dictionary<SkyStateType, SkyState> skyStates;
+    SkyStateType currSkyState;
+	AudioSource BGM;
     Timer skyTimer;
+    GameObject[] parallaxBackgrounds;
+
+	int[] levels = new int[Constants.MAP_LENGTH];
+	float elevationWeight = 1;
+	float heightDifferenceWeight = 1;
 
     #endregion
 
