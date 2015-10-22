@@ -7,7 +7,7 @@ using System.Text;
 /// Enumeration for the different kingdoms
 /// Needs nine, just using this setup temporarily
 /// </summary>
-public enum Kingdom
+public enum KingdomName
 {
     One,
     NotOne

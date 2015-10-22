@@ -34,6 +34,9 @@ public class DynamicLevelGeneration : MonoBehaviour
 	/// Start is called once on object creation
 	/// </summary>
 	void Start () {
+
+        Random.seed = 71;
+
 		starrySky = GameObject.Find ("starrySky");
 		daySky = GameObject.Find ("daySky");
 		sunMoon = GameObject.Find ("sunMoon");
@@ -79,37 +82,14 @@ public class DynamicLevelGeneration : MonoBehaviour
 		DrawMap ();
 	}
 
-    /// <summary>
-    /// Gets the next height value based on the previous height, the weight, and randomness
-    /// </summary>
-    /// <param name="previous">the previous height</param>
-    /// <returns>the next height</returns>
-	int NextHeight(int previous)
-	{
-		//use weight to decide if we should change direction or not.
-		if (Random.Range (0.00f, 1.00f) <= elevationWeight) {
-			//change direction
-			if (Random.Range (0.00f, 1.00f) >= (heightDifferenceWeight))
-			{
-				//go down
-				return previous - 1;
-			} 
-			else
-			{
-				//go up
-				return previous + 1;
-			}
-		} else {
-			return previous;
-		}
-	}
+    
 
     /// <summary>
     /// Places objects to create the map based on the generated terrain levels
     /// </summary>
 	void DrawMap()
 	{
-		Transform groundParent = GameObject.Find ("Ground").transform;
+        //Transform groundParent = GameObject.Find ("Ground").transform;
 
 		//draws each of the top blocks
         GameObject groundPrefab = Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.GROUND_PREFAB);
@@ -117,14 +97,14 @@ public class DynamicLevelGeneration : MonoBehaviour
 		for (int i = 0; i < levels.Length; i++) 
 		{
 			GameObject newObject = Instantiate(groundPrefab) as GameObject;
-			newObject.transform.SetParent(groundParent);
+            //newObject.transform.SetParent(groundParent);
 			newObject.transform.position = new Vector2(i, levels[i]);
 
 			//draws the blocks under the top
 			for (int j = 1; j <= Constants.SOIL_HEIGHT; j++)
 			{
                 GameObject soil = Instantiate(groundUnderPrefab) as GameObject;
-				soil.transform.SetParent(groundParent);
+                //soil.transform.SetParent(groundParent);
 				soil.transform.position = new Vector2(i, levels[i] - j);
 			}
 		}
@@ -133,6 +113,35 @@ public class DynamicLevelGeneration : MonoBehaviour
 		enemyCastle = Instantiate(enemyCastle, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation) as GameObject;
 		GenerateParallaxObjects ();
 	}
+
+    /// <summary>
+    /// Gets the next height value based on the previous height, the weight, and randomness
+    /// </summary>
+    /// <param name="previous">the previous height</param>
+    /// <returns>the next height</returns>
+    int NextHeight(int previous)
+    {
+        //use weight to decide if we should change direction or not.
+        if (Random.Range(0.00f, 1.00f) <= elevationWeight)
+        {
+            //change direction
+            if (Random.Range(0.00f, 1.00f) >= (heightDifferenceWeight))
+            {
+                //go down
+                return previous - 1;
+            }
+            else
+            {
+                //go up
+                return previous + 1;
+            }
+            return previous - (int)Mathf.Sign(Random.Range(0.00f, 1.00f) - heightDifferenceWeight);
+        }
+        else
+        {
+            return previous;
+        }
+    }
 
     /// <summary>
     /// Generates the parallax objects for the map
@@ -149,7 +158,7 @@ public class DynamicLevelGeneration : MonoBehaviour
             for (int i = 0; i < (int)(Constants.MAP_LENGTH * Constants.CLOUD_DENSITY); i++)
             {
                 horizontalPosition = Random.Range(0, Constants.MAP_LENGTH);
-                verticalPosition = Random.Range((float)levels[(int)horizontalPosition] + 3.00f, (float)levels[(int)horizontalPosition] + 12.00f);
+                verticalPosition = Random.Range((float)levels[(int)horizontalPosition] + 3.00f, (float)levels[(int)horizontalPosition] + 11.00f);
                 GameObject newObject = Instantiate(cloudPrefabs[Random.Range(0, cloudPrefabs.Length)]) as GameObject;
                 newObject.transform.SetParent(bg.transform);
                 newObject.transform.position = new Vector3(horizontalPosition, verticalPosition, 2);
@@ -168,14 +177,14 @@ public class DynamicLevelGeneration : MonoBehaviour
 
 		//moves the sunMoon back and forth and changes direction if it reaches distance to travel from middle
 		if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun) {
-			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((cameraHalfWidth * 2) / (Constants.LENGTH_OF_CYCLE * 10)), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((cameraHalfWidth * 2 * Constants.QUARTER_CYCLE) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
 			if (sunMoon.transform.localPosition.x > cameraHalfWidth)
 			{
 				sunMoon.GetComponent<SpriteRenderer> ().sprite = moon;
 			}
 		}
 		else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon) {
-			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((cameraHalfWidth * 2) / (Constants.LENGTH_OF_CYCLE * 10)), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+            sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((cameraHalfWidth * 2 * Constants.QUARTER_CYCLE) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
 			if (sunMoon.transform.localPosition.x < -cameraHalfWidth)
 			{
 				sunMoon.GetComponent<SpriteRenderer> ().sprite = sun;

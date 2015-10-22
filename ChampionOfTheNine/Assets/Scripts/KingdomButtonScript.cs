@@ -10,7 +10,7 @@ public class KingdomButtonScript : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]Kingdom kingdom;
+    [SerializeField]KingdomName kingdom;
 
     #endregion
 
@@ -35,7 +35,7 @@ public class KingdomButtonScript : MonoBehaviour
     {
         // Replace interactable part of this code later
         Button buttonScript = GetComponent<Button>();
-        buttonScript.interactable = kingdom == Kingdom.One;
+        buttonScript.interactable = kingdom == KingdomName.One;
         buttonScript.onClick.AddListener(Pressed);
     }
 

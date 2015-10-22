@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/// <summary>
+/// Class that holds game save information
+/// </summary>
 [Serializable]
 public class Savegame
 {
     #region Fields
 
+    Dictionary<int, KingdomName> kingdomLocations;
+    Dictionary<KingdomName, KingdomStatus> kingdomStatuses;
 
     #endregion
 
@@ -19,7 +24,8 @@ public class Savegame
     /// </summary>
     public Savegame()
     {
-        
+        kingdomLocations = new Dictionary<int, KingdomName>();
+        kingdomStatuses = new Dictionary<KingdomName, KingdomStatus>();
     }
 
     #endregion
