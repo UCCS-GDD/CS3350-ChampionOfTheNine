@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -84,31 +85,36 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     public virtual void UpdateChar()
     {
-        if (gcTimer.IsRunning)
+        try
         {
-            gcTimer.Update();
-            foreach (Image bar in gcdBars)
-            { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
-        }
-        animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
+            if (gcTimer.IsRunning)
+            {
+                gcTimer.Update();
+                foreach (Image bar in gcdBars)
+                { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
+            }
 
-        // Set jump animation/play sounds
-        if (Grounded)
-        {
-            if (!animator.GetBool(Constants.GROUNDED_FLAG))
+            animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
+
+            // Set jump animation/play sounds
+            if (Grounded)
             {
-                animator.SetBool(Constants.GROUNDED_FLAG, true);
-                Utilities.PlaySoundPitched(audioSource, landSound);
+                if (!animator.GetBool(Constants.GROUNDED_FLAG))
+                {
+                    animator.SetBool(Constants.GROUNDED_FLAG, true);
+                    Utilities.PlaySoundPitched(audioSource, landSound);
+                }
+            }
+            else
+            {
+                if (animator.GetBool(Constants.GROUNDED_FLAG))
+                {
+                    animator.SetBool(Constants.GROUNDED_FLAG, false);
+                    Utilities.PlaySoundPitched(audioSource, jumpSound);
+                }
             }
         }
-        else
-        {
-            if (animator.GetBool(Constants.GROUNDED_FLAG))
-            {
-                animator.SetBool(Constants.GROUNDED_FLAG, false);
-                Utilities.PlaySoundPitched(audioSource, jumpSound);
-            }
-        }
+        catch (NullReferenceException) { }
     }
 
     #endregion

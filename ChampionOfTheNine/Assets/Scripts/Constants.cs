@@ -8,6 +8,8 @@ using System.Text;
 /// </summary>
 public static class Constants
 {
+    public const string FILE_SUFFIX = ".cotn";
+    public const string SAVES_FILE = "savegames";
     public const string ENEMY_TAG = "Enemy";
     public const string PLAYER_TAG = "Player";
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
@@ -74,9 +76,9 @@ public static class Constants
 	public const float CLOUD_DENSITY = 0.5f;
 	public const float CLOUD_SCALE_MIN = 0.5f;
 	public const float CLOUD_SCALE_MAX = 1.5f;
-	public const float ELEVATION_CHANGE_WEIGHT = 0.35f; // low value = flatter map, high value = more change. 0 - 1
+	public const float ELEVATION_CHANGE_WEIGHT = 1f; // low value = flatter map, high value = more change. 0 - 1
 	public const float ELEVATION_CHANGE_OFFSET = 0.1f;
-	public const float HEIGHT_DIFFERENCE_WEIGHT = 0.5f; // low value = downward direction, high value = upward direction. 0 - 1
+	public const float HEIGHT_DIFFERENCE_WEIGHT = 0.0f; // low value = downward direction, high value = upward direction. 0 - 1
 	public const float HEIGHT_DIFFERENCE_OFFSET = 0.4f;
 	public const float PARALLAX_SCALE = 0.01f;
     public const int PLATFORM_LENGTH = 10;
@@ -85,16 +87,16 @@ public static class Constants
     public const int SOIL_HEIGHT = 9;
     public const string GROUND_PREFAB = "ground";
     public const string GROUND_UNDER_PREFAB = "groundUnder";
+    public const string PARALLAX_BACKGROUND_TAG = "ParallaxBack";
 
 	// Time of Day Constants
 	public const float MIN_DARKNESS_ALPHA = 0;
 	public const float MAX_DARKNESS_ALPHA = .75f;
-	public const float STAR_ROTATION_SPEED = .25f;
+	public const float STAR_ROTATION_SPEED = 2f;
 	public const float LENGTH_OF_CYCLE = 25; //in seconds, amount of time it takes for a full light "OR" darkness cycle to occur
 	public const float DISTANCE_TO_START_CHANGE = 1f;
 	public const float DISTANCE_TO_TRAVEL_FROM_MIDDLE = 13f;
 	public const float BGM_MAX_VOLUME = .6f;
-
 
     // Scene constants
     public const string LEVEL_SCENE = "DynamicLevel";

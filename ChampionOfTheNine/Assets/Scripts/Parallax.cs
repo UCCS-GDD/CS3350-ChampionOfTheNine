@@ -17,6 +17,7 @@ public class Parallax : MonoBehaviour
 		playerLocation = player.transform.position;
 		background1 = GameObject.Find ("Background1");
 		background2 = GameObject.Find ("Background2");
+
 	}
 	
 	// Update is called once per frame
@@ -36,11 +37,11 @@ public class Parallax : MonoBehaviour
 		else if (playerLocation.x < player.transform.position.x) 
 		{
 			background1.transform.position = new Vector3(background1.transform.position.x + (1.3f * parallaxVar),
-			                                             background1.transform.position.y,
+                                                         background1.transform.position.y + (player.transform.position.y - playerLocation.y),
 			                                             background1.transform.position.z);
 			
 			background2.transform.position = new Vector3(background2.transform.position.x + ( 3 * parallaxVar),
-			                                             background2.transform.position.y,
+                                                         background2.transform.position.y + (player.transform.position.y - playerLocation.y),
 			                                             background2.transform.position.z);
 		}
 		
