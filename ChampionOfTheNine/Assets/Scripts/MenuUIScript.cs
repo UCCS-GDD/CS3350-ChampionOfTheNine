@@ -31,6 +31,14 @@ public class MenuUIScript : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// Handles the back button being pressed
+    /// </summary>
+    public void BackButtonPressed()
+    {
+        Application.LoadLevel(Constants.MAIN_MENU_SCENE);
+    }
+
     #endregion
 
     #region Private Methods

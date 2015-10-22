@@ -114,7 +114,7 @@ public class PlayerScript : CharacterControllerScript
     /// </summary>
     private void HandleDarknessTimerFinishing()
     {
-        Application.LoadLevel("MainMenu");
+        Application.LoadLevel(Constants.MAP_SCENE);
     }
 
     #endregion
