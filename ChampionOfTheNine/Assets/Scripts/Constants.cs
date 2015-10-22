@@ -22,7 +22,7 @@ public static class Constants
 
     // Character sounds
     public const string CHAR_HIT_SND = "hurt";
-    public const string CHAR_DEATH_SND = "hurt";
+    public const string CHAR_DEATH_SND = "death";
     public const string CHAR_JUMP_SND = "jump";
     public const string CHAR_LAND_SND = "land";
     public const string CHAR_WALK_SND = "Walking";
