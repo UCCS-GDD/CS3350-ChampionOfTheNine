@@ -173,25 +173,25 @@ public class DynamicLevelGeneration : MonoBehaviour
 	void Update()
 	{
 		//simply rotates the stars to look better
-		starrySky.transform.Rotate (0, 0, Constants.STAR_ROTATION_SPEED * Time.deltaTime);
+		/*starrySky.transform.Rotate (0, 0, Constants.STAR_ROTATION_SPEED * Time.deltaTime);
 
 		//moves the sunMoon back and forth and changes direction if it reaches distance to travel from middle
 		if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun) {
-			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((cameraHalfWidth * 2 * Constants.QUARTER_CYCLE) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+			sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x + ((cameraHalfWidth * 2 * Constants.CYCLE_TIME) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
 			if (sunMoon.transform.localPosition.x > cameraHalfWidth)
 			{
 				sunMoon.GetComponent<SpriteRenderer> ().sprite = moon;
 			}
 		}
 		else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon) {
-            sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((cameraHalfWidth * 2 * Constants.QUARTER_CYCLE) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
+            sunMoon.transform.localPosition = new Vector3(sunMoon.transform.localPosition.x - ((cameraHalfWidth * 2 * Constants.CYCLE_TIME) / Time.deltaTime), sunMoon.transform.localPosition.y, sunMoon.transform.localPosition.z);
 			if (sunMoon.transform.localPosition.x < -cameraHalfWidth)
 			{
 				sunMoon.GetComponent<SpriteRenderer> ().sprite = sun;
 			}
 		}
 
-		/*//Check to see if we should start changing to day or night
+		//Check to see if we should start changing to day or night
 		if (sunMoon.GetComponent<SpriteRenderer> ().sprite == sun && sunMoon.transform.localPosition.x > cameraHalfWidth - Constants.DISTANCE_TO_START_CHANGE) {
 			changeToNight = true;
 		} else if (sunMoon.GetComponent<SpriteRenderer> ().sprite == moon && sunMoon.transform.localPosition.x < -cameraHalfWidth + Constants.DISTANCE_TO_START_CHANGE) {
