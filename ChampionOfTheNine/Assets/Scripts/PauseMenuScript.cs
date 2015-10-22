@@ -10,8 +10,8 @@ public class PauseMenuScript : MonoBehaviour
     #region Fields
 
     bool open = false;
-    const float NOT_OPEN_X = -10;
-    const float OPEN_X = -1;
+    const float NOT_OPEN_X = -13.5f;
+    const float OPEN_X = -3.78f;
     const float SPEED = 10;
     Rigidbody2D rbody;
 
