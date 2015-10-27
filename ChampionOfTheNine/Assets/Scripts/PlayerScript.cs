@@ -14,6 +14,11 @@ public class PlayerScript : CharacterControllerScript
     [SerializeField]Image darkness;
     [SerializeField]GameObject victoryText;
     [SerializeField]GameObject defeatText;
+    [SerializeField]Image energyBar;
+    [SerializeField]Image[] gcdBars;
+    [SerializeField]Image secondaryCDBar;
+    [SerializeField]Image powerCDBar;
+    [SerializeField]Image specialCDBar;
 
     #endregion
 
@@ -88,21 +93,37 @@ public class PlayerScript : CharacterControllerScript
         // Handles firing
         if (Input.GetAxis("SpecialFire") > 0)
         { specialAbility(); }
-        if (!character.GCD.IsRunning && Input.GetAxis("PowerFire") > 0)
+        if (!character.GCDTimer.IsRunning && Input.GetAxis("PowerFire") > 0)
         { powerAbility(); }
-        if (!character.GCD.IsRunning && Input.GetAxis("SecondaryFire") > 0)
+        if (!character.GCDTimer.IsRunning && Input.GetAxis("SecondaryFire") > 0)
         { secondaryAbility(); }
-        if (!character.GCD.IsRunning && Input.GetAxis("MainFire") > 0)
+        if (!character.GCDTimer.IsRunning && Input.GetAxis("MainFire") > 0)
         { mainAbility(); }
 
         // Moves the camera
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
+
+        // Updates cooldown bars
+        foreach (Image bar in gcdBars)
+        { bar.fillAmount = 1 - (character.GCDTimer.ElapsedSeconds / character.GCDTimer.TotalSeconds); }
+        secondaryCDBar.fillAmount = 1 - (character.SecondaryCDTimer.ElapsedSeconds / character.SecondaryCDTimer.TotalSeconds);
+        powerCDBar.fillAmount = 1 - (character.PowerCDTimer.ElapsedSeconds / character.PowerCDTimer.TotalSeconds);
+        specialCDBar.fillAmount = 1 - (character.SpecialCDTimer.ElapsedSeconds / character.SpecialCDTimer.TotalSeconds);
 
         if (darknessTimer.IsRunning)
         {
             darknessTimer.Update();
             darkness.color = new Color(0, 0, 0, darknessTimer.ElapsedSeconds / darknessTimer.TotalSeconds);
         }
+    }
+
+    /// <summary>
+    /// Handles the character's energy level changing
+    /// </summary>
+    /// <param name="pct">the percentage of energy the player has</param>
+    protected override void CharacterEnergyChanged(float pct)
+    {
+        energyBar.fillAmount = pct;
     }
 
     #endregion

@@ -15,13 +15,14 @@ public abstract class CharacterScript : DamagableObjectScript
 
     [SerializeField]protected Transform fireLocation;
     [SerializeField]protected AudioSource walkAudio;
-    [SerializeField]Image energyBar;
-    [SerializeField]Image[] gcdBars;
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
-    protected Timer gcTimer;
+    protected Timer secondaryCDTimer;
+    protected Timer powerCDTimer;
+    protected Timer specialCDTimer;
+    protected Timer gCDTimer;
     protected float maxEnergy;
     protected float moveSpeed;
     protected float jumpSpeed;
@@ -38,6 +39,8 @@ public abstract class CharacterScript : DamagableObjectScript
     protected AudioClip powerAbilitySound;
     protected AudioClip specialAbilitySound;
 
+    protected MovementHandler energyChanged = Blank;
+
     #endregion
 
     #region Properties
@@ -51,10 +54,7 @@ public abstract class CharacterScript : DamagableObjectScript
         set
         {
             energy = value;
-
-            // Sets energy bar if it exists
-            if (energyBar != null)
-            { energyBar.fillAmount = energy / maxEnergy; }
+            energyChanged(energy / maxEnergy);
         }
     }
 
@@ -65,10 +65,28 @@ public abstract class CharacterScript : DamagableObjectScript
     { get { return Physics2D.OverlapCircle(groundCheck.position, Constants.GROUND_CHECK_RADIUS, whatIsGround); } }
 
     /// <summary>
-    /// Gets the character's global cooldown
+    /// Gets the character's global cooldown timer
     /// </summary>
-    public Timer GCD
-    { get { return gcTimer; } }
+    public Timer GCDTimer
+    { get { return gCDTimer; } }
+
+    /// <summary>
+    /// Gets the character's secondary cooldown timer
+    /// </summary>
+    public Timer SecondaryCDTimer
+    { get { return secondaryCDTimer; } }
+
+    /// <summary>
+    /// Gets the character's power cooldown timer
+    /// </summary>
+    public Timer PowerCDTimer
+    { get { return powerCDTimer; } }
+
+    /// <summary>
+    /// Gets the character's special cooldown timer
+    /// </summary>
+    public Timer SpecialCDTimer
+    { get { return specialCDTimer; } }
 
     /// <summary>
     /// Gets the character's arm object
@@ -87,12 +105,11 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         try
         {
-            if (gcTimer.IsRunning)
-            {
-                gcTimer.Update();
-                foreach (Image bar in gcdBars)
-                { bar.fillAmount = 1 - (gcTimer.ElapsedSeconds / gcTimer.TotalSeconds); }
-            }
+            // Updates cooldown timers
+            gCDTimer.Update();
+            powerCDTimer.Update();
+            secondaryCDTimer.Update();
+            specialCDTimer.Update();
 
             animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
 
@@ -117,6 +134,19 @@ public abstract class CharacterScript : DamagableObjectScript
         catch (NullReferenceException) { }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="energyChanged"></param>
+    public virtual void Attach(CharacterControllerScript controller, MovementHandler energyChanged)
+    {
+        // Registers for character controller input
+        this.energyChanged = energyChanged;
+        controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move, SetArmAngle);
+        targetTag = controller.TargetTag;
+    }
+
     #endregion
 
     #region Protected Methods
@@ -135,11 +165,6 @@ public abstract class CharacterScript : DamagableObjectScript
         deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_DEATH_SND);
         jumpSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_JUMP_SND);
         landSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_LAND_SND);
-
-        // Registers for character controller input
-        CharacterControllerScript controller = GetComponent<CharacterControllerScript>();
-        controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move, SetArmAngle);
-        targetTag = controller.TargetTag;
     }
 
     /// <summary>
@@ -243,4 +268,6 @@ public abstract class CharacterScript : DamagableObjectScript
     protected abstract void FireSpecialAbility();
 
     #endregion
+
+    private static void Blank(float value) { }
 }

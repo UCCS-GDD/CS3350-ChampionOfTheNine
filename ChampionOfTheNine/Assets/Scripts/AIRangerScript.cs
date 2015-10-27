@@ -24,7 +24,7 @@ public class AIRangerScript : AIScript
     /// </summary>
     protected override void Attack()
     {
-        if (!character.GCD.IsRunning)
+        if (!character.GCDTimer.IsRunning)
         {
             // Sometimes does nothing
             int choice = Random.Range(0, Constants.RANGER_AI_SHOT_THRESHOLD);
@@ -36,7 +36,7 @@ public class AIRangerScript : AIScript
             }
             else
             {
-                character.GCD.Start();
+                character.GCDTimer.Start();
             }
         }
     }

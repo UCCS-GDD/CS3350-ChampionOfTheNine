@@ -43,8 +43,8 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// <param name="specialAbility">delegate to call on use special ability</param>
     /// <param name="movement">delegate to call on move</param>
     /// <param name="armDirection">delegate to call on change arm direction</param>
-    public void Register(ActionHandler jumpAbility, ActionHandler mainAbility, ActionHandler secondaryAbility,
-        ActionHandler powerAbility, ActionHandler specialAbility, MovementHandler movement, MovementHandler armDirection)
+    public void Register(ActionHandler jumpAbility, ActionHandler mainAbility, ActionHandler secondaryAbility, ActionHandler powerAbility, 
+        ActionHandler specialAbility, MovementHandler movement, MovementHandler armDirection)
     {
         this.jumpAbility = jumpAbility;
         this.mainAbility = mainAbility;
@@ -70,6 +70,7 @@ public abstract class CharacterControllerScript : MonoBehaviour
     protected virtual void Start()
     {
         character = GetComponent<CharacterScript>();
+        character.Attach(this, CharacterEnergyChanged);
     }
 
     /// <summary>
@@ -79,6 +80,13 @@ public abstract class CharacterControllerScript : MonoBehaviour
     {
         character.UpdateChar();
     }
+
+    /// <summary>
+    /// Handles the character's energy level changing
+    /// </summary>
+    /// <param name="pct">the percentage of energy the player has</param>
+    protected virtual void CharacterEnergyChanged(float pct)
+    { }
 
     #endregion
 }

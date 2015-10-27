@@ -13,18 +13,12 @@ public class RangerScript : CharacterScript
     [SerializeField]GameObject arrow;
     [SerializeField]GameObject pierceArrow;
     [SerializeField]GameObject expArrow;
-    [SerializeField]Image expCDBar;
-    [SerializeField]Image pierceCDBar;
     [SerializeField]Image pierceBar;
-    [SerializeField]Image boostCDBar;
     [SerializeField]Image boostBar;
 
     Timer pierceShootWindow;
     Timer pierceShootCD;
-    Timer pierceAbilityCD;
-    Timer expArrowCD;
     Timer boostTimer;
-    Timer boostCD;
 
     float cooldownMult = 1;
     float arrowSpeedMult = 1;
@@ -75,13 +69,13 @@ public class RangerScript : CharacterScript
         moveSpeed = Constants.RANGER_MOVE_SPEED;
         jumpSpeed = Constants.RANGER_JUMP_SPEED;
         maxEnergy = Constants.RANGER_ENERGY;
-        gcTimer = new Timer(Constants.RANGER_GCD);
+        gCDTimer = new Timer(Constants.RANGER_GCD);
         pierceShootWindow = new Timer(Constants.PIERCE_SHOOT_WINDOW);
         pierceShootCD = new Timer(Constants.PIERCE_SHOOT_CD);
-        pierceAbilityCD = new Timer(Constants.PIERCE_ABILITY_CD);
+        powerCDTimer = new Timer(Constants.PIERCE_ABILITY_CD);
         boostTimer = new Timer(Constants.RANGER_BOOST_TIME);
-        boostCD = new Timer(Constants.RANGER_BOOST_CD);
-        expArrowCD = new Timer(Constants.EXP_ARROW_CD);
+        specialCDTimer = new Timer(Constants.RANGER_BOOST_CD);
+        secondaryCDTimer = new Timer(Constants.EXP_ARROW_CD);
         boostTimer.Register(HandleBoostTimerFinishing);
         pierceShootWindow.Register(HandlePierceWindowFinishing);
 
@@ -127,16 +121,10 @@ public class RangerScript : CharacterScript
 	    {	        
 		    // Updates timers
             pierceShootCD.Update();
-            pierceAbilityCD.Update();
             pierceShootWindow.Update();
-            expArrowCD.Update();
             boostTimer.Update();
-            boostCD.Update();
 
-            // Updates cooldown bars
-            expCDBar.fillAmount = 1 - (expArrowCD.ElapsedSeconds / expArrowCD.TotalSeconds);
-            pierceCDBar.fillAmount = 1 - (pierceAbilityCD.ElapsedSeconds / pierceAbilityCD.TotalSeconds);
-            boostCDBar.fillAmount = 1 - (boostCD.ElapsedSeconds / boostCD.TotalSeconds);
+            // Updates ability bars
             boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
             pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
 	    }
@@ -148,7 +136,7 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility() 
     {
-        FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gcTimer);
+        FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer);
     }
 
     /// <summary>
@@ -156,11 +144,11 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireSecondaryAbility()
     {
-        if (!expArrowCD.IsRunning)
+        if (!secondaryCDTimer.IsRunning)
         {
-            ProjScript projectile = FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gcTimer);
+            ProjScript projectile = FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer);
             if (projectile != null)
-            { expArrowCD.Start(); }
+            { secondaryCDTimer.Start(); }
         }
     }
 
@@ -170,7 +158,7 @@ public class RangerScript : CharacterScript
     protected override void FirePowerAbility()
     {
         // Fires piercing arrow ability if possible
-        if (!pierceAbilityCD.IsRunning && !pierceShootCD.IsRunning)
+        if (!powerCDTimer.IsRunning && !pierceShootCD.IsRunning)
         {
             // Starts window if this is the first shot
             if (!pierceShootWindow.IsRunning)
@@ -186,7 +174,7 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireSpecialAbility()
     {
-        if (!boostCD.IsRunning)
+        if (!specialCDTimer.IsRunning)
         {
             // Change multipliers
             moveSpeed = Constants.RANGER_MOVE_SPEED * Constants.RANGER_BOOST_MOVE_MULT;
@@ -198,7 +186,7 @@ public class RangerScript : CharacterScript
 
             audioSource.PlayOneShot(specialAbilitySound);
             boostTimer.Start();
-            boostCD.Start();
+            specialCDTimer.Start();
         }
     }
 
@@ -207,7 +195,7 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected void HandlePierceWindowFinishing()
     {
-        pierceAbilityCD.Start();
+        powerCDTimer.Start();
     }
 
     /// <summary>
@@ -229,9 +217,9 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected void UpdateTimerLengths()
     {
-        gcTimer.TotalSeconds = Constants.RANGER_GCD * cooldownMult;
+        gCDTimer.TotalSeconds = Constants.RANGER_GCD * cooldownMult;
         pierceShootCD.TotalSeconds = Constants.PIERCE_SHOOT_CD * cooldownMult;
-        pierceAbilityCD.TotalSeconds = Constants.PIERCE_ABILITY_CD * cooldownMult;
+        powerCDTimer.TotalSeconds = Constants.PIERCE_ABILITY_CD * cooldownMult;
     }
 
     #endregion
