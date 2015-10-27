@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// Script for a wizard character
+/// Script for a mage character
 /// </summary>
-public class WizardScript : CharacterScript
+public class MageScript : CharacterScript
 {
     /// <summary>
     /// Fires the character's main ability

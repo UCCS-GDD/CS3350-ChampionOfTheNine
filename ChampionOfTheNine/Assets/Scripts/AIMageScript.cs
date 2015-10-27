@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// Script that controls an AI wizard character
+/// Script that controls an AI mage character
 /// </summary>
-public class AIWizardScript : AIScript
+public class AIMageScript : AIScript
 {
     /// <summary>
     /// Attacks the target

@@ -122,11 +122,11 @@
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WizardScript">
+  <Class Name="MageScript">
     <Position X="13.75" Y="22" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAIAAAABAAABAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\WizardScript.cs</FileName>
+      <FileName>Assets\Scripts\MageScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WarriorScript">
@@ -157,11 +157,11 @@
       <FileName>Assets\Scripts\MeteorSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AIWizardScript">
+  <Class Name="AIMageScript">
     <Position X="8" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\AIWizardScript.cs</FileName>
+      <FileName>Assets\Scripts\AIMageScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIWarriorScript">
