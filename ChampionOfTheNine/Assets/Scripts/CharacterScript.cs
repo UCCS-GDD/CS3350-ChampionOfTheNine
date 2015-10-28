@@ -59,6 +59,20 @@ public abstract class CharacterScript : DamagableObjectScript
     }
 
     /// <summary>
+    /// Gets the angle at which to shoot a projectile
+    /// </summary>
+    protected float ShotAngle
+    {
+        get
+        {
+            float shotAngle = arm.transform.rotation.eulerAngles.z;
+            if (transform.localScale.x < 0)
+            { shotAngle = 180 - shotAngle; }
+            return shotAngle;
+        }
+    }
+
+    /// <summary>
     /// Gets whether or not the character is grounded
     /// </summary>
     public bool Grounded
@@ -222,12 +236,7 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
-        {
-            float shotAngle = arm.transform.rotation.eulerAngles.z;
-            if (transform.localScale.x < 0)
-            { shotAngle = 180 - shotAngle; }
-            projectile.Initialize(fireLocation.position, shotAngle, targetTag);
-        }
+        { projectile.Initialize(fireLocation.position, ShotAngle, targetTag); }
         return projectile;
     }
 
@@ -244,8 +253,7 @@ public abstract class CharacterScript : DamagableObjectScript
         if (energy >= energyCost)
         {
             // Creates the projectile
-            GameObject projectile = GameObject.Instantiate(prefab);
-            projScript = projectile.GetComponent<ProjScript>();
+            projScript = ((GameObject)Instantiate(prefab)).GetComponent<ProjScript>();
 
             // Subtracts energy and starts timer
             energy -= energyCost;

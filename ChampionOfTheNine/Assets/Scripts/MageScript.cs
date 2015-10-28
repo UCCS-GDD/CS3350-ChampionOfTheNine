@@ -15,6 +15,9 @@ public class MageScript : CharacterScript
     [SerializeField]GameObject meteor;
     [SerializeField]GameObject lightning;
 
+    LightningSpellScript lightningProj = null;
+    Timer lightningTimer;
+
     #endregion
 
     #region Protected Methods
@@ -33,6 +36,8 @@ public class MageScript : CharacterScript
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
         powerCDTimer = new Timer(Constants.METEOR_CD);
         specialCDTimer = new Timer(Constants.MAGE_SPECIAL_CD);
+        lightningTimer = new Timer(Constants.LIGHTNING_CAST_TIME);
+        lightningTimer.Register(LightningTimerFinished);
 
         // Loads sounds
         mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.ICE_CAST_SND);
@@ -52,6 +57,13 @@ public class MageScript : CharacterScript
         // Updates energy
         if (Energy < maxEnergy)
         { Energy = Mathf.Min(maxEnergy, Energy + (Constants.MAGE_REGEN * Time.deltaTime)); }
+
+        if (lightningProj != null)
+        {
+            lightningProj.SetLocationAndDirection(fireLocation.position, ShotAngle);
+            Energy -= (Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime);
+            lightningTimer.Update();
+        }
     }
 
     /// <summary>
@@ -69,7 +81,15 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireSecondaryAbility()
     {
-        
+        if (!gCDTimer.IsRunning)
+        {
+            lightningTimer.Start();
+            if (lightningProj == null)
+            {
+                lightningProj = ((GameObject)Instantiate(lightning)).GetComponent<LightningSpellScript>();
+                lightningProj.Initialize(fireLocation.position, ShotAngle, targetTag);
+            }
+        }
     }
 
     /// <summary>
@@ -96,6 +116,16 @@ public class MageScript : CharacterScript
     protected override void FireSpecialAbility()
     {
 
+    }
+
+    /// <summary>
+    /// Handles the lightning timer finishing
+    /// </summary>
+    protected virtual void LightningTimerFinished()
+    {
+        Destroy(lightningProj.gameObject);
+        lightningProj = null;
+        gCDTimer.Start();
     }
 
     #endregion

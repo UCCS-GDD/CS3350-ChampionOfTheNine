@@ -76,7 +76,7 @@ public static class Constants
     public const float MAGE_AI_ANGLE_RANGE = 15;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 100;
-    public const float MAGE_ENERGY = 100;
+    public const float MAGE_ENERGY = 500;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 9;
     public const float MAGE_REGEN = 5;
@@ -100,9 +100,10 @@ public static class Constants
     public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
 
     // Lightning
-    public const float LIGHTNING_DAMAGE = 20;
-    public const float LIGHTNING_COST = 30;
+    public const float LIGHTNING_DAMAGE = 1;
+    public const float LIGHTNING_COST_PER_SEC = 40;
     public const float LIGHTNING_CD = MAGE_GCD;
+    public const float LIGHTNING_CAST_TIME = 0.1f;
     public const string LIGHTNING_CAST_SND = "arrowShoot";
 
     #endregion

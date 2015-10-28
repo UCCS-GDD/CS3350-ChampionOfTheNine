@@ -63,6 +63,20 @@ public abstract class ProjScript : MonoBehaviour
         damage *= multiplier;
     }
 
+    /// <summary>
+    /// Sets the projectile's position and direction
+    /// </summary>
+    /// <param name="position">the position of the projectile</param>
+    /// <param name="angle">the angle, in degrees</param>
+    public void SetLocationAndDirection(Vector2 position, float angle)
+    {
+        // Sets position and direction
+        transform.position = position;
+        transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        rbody.velocity = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad) * moveSpeed, Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed);
+    }
+
     #endregion
 
     #region Protected Methods
@@ -124,20 +138,6 @@ public abstract class ProjScript : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
 
         rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
-    }
-
-    /// <summary>
-    /// Sets the projectile's position and direction
-    /// </summary>
-    /// <param name="position">the position of the projectile</param>
-    /// <param name="angle">the angle, in degrees</param>
-    protected void SetLocationAndDirection(Vector2 position, float angle)
-    {
-        // Sets position and direction
-        transform.position = position;
-        transform.localRotation = Quaternion.Euler(0, 0, angle);
-
-        rbody.velocity = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad) * moveSpeed, Mathf.Sin(angle * Mathf.Deg2Rad) * moveSpeed);
     }
 
     #endregion
