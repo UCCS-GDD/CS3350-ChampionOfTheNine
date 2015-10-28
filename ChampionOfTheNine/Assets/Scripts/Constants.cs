@@ -93,8 +93,8 @@ public static class Constants
     // Meteor
     public const float METEOR_SPEED = 20;
     public const float METEOR_DAMAGE = 20;
-    public const float METEOR_COST = 3;
-    public const float METEOR_CD = 0.5f;
+    public const float METEOR_COST = 30;
+    public const float METEOR_CD = MAGE_GCD;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "arrowShoot";
     public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
@@ -102,7 +102,7 @@ public static class Constants
     // Lightning
     public const float LIGHTNING_DAMAGE = 20;
     public const float LIGHTNING_COST = 30;
-    public const float LIGHTNING_CD = 5f;
+    public const float LIGHTNING_CD = MAGE_GCD;
     public const string LIGHTNING_CAST_SND = "arrowShoot";
 
     #endregion
