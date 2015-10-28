@@ -27,7 +27,8 @@ public static class Constants
     public const string CHAR_LAND_SND = "land";
     public const string CHAR_WALK_SND = "Walking";
 
-    // Ranger class
+    #region Ranger
+
     public const float RANGER_AI_RANGE = 9;
     public const float RANGER_AI_ANGLE_RANGE = 15;
     public const int RANGER_AI_SHOT_THRESHOLD = 5;
@@ -67,12 +68,46 @@ public static class Constants
     public const float EXP_ARROW_COST = 30;
     public const float EXP_ARROW_CD = 1.2f;
 
-    // Castles
-    public const float CASTLE_HEALTH = 800;
-    public const string CASTLE_HIT_SND = "hit";
-    public const string CASTLE_DEATH_SND = "explosion";
+    #endregion
 
-	// Dynamic map constants
+    #region Mage
+
+    public const float MAGE_AI_RANGE = 9;
+    public const float MAGE_AI_ANGLE_RANGE = 15;
+    public const int MAGE_AI_SHOT_THRESHOLD = 5;
+    public const float MAGE_HEALTH = 100;
+    public const float MAGE_ENERGY = 100;
+    public const float MAGE_MOVE_SPEED = 4;
+    public const float MAGE_JUMP_SPEED = 9;
+    public const float MAGE_REGEN = 5;
+    public const float MAGE_GCD = 0.5f;
+    public const float MAGE_SPECIAL_CD = 40f;
+    public const string MAGE_SPECIAL_SND = "boost";
+
+    // Ice
+    public const float ICE_SPEED = 20;
+    public const float ICE_DAMAGE = 15;
+    public const float ICE_COST = 5;
+    public const string ICE_CAST_SND = "arrowShoot";
+
+    // Meteor
+    public const float METEOR_SPEED = 25;
+    public const float METEOR_DAMAGE = 17;
+    public const float METEOR_COST = 12;
+    public const float METEOR_CD = 10f;
+    public const string METEOR_CAST_SND = "arrowShoot";
+
+    // Lightning
+    public const float LIGHTNING_DAMAGE = 20;
+    public const float LIGHTNING_COST = 30;
+    public const float LIGHTNING_CD = 5f;
+    public const string LIGHTNING_CAST_SND = "arrowShoot";
+
+    #endregion
+
+
+    #region Dynamic Map
+
     public static float[] PARALLAX_LEVELS = {1.3f, 3};
     public const float CLOUD_HEIGHT_MIN = 3;
     public const float CLOUD_HEIGHT_MAX = 11;
@@ -92,7 +127,10 @@ public static class Constants
     public const string GROUND_UNDER_PREFAB = "groundUnder";
     public const string PARALLAX_BACKGROUND_TAG = "ParallaxBack";
 
-	// Time of Day Constants
+    #endregion
+
+    #region Time of Day
+
     // Cycle time is the time in seconds it takes for a full light/darkness cycle to occur
     // Percentages need to add to 0.5 with x2 orange times and x4 fade times
 	public const float CYCLE_TIME = 90; 
@@ -109,12 +147,19 @@ public static class Constants
     public static Color ORANGE_DARKNESS_COLOR = new Color(0, 0, 0, 0.2f);
     public static Color NIGHT_DARKNESS_COLOR = new Color(0, 0, 0, 0.5f);
 
-    // Scene constants
+    #endregion
+
+    // Castles
+    public const float CASTLE_HEALTH = 800;
+    public const string CASTLE_HIT_SND = "hit";
+    public const string CASTLE_DEATH_SND = "explosion";
+
+    // Scenes
     public const string LEVEL_SCENE = "DynamicLevel";
     public const string MAP_SCENE = "Map";
     public const string MAIN_MENU_SCENE = "MainMenu";
 
-    // Animator constants
+    // Animator
     public const string GROUNDED_FLAG = "Grounded";
     public const string XVELOCTIY_FLAG = "XVelocity";
 }

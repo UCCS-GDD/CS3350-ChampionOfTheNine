@@ -40,7 +40,6 @@ public class PauseMenuScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         { open = !open; }
-        Debug.Log(open);
 
         if (open && transform.localPosition.x < OPEN_X)
         { rbody.velocity = new Vector2(SPEED, 0); }

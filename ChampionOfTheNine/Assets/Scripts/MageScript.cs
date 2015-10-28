@@ -24,23 +24,34 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void Start()
     {
-        // Needs changing to mage
         // Sets fields
-        maxHealth = Constants.RANGER_HEALTH;
-        moveSpeed = Constants.RANGER_MOVE_SPEED;
-        jumpSpeed = Constants.RANGER_JUMP_SPEED;
-        maxEnergy = Constants.RANGER_ENERGY;
-        gCDTimer = new Timer(Constants.RANGER_GCD);
-        powerCDTimer = new Timer(Constants.PIERCE_ABILITY_CD);
-        specialCDTimer = new Timer(Constants.RANGER_BOOST_CD);
-        secondaryCDTimer = new Timer(Constants.EXP_ARROW_CD);
+        maxHealth = Constants.MAGE_HEALTH;
+        moveSpeed = Constants.MAGE_MOVE_SPEED;
+        jumpSpeed = Constants.MAGE_JUMP_SPEED;
+        maxEnergy = Constants.MAGE_ENERGY;
+        gCDTimer = new Timer(Constants.MAGE_GCD);
+        secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
+        powerCDTimer = new Timer(Constants.METEOR_CD);
+        specialCDTimer = new Timer(Constants.MAGE_SPECIAL_CD);
 
         // Loads sounds
-        mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SHOOT_SND);
-        secondaryAbilitySound = mainAbilitySound;
-        powerAbilitySound = mainAbilitySound;
-        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SPECIAL_SND);
+        mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.ICE_CAST_SND);
+        secondaryAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.LIGHTNING_CAST_SND);
+        powerAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.METEOR_CAST_SND);
+        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.MAGE_SPECIAL_SND);
         base.Start();
+    }
+
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
+    public override void UpdateChar()
+    {
+        base.UpdateChar();
+
+        // Updates energy
+        if (Energy < maxEnergy)
+        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.MAGE_REGEN * Time.deltaTime)); }
     }
 
     /// <summary>
@@ -48,7 +59,9 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility()
     {
-        
+        ProjScript projectile = FireProjectileAttack(ice, Constants.ICE_COST, gCDTimer);
+        if (projectile != null)
+        { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
 
     /// <summary>
