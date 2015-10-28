@@ -88,15 +88,15 @@ public class RangerScript : CharacterScript
     }
 
     /// <summary>
-    /// Fires a projectile attack
+    /// Fires a projectile attack straight forward from the character
     /// </summary>
     /// <param name="prefab">the projectile prefab</param>
     /// <param name="energyCost">the energy cost of the attack</param>
     /// <param name="cooldown">the cooldown timer to start</param>
     /// <returns>the projectile, if one was fired</returns>
-    protected override ProjScript FireProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
+    protected override ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
     {
-        ProjScript projectile = base.FireProjectileAttack(prefab, energyCost, cooldown);
+        ProjScript projectile = base.FireStraightProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
         {
             Utilities.PlaySoundPitched(audioSource, mainAbilitySound);
@@ -136,7 +136,7 @@ public class RangerScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility() 
     {
-        FireProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer);
+        FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class RangerScript : CharacterScript
     {
         if (!secondaryCDTimer.IsRunning)
         {
-            ProjScript projectile = FireProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer);
+            ProjScript projectile = FireStraightProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer);
             if (projectile != null)
             { secondaryCDTimer.Start(); }
         }
@@ -165,7 +165,7 @@ public class RangerScript : CharacterScript
             { pierceShootWindow.Start(); }
 
             // Fires arrow
-            FireProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD);
+            FireStraightProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD);
         }
     }
 

@@ -91,11 +91,13 @@ public static class Constants
     public const string ICE_CAST_SND = "arrowShoot";
 
     // Meteor
-    public const float METEOR_SPEED = 25;
-    public const float METEOR_DAMAGE = 17;
-    public const float METEOR_COST = 12;
-    public const float METEOR_CD = 10f;
+    public const float METEOR_SPEED = 20;
+    public const float METEOR_DAMAGE = 20;
+    public const float METEOR_COST = 3;
+    public const float METEOR_CD = 0.5f;
+    public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "arrowShoot";
+    public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
 
     // Lightning
     public const float LIGHTNING_DAMAGE = 20;

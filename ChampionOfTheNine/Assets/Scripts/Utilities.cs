@@ -24,4 +24,20 @@ public static class Utilities
         source.pitch = 1 + Random.Range(-Constants.PITCH_CHANGE, Constants.PITCH_CHANGE);
         source.PlayOneShot(clip);
     }
+
+    /// <summary>
+    /// Gets the angle between two points
+    /// </summary>
+    /// <param name="start">the start point</param>
+    /// <param name="end">the end point</param>
+    /// <returns>the angle, in degrees</returns>
+    public static float GetAngleDegrees(Vector2 start, Vector2 end)
+    {
+        float angle = Mathf.Asin((end.y - start.y) / Vector2.Distance(end, start));
+        if (end.x - start.x < 0)
+        { angle = Mathf.PI - angle; }
+        angle *= Mathf.Rad2Deg;
+
+        return angle;
+    }
 }

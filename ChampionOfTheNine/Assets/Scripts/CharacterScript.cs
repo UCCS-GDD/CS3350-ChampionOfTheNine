@@ -26,8 +26,8 @@ public abstract class CharacterScript : DamagableObjectScript
     protected float maxEnergy;
     protected float moveSpeed;
     protected float jumpSpeed;
+    protected string targetTag;
     float energy;
-    string targetTag;
 
     Rigidbody2D rbody;
     Animator animator;
@@ -212,6 +212,26 @@ public abstract class CharacterScript : DamagableObjectScript
     }
 
     /// <summary>
+    /// Fires a projectile attack straight forward from the character
+    /// </summary>
+    /// <param name="prefab">the projectile prefab</param>
+    /// <param name="energyCost">the energy cost of the attack</param>
+    /// <param name="cooldown">the cooldown timer to start</param>
+    /// <returns>the projectile, if one was fired</returns>
+    protected virtual ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
+    {
+        ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
+        if (projectile != null)
+        {
+            float shotAngle = arm.transform.rotation.eulerAngles.z;
+            if (transform.localScale.x < 0)
+            { shotAngle = 180 - shotAngle; }
+            projectile.Initialize(fireLocation.position, shotAngle, targetTag);
+        }
+        return projectile;
+    }
+
+    /// <summary>
     /// Fires a projectile attack
     /// </summary>
     /// <param name="prefab">the projectile prefab</param>
@@ -222,14 +242,10 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         ProjScript projScript = null;
         if (energy >= energyCost)
-        { 
+        {
             // Creates the projectile
             GameObject projectile = GameObject.Instantiate(prefab);
             projScript = projectile.GetComponent<ProjScript>();
-            float shotAngle = arm.transform.rotation.eulerAngles.z;
-            if (transform.localScale.x < 0)
-            { shotAngle = 180 - shotAngle; }
-            projScript.Initialize(fireLocation.position, shotAngle, targetTag);
 
             // Subtracts energy and starts timer
             energy -= energyCost;

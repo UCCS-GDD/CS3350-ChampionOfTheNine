@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d814ba7df3976694c93c7916f987549f
-timeCreated: 1446007928
+timeCreated: 1446052549
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -57,31 +57,31 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 163
-        height: 165
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 166
+        height: 114
+      alignment: 9
+      pivot: {x: .335484475, y: .49385795}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: meteor_fire_1
       rect:
         serializedVersion: 2
-        x: 190
-        y: 1
-        width: 166
-        height: 165
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 168
+        y: 0
+        width: 165
+        height: 114
+      alignment: 9
+      pivot: {x: .321755528, y: .500000656}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: meteor_fire_2
       rect:
         serializedVersion: 2
-        x: 367
+        x: 331
         y: 0
-        width: 185
-        height: 166
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 182
+        height: 114
+      alignment: 9
+      pivot: {x: .323014826, y: .500000238}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

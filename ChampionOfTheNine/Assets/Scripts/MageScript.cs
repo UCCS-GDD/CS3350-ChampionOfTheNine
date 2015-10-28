@@ -59,7 +59,7 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility()
     {
-        ProjScript projectile = FireProjectileAttack(ice, Constants.ICE_COST, gCDTimer);
+        ProjScript projectile = FireStraightProjectileAttack(ice, Constants.ICE_COST, gCDTimer);
         if (projectile != null)
         { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
@@ -77,7 +77,17 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FirePowerAbility()
     {
-        
+        if (!powerCDTimer.IsRunning)
+        {
+            ProjScript projectile = FireProjectileAttack(meteor, Constants.METEOR_COST, gCDTimer);
+            if (projectile != null)
+            {
+                Utilities.PlaySoundPitched(audioSource, powerAbilitySound);
+                powerCDTimer.Start();
+                Vector2 shotLocation = (Vector2)transform.position + Constants.METEOR_START_LOC;
+                projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag);
+            }
+        }
     }
 
     /// <summary>
