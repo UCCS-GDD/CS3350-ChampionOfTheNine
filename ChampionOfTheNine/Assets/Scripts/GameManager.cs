@@ -30,6 +30,7 @@ public class GameManager
             Serializer.Serialize(Constants.SAVES_FILE, saves);
         }
         CurrentSaveName = "";
+        Paused = false;
     }
 
     #endregion
@@ -60,6 +61,9 @@ public class GameManager
     /// Gets or sets the current save name
     /// </summary>
     public string CurrentSaveName
+    { get; set; }
+
+    public bool Paused
     { get; set; }
 
     #endregion

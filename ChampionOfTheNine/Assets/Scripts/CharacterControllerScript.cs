@@ -78,7 +78,10 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        character.UpdateChar();
+        if (!GameManager.Instance.Paused)
+        {
+            character.UpdateChar();
+        }
     }
 
     /// <summary>

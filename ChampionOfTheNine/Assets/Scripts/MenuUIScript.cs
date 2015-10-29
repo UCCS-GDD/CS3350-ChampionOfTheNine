@@ -43,13 +43,13 @@ public class MenuUIScript : MonoBehaviour
 
     #region Private Methods
 
-    ///// <summary>
-    ///// Start is called once on object creation
-    ///// </summary>
-    //private void Start()
-    //{
-
-    //}
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    private void Start()
+    {
+        GameManager.Instance.Paused = false;
+    }
 
     ///// <summary>
     ///// Update is called once per frame

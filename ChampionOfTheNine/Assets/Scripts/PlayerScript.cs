@@ -74,42 +74,45 @@ public class PlayerScript : CharacterControllerScript
     /// </summary>
     protected override void Update()
     {
-        base.Update();
-
-        // Handles horizontal movement
-        movement(Input.GetAxis("Horizontal"));
-
-        // Handles jumping
-        if (Input.GetButtonDown("Jump") && character.Grounded)
-        { jumpAbility(); }
-
-        // Handles arm movement
-        armDirection(Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition));
-
-        // Handles firing
-        if (Input.GetAxis("SpecialFire") > 0)
-        { specialAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("PowerFire") > 0)
-        { powerAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("SecondaryFire") > 0)
-        { secondaryAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("MainFire") > 0)
-        { mainAbility(); }
-
-        // Moves the camera
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
-
-        // Updates cooldown bars
-        foreach (Image bar in gcdBars)
-        { bar.fillAmount = 1 - (character.GCDTimer.ElapsedSeconds / character.GCDTimer.TotalSeconds); }
-        secondaryCDBar.fillAmount = 1 - (character.SecondaryCDTimer.ElapsedSeconds / character.SecondaryCDTimer.TotalSeconds);
-        powerCDBar.fillAmount = 1 - (character.PowerCDTimer.ElapsedSeconds / character.PowerCDTimer.TotalSeconds);
-        specialCDBar.fillAmount = 1 - (character.SpecialCDTimer.ElapsedSeconds / character.SpecialCDTimer.TotalSeconds);
-
-        if (darknessTimer.IsRunning)
+        if (!GameManager.Instance.Paused)
         {
-            darknessTimer.Update();
-            darkness.color = new Color(0, 0, 0, darknessTimer.ElapsedSeconds / darknessTimer.TotalSeconds);
+            base.Update();
+
+            // Handles horizontal movement
+            movement(Input.GetAxis("Horizontal"));
+
+            // Handles jumping
+            if (Input.GetButtonDown("Jump") && character.Grounded)
+            { jumpAbility(); }
+
+            // Handles arm movement
+            armDirection(Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition));
+
+            // Handles firing
+            if (Input.GetAxis("SpecialFire") > 0)
+            { specialAbility(); }
+            if (!character.GCDTimer.IsRunning && Input.GetAxis("PowerFire") > 0)
+            { powerAbility(); }
+            if (!character.GCDTimer.IsRunning && Input.GetAxis("SecondaryFire") > 0)
+            { secondaryAbility(); }
+            if (!character.GCDTimer.IsRunning && Input.GetAxis("MainFire") > 0)
+            { mainAbility(); }
+
+            // Moves the camera
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
+
+            // Updates cooldown bars
+            foreach (Image bar in gcdBars)
+            { bar.fillAmount = 1 - (character.GCDTimer.ElapsedSeconds / character.GCDTimer.TotalSeconds); }
+            secondaryCDBar.fillAmount = 1 - (character.SecondaryCDTimer.ElapsedSeconds / character.SecondaryCDTimer.TotalSeconds);
+            powerCDBar.fillAmount = 1 - (character.PowerCDTimer.ElapsedSeconds / character.PowerCDTimer.TotalSeconds);
+            specialCDBar.fillAmount = 1 - (character.SpecialCDTimer.ElapsedSeconds / character.SpecialCDTimer.TotalSeconds);
+
+            if (darknessTimer.IsRunning)
+            {
+                darknessTimer.Update();
+                darkness.color = new Color(0, 0, 0, darknessTimer.ElapsedSeconds / darknessTimer.TotalSeconds);
+            }
         }
     }
 

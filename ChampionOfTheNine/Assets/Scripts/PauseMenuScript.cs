@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,10 +11,14 @@ public class PauseMenuScript : MonoBehaviour
     #region Fields
 
     bool open = false;
-    const float NOT_OPEN_X = -13.5f;
-    const float OPEN_X = -3.78f;
+    //const float NOT_OPEN_X = -13.5f;
+    //const float OPEN_X = -3.78f;  WIDESCREEN
+
+    const float NOT_OPEN_X = -12.9f;
+    const float OPEN_X = -3.37f; 
     const float SPEED = 10;
     Rigidbody2D rbody;
+    [SerializeField]Image darkness;
 
     #endregion
 
@@ -39,7 +44,14 @@ public class PauseMenuScript : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        { open = !open; }
+        { 
+            open = !open;
+            GameManager.Instance.Paused = open;
+            if (open)
+	        { darkness.color = new Color(0, 0, 0, 0.6f); }
+            else
+            { darkness.color = new Color(0, 0, 0, 0); }
+        }
 
         if (open && transform.localPosition.x < OPEN_X)
         { rbody.velocity = new Vector2(SPEED, 0); }

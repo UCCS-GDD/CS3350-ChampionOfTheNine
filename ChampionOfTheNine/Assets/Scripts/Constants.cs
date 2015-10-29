@@ -108,13 +108,12 @@ public static class Constants
 
     #endregion
 
-
     #region Dynamic Map
 
     public static float[] PARALLAX_LEVELS = {1.3f, 3};
-    public const float CLOUD_HEIGHT_MIN = 3;
+    public const float CLOUD_HEIGHT_MIN = 3.5f;
     public const float CLOUD_HEIGHT_MAX = 11;
-	public const float CLOUD_DENSITY = 0.3f;
+	public const float CLOUD_DENSITY = 0.2f;
 	public const float CLOUD_SCALE_MIN = 0.5f;
 	public const float CLOUD_SCALE_MAX = 1.5f;
 	public const float ELEVATION_CHANGE_WEIGHT = 0.35f; // low value = flatter map, high value = more change. 0 - 1
@@ -123,9 +122,9 @@ public static class Constants
 	public const float HEIGHT_DIFFERENCE_OFFSET = 0.4f;
 	public const float PARALLAX_SCALE = 0.01f;
     public const int PLATFORM_LENGTH = 10;
-    public const int MAP_LENGTH = 80;
+    public const int MAP_LENGTH = 60;
     public const int BASE_LEVEL = 5;
-    public const int SOIL_HEIGHT = 9;
+    public const int SOIL_HEIGHT = 8;
     public const string GROUND_PREFAB = "ground";
     public const string GROUND_UNDER_PREFAB = "groundUnder";
     public const string PARALLAX_BACKGROUND_TAG = "ParallaxBack";

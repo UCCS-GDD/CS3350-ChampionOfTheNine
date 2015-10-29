@@ -103,25 +103,28 @@ public class WorldScript : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Updates the parallax backgrounds
-        if (playerLocation != player.transform.position)
+        if (!GameManager.Instance.Paused)
         {
-            float xDirection = Mathf.Sign(player.transform.position.x - playerLocation.x);
-            for (int i = 0; i < parallaxBackgrounds.Length; i++)
+            // Updates the parallax backgrounds
+            if (playerLocation != player.transform.position)
             {
-                parallaxBackgrounds[i].transform.position = new Vector2(parallaxBackgrounds[i].transform.position.x + 
-                    (Constants.PARALLAX_SCALE * Constants.PARALLAX_LEVELS[i] * xDirection), 6);
+                float xDirection = Mathf.Sign(player.transform.position.x - playerLocation.x);
+                for (int i = 0; i < parallaxBackgrounds.Length; i++)
+                {
+                    parallaxBackgrounds[i].transform.position = new Vector2(parallaxBackgrounds[i].transform.position.x +
+                        (Constants.PARALLAX_SCALE * Constants.PARALLAX_LEVELS[i] * xDirection), 6);
+                }
+                playerLocation = player.transform.position;
             }
-            playerLocation = player.transform.position;
-        }
 
-        // Updates the sky
-        skyTimer.Update();
-        starrySky.transform.Rotate(0, 0, -360 * (Time.deltaTime / Constants.CYCLE_TIME));
-        float timePct = skyTimer.ElapsedSeconds / skyTimer.TotalSeconds;
-        darkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, timePct);
-        sky.color = Color.Lerp(skyStates[currSkyState].StartSkyColor, skyStates[currSkyState].EndSkyColor, timePct);
-        BGM.volume = Mathf.Lerp(skyStates[currSkyState].StartVolume, skyStates[currSkyState].EndVolume, timePct);
+            // Updates the sky
+            skyTimer.Update();
+            starrySky.transform.Rotate(0, 0, -360 * (Time.deltaTime / Constants.CYCLE_TIME));
+            float timePct = skyTimer.ElapsedSeconds / skyTimer.TotalSeconds;
+            darkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, timePct);
+            sky.color = Color.Lerp(skyStates[currSkyState].StartSkyColor, skyStates[currSkyState].EndSkyColor, timePct);
+            BGM.volume = Mathf.Lerp(skyStates[currSkyState].StartVolume, skyStates[currSkyState].EndVolume, timePct);
+        }
     }
 
     /// <summary>
@@ -139,7 +142,8 @@ public class WorldScript : MonoBehaviour
             for (int i = 0; i < (int)(Constants.MAP_LENGTH * Constants.CLOUD_DENSITY); i++)
             {
                 horizontalPosition = Random.Range(0, Constants.MAP_LENGTH);
-                verticalPosition = Random.Range((float)levels[(int)horizontalPosition] + 3.00f, (float)levels[(int)horizontalPosition] + 12.00f);
+                verticalPosition = Random.Range((float)levels[(int)horizontalPosition] + Constants.CLOUD_HEIGHT_MIN,
+                    (float)levels[(int)horizontalPosition] + Constants.CLOUD_HEIGHT_MAX);
                 GameObject newObject = Instantiate(cloudPrefabs[Random.Range(0, cloudPrefabs.Length)]) as GameObject;
                 newObject.transform.SetParent(bg.transform);
                 newObject.transform.position = new Vector3(horizontalPosition, verticalPosition, 2);
