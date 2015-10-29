@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     #region Fields
 
     [SerializeField]GameObject enemyRanger;
+    [SerializeField]GameObject enemyMage;
 
     #endregion
 
@@ -28,7 +29,10 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private void SpawnEnemy()
     {
-        Instantiate(enemyRanger, transform.position, transform.rotation);
+        GameObject spawn = enemyRanger;
+        if (Random.Range(0, 10) < 5)
+        { spawn = enemyMage; }
+        Instantiate(spawn, transform.position, transform.rotation);
     }
 
     #endregion

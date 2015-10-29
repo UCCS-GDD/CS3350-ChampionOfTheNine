@@ -73,12 +73,12 @@ public static class Constants
     #region Mage
 
     public const float MAGE_AI_RANGE = 9;
-    public const float MAGE_AI_ANGLE_RANGE = 15;
+    public const float MAGE_AI_ANGLE_RANGE = 8;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 100;
     public const float MAGE_ENERGY = 500;
     public const float MAGE_MOVE_SPEED = 4;
-    public const float MAGE_JUMP_SPEED = 9;
+    public const float MAGE_JUMP_SPEED = 10;
     public const float MAGE_REGEN = 5;
     public const float MAGE_GCD = 0.2f;
     public const float MAGE_SPECIAL_CD = 40f;
@@ -86,7 +86,7 @@ public static class Constants
 
     // Ice
     public const float ICE_SPEED = 20;
-    public const float ICE_DAMAGE = 15;
+    public const float ICE_DAMAGE = 5;
     public const float ICE_COST = 5;
     public const string ICE_CAST_SND = "arrowShoot";
 
