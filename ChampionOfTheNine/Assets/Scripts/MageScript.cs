@@ -14,6 +14,7 @@ public class MageScript : CharacterScript
     [SerializeField]GameObject ice;
     [SerializeField]GameObject meteor;
     [SerializeField]GameObject lightning;
+    [SerializeField]GameObject beam;
 
     LightningSpellScript lightningProj = null;
     Timer lightningTimer;
@@ -115,7 +116,36 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireSpecialAbility()
     {
+        if (!gCDTimer.IsRunning)
+        {
+            gCDTimer.Start();
 
+            // Calculate random beam
+            Vector2 endLocation = (Vector2)transform.position + new Vector2(4, 0);
+            float value = 0.01f;
+            float turnSpeed = Random.Range(0.1f, 0.3f);
+            float heightVal = 1;
+            Vector2 newLocation = fireLocation.position;
+            float angle = 90;
+            int i = 0;
+            while (angle > -89 && i < 100)
+            {
+                angle = Mathf.Lerp(90, -90, value);
+                Debug.Log(angle);
+                Instantiate(beam, newLocation, Quaternion.Euler(0, 0, angle));
+                newLocation += new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                if (angle > 0)
+                {
+                    value += turnSpeed * Mathf.Lerp(0, heightVal, value);
+                }
+                else
+                {
+                    value += turnSpeed * Mathf.Lerp(0, heightVal, 1 - value);
+                }
+                
+                i++;
+            }
+        }
     }
 
     /// <summary>

@@ -80,7 +80,7 @@ public static class Constants
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 9;
     public const float MAGE_REGEN = 5;
-    public const float MAGE_GCD = 0.5f;
+    public const float MAGE_GCD = 0.2f;
     public const float MAGE_SPECIAL_CD = 40f;
     public const string MAGE_SPECIAL_SND = "boost";
 
