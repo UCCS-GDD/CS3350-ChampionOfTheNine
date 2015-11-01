@@ -27,7 +27,7 @@ public class ScrollScript : MonoBehaviour
         {
             content.text = value;
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, LayoutUtility.GetPreferredHeight(content.rectTransform) + 
-                (-content.rectTransform.anchoredPosition.y * 2));
+                (-content.rectTransform.anchoredPosition.y * 2) + 30);
         }
     }
 
@@ -38,7 +38,7 @@ public class ScrollScript : MonoBehaviour
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         rect = (RectTransform)transform;
     }
