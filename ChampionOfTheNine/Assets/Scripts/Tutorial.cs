@@ -34,15 +34,20 @@ public class Tutorial : MonoBehaviour {
 //		stage++;
 //	}
 
-	protected void CompleteStage(int index)
-	{
-		isCompleted[index] = true;
-	}
+//	protected void CompleteStage(int index)
+//	{
+//		isCompleted[index] = true;
+//	}
 
-//	protected bool CheckStage(int index)
+//	public bool CheckStage(int index)
 //	{
 //		return isCompleted[index];
 //	}
+
+	public int GetStage()
+	{
+		return (int)stage;
+	}
 
 	protected void ChangeText(string text)
 	{
