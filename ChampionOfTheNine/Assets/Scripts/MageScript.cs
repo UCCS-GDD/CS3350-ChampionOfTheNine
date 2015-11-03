@@ -119,31 +119,25 @@ public class MageScript : CharacterScript
         if (!gCDTimer.IsRunning)
         {
             gCDTimer.Start();
+            Vector2 topLocation = new Vector2(3, 5) + (Vector2)fireLocation.position;
+            Vector2 location = fireLocation.position;
+            int totalSegments = 5;
 
             // Calculate random beam
-            Vector2 endLocation = (Vector2)transform.position + new Vector2(4, 0);
-            float value = 0.01f;
-            float turnSpeed = Random.Range(0.1f, 0.3f);
-            float heightVal = 1;
-            Vector2 newLocation = fireLocation.position;
-            float angle = 90;
-            int i = 0;
-            while (angle > -89 && i < 100)
+            //Vector2 endLocation = (Vector2)transform.position + new Vector2(4, 0);
+            //float value = 0.01f;
+            //float turnSpeed = Random.Range(0.1f, 0.3f);
+            //float heightVal = 1;
+            //float angle = 90;
+            //int i = 0;
+            for (float i = 1; i <= totalSegments; i++)
             {
-                angle = Mathf.Lerp(90, -90, value);
-                Debug.Log(angle);
-                Instantiate(beam, newLocation, Quaternion.Euler(0, 0, angle));
-                newLocation += new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                if (angle > 0)
-                {
-                    value += turnSpeed * Mathf.Lerp(0, heightVal, value);
-                }
-                else
-                {
-                    value += turnSpeed * Mathf.Lerp(0, heightVal, 1 - value);
-                }
-                
-                i++;
+                Vector2 oldLocation = location;
+                location = Vector2.Lerp(fireLocation.position, topLocation, i / totalSegments);
+                float distance = Vector2.Distance(oldLocation, location);
+                float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
+                GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
+                beamInst.transform.localScale = new Vector3(distance, 1, 1);
             }
         }
     }
