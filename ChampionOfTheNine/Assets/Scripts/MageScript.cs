@@ -119,21 +119,28 @@ public class MageScript : CharacterScript
         if (!gCDTimer.IsRunning)
         {
             gCDTimer.Start();
-            Vector2 topLocation = new Vector2(3, 5) + (Vector2)fireLocation.position;
+            float dist = Random.Range(3f, 7f);
+            Vector2 topLocation = new Vector2(dist / 2, Random.Range(2, 5f)) + (Vector2)fireLocation.position;
+            Vector2 endLocation = (Vector2)fireLocation.position + new Vector2(dist, 0);
             Vector2 location = fireLocation.position;
-            int totalSegments = 5;
+            int totalSegments = 6;
 
             // Calculate random beam
-            //Vector2 endLocation = (Vector2)transform.position + new Vector2(4, 0);
-            //float value = 0.01f;
-            //float turnSpeed = Random.Range(0.1f, 0.3f);
-            //float heightVal = 1;
-            //float angle = 90;
-            //int i = 0;
             for (float i = 1; i <= totalSegments; i++)
             {
                 Vector2 oldLocation = location;
-                location = Vector2.Lerp(fireLocation.position, topLocation, i / totalSegments);
+                location.x = Mathf.Lerp(fireLocation.position.x, topLocation.x, i / totalSegments);
+                location.y = Mathf.Lerp(fireLocation.position.y, topLocation.y, 1 - Mathf.Pow(0.5f, i));
+                float distance = Vector2.Distance(oldLocation, location);
+                float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
+                GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
+                beamInst.transform.localScale = new Vector3(distance, 1, 1);
+            }
+            for (float i = totalSegments; i >= 0; i--)
+            {
+                Vector2 oldLocation = location;
+                location.x = Mathf.Lerp(endLocation.x, topLocation.x, i / totalSegments);
+                location.y = Mathf.Lerp(endLocation.y, topLocation.y, 1 - Mathf.Pow(0.5f, i));
                 float distance = Vector2.Distance(oldLocation, location);
                 float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
                 GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
