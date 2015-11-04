@@ -18,6 +18,10 @@ public class MageScript : CharacterScript
 
     LightningSpellScript lightningProj = null;
     Timer lightningTimer;
+    Timer drainTimer;
+    List<SpriteRenderer> beams;
+    List<DamagableObjectScript> drainTargets;
+    Dictionary<Color, Color> beamColors;
 
     #endregion
 
@@ -36,15 +40,22 @@ public class MageScript : CharacterScript
         gCDTimer = new Timer(Constants.MAGE_GCD);
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
         powerCDTimer = new Timer(Constants.METEOR_CD);
-        specialCDTimer = new Timer(Constants.MAGE_SPECIAL_CD);
+        specialCDTimer = new Timer(Constants.DRAIN_CD);
         lightningTimer = new Timer(Constants.LIGHTNING_CAST_TIME);
         lightningTimer.Register(LightningTimerFinished);
+        beams = new List<SpriteRenderer>();
+        drainTimer = new Timer(Constants.DRAIN_TIME);
+        drainTimer.Register(DrainTimerFinished);
+        drainTargets = new List<DamagableObjectScript>();
+        beamColors = new Dictionary<Color, Color>();
+        beamColors.Add(Constants.BEAM_COLOR_1, Constants.BEAM_COLOR_2);
+        beamColors.Add(Constants.BEAM_COLOR_2, Constants.BEAM_COLOR_1);
 
         // Loads sounds
         mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.ICE_CAST_SND);
         secondaryAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.LIGHTNING_CAST_SND);
         powerAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.METEOR_CAST_SND);
-        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.MAGE_SPECIAL_SND);
+        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.DRAIN_SND);
         base.Start();
     }
 
@@ -59,11 +70,39 @@ public class MageScript : CharacterScript
         if (Energy < maxEnergy)
         { Energy = Mathf.Min(maxEnergy, Energy + (Constants.MAGE_REGEN * Time.deltaTime)); }
 
+        // Updates lightning
         if (lightningProj != null)
         {
-            lightningProj.SetLocationAndDirection(fireLocation.position, ShotAngle);
-            Energy -= (Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime);
-            lightningTimer.Update();
+            if (Energy >= Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime)
+            {
+                lightningProj.SetLocationAndDirection(fireLocation.position, ShotAngle);
+                Energy -= (Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime);
+                lightningTimer.Update();
+            }
+            else
+            { lightningTimer.Finish(); }
+        }
+
+        // Updates beams
+        if (drainTimer.IsRunning)
+        {
+            // Updates flash
+            if (drainTimer.ElapsedSeconds % Constants.DRAIN_FLASH_TIME < Time.deltaTime)
+            {
+                foreach (SpriteRenderer beam in beams)
+                { beam.color = beamColors[beam.color]; }
+            }
+            
+            // Damages targets and increases mana
+            for (int i = drainTargets.Count - 1; i >= 0; i--)
+            {
+                if (drainTargets[i].Damage(Constants.DRAIN_DAMAGE * (Time.deltaTime / Constants.DRAIN_TIME)))
+                { Energy = Mathf.Min(maxEnergy, Energy + (Constants.DRAIN_MANA_PER_TARGET * (Time.deltaTime / Constants.DRAIN_TIME))); }
+                else
+                { drainTargets.RemoveAt(i); }
+            }
+
+            drainTimer.Update();
         }
     }
 
@@ -116,35 +155,31 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireSpecialAbility()
     {
-        if (!gCDTimer.IsRunning)
+        if (!gCDTimer.IsRunning && !specialCDTimer.IsRunning && !drainTimer.IsRunning)
         {
             gCDTimer.Start();
-            float dist = Random.Range(3f, 7f);
-            Vector2 topLocation = new Vector2(dist / 2, Random.Range(2, 5f)) + (Vector2)fireLocation.position;
-            Vector2 endLocation = (Vector2)fireLocation.position + new Vector2(dist, 0);
-            Vector2 location = fireLocation.position;
-            int totalSegments = 6;
+            drainTimer.Start();
+            specialCDTimer.Start();
 
-            // Calculate random beam
-            for (float i = 1; i <= totalSegments; i++)
+            // Send beams to all nearby enemies
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(targetTag);
+            foreach (GameObject obj in enemies)
             {
-                Vector2 oldLocation = location;
-                location.x = Mathf.Lerp(fireLocation.position.x, topLocation.x, i / totalSegments);
-                location.y = Mathf.Lerp(fireLocation.position.y, topLocation.y, 1 - Mathf.Pow(0.5f, i));
-                float distance = Vector2.Distance(oldLocation, location);
-                float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
-                GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
-                beamInst.transform.localScale = new Vector3(distance, 1, 1);
-            }
-            for (float i = totalSegments; i >= 0; i--)
-            {
-                Vector2 oldLocation = location;
-                location.x = Mathf.Lerp(endLocation.x, topLocation.x, i / totalSegments);
-                location.y = Mathf.Lerp(endLocation.y, topLocation.y, 1 - Mathf.Pow(0.5f, i));
-                float distance = Vector2.Distance(oldLocation, location);
-                float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
-                GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
-                beamInst.transform.localScale = new Vector3(distance, 1, 1);
+                if (Vector2.Distance(fireLocation.position, obj.transform.position) < Constants.DRAIN_RANGE)
+                {
+                    drainTargets.Add(obj.GetComponent<DamagableObjectScript>());
+                    Vector2 topLocation = new Vector2((obj.transform.position.x - fireLocation.position.x) / 2,
+                        Mathf.Max(obj.transform.position.y, fireLocation.position.y) + Random.Range(Constants.DRAIN_MIN_HEIGHT, 
+                        Constants.DRAIN_MAX_HEIGHT)) + (Vector2)fireLocation.position;
+                    Vector2 location = fireLocation.position;
+                    bool goingLeft = fireLocation.position.x > obj.transform.position.x;
+
+                    // Calculate beam
+                    for (float i = 1; i <= Constants.DRAIN_SEGMENTS; i++)
+                    { CalcAndSpawnBeam(i, ref location, topLocation, fireLocation.position, goingLeft); }
+                    for (float i = Constants.DRAIN_SEGMENTS - 1; i >= 0; i--)
+                    { CalcAndSpawnBeam(i, ref location, topLocation, obj.transform.position, goingLeft); }
+                }
             }
         }
     }
@@ -157,6 +192,38 @@ public class MageScript : CharacterScript
         Destroy(lightningProj.gameObject);
         lightningProj = null;
         gCDTimer.Start();
+    }
+
+    /// <summary>
+    /// Handles the drain timer finishing
+    /// </summary>
+    protected virtual void DrainTimerFinished()
+    {
+        foreach (SpriteRenderer beam in beams)
+        { Destroy(beam.gameObject); }
+        beams.Clear();
+        drainTargets.Clear();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="num"></param>
+    /// <param name="location"></param>
+    /// <param name="topLocation"></param>
+    /// <param name="endpointLocation"></param>
+    protected void CalcAndSpawnBeam(float num, ref Vector2 location, Vector2 topLocation, Vector2 endpointLocation, bool goingLeft)
+    {
+        Vector2 oldLocation = location;
+        location.x = Mathf.Lerp(endpointLocation.x, topLocation.x, num / Constants.DRAIN_SEGMENTS);
+        location.y = Mathf.Lerp(endpointLocation.y, topLocation.y, 1 - Mathf.Pow(0.5f, num));
+        float distance = Vector2.Distance(oldLocation, location);
+        float angle = Mathf.Asin((location.y - oldLocation.y) / distance) * Mathf.Rad2Deg;
+        if (goingLeft)
+        { angle = 180 - angle; }
+        GameObject beamInst = (GameObject)Instantiate(beam, oldLocation, Quaternion.Euler(0, 0, angle));
+        beamInst.transform.localScale = new Vector3(distance, 1, 1);
+        beams.Add(beamInst.GetComponent<SpriteRenderer>());
     }
 
     #endregion

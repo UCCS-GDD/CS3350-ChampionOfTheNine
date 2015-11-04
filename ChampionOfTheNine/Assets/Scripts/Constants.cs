@@ -75,25 +75,23 @@ public static class Constants
     public const float MAGE_AI_RANGE = 9;
     public const float MAGE_AI_ANGLE_RANGE = 8;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
-    public const float MAGE_HEALTH = 100;
+    public const float MAGE_HEALTH = 90;
     public const float MAGE_ENERGY = 500;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
     public const float MAGE_REGEN = 5;
-    public const float MAGE_GCD = 0.2f;
-    public const float MAGE_SPECIAL_CD = 40f;
-    public const string MAGE_SPECIAL_SND = "boost";
+    public const float MAGE_GCD = 0.4f;
 
     // Ice
     public const float ICE_SPEED = 20;
-    public const float ICE_DAMAGE = 5;
+    public const float ICE_DAMAGE = 10;
     public const float ICE_COST = 5;
     public const string ICE_CAST_SND = "arrowShoot";
 
     // Meteor
     public const float METEOR_SPEED = 20;
     public const float METEOR_DAMAGE = 20;
-    public const float METEOR_COST = 30;
+    public const float METEOR_COST = 50;
     public const float METEOR_CD = MAGE_GCD;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "arrowShoot";
@@ -101,10 +99,24 @@ public static class Constants
 
     // Lightning
     public const float LIGHTNING_DAMAGE = 1;
-    public const float LIGHTNING_COST_PER_SEC = 40;
+    public const float LIGHTNING_COST_PER_SEC = 80;
     public const float LIGHTNING_CD = MAGE_GCD;
     public const float LIGHTNING_CAST_TIME = 0.1f;
     public const string LIGHTNING_CAST_SND = "arrowShoot";
+
+    // Drain
+    public const float DRAIN_TIME = MAGE_GCD;
+    public const float DRAIN_DAMAGE = 80f;
+    public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.2f;
+    public const float DRAIN_CD = 40f;
+    public const float DRAIN_RANGE = 7f;
+    public const float DRAIN_MIN_HEIGHT = 2f;
+    public const float DRAIN_MAX_HEIGHT = 7f;
+    public const float DRAIN_FLASH_TIME = 0.1f;
+    public const int DRAIN_SEGMENTS = 6;
+    public const string DRAIN_SND = "boost";
+    public static Color BEAM_COLOR_1 = new Color(1, 1, 1, 1);
+    public static Color BEAM_COLOR_2 = new Color(1, 1, 1, 0.4f);
 
     #endregion
 

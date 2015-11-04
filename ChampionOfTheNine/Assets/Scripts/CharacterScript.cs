@@ -28,6 +28,7 @@ public abstract class CharacterScript : DamagableObjectScript
     protected float jumpSpeed;
     protected string targetTag;
     float energy;
+    bool frozen;
 
     Rigidbody2D rbody;
     Animator animator;
@@ -44,6 +45,12 @@ public abstract class CharacterScript : DamagableObjectScript
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Gets whether or not the character is frozen
+    /// </summary>
+    public bool Frozen
+    { get { return frozen; } }
 
     /// <summary>
     /// Gets and sets the character's energy, setting the energy bar appropriately
@@ -113,39 +120,53 @@ public abstract class CharacterScript : DamagableObjectScript
     #region Public Methods
 
     /// <summary>
+    /// Freezes or unfreezes the character
+    /// </summary>
+    /// <param name="freeze">freeze or not</param>
+    public virtual void SetFrozen(bool freeze)
+    {
+        if (freeze)
+        { rbody.velocity = Vector2.zero; }
+        frozen = freeze;
+    }
+
+    /// <summary>
     /// Updates the character; not called on normal update cycle, called by controller
     /// </summary>
     public virtual void UpdateChar()
     {
-        try
+        if (!frozen)
         {
-            // Updates cooldown timers
-            gCDTimer.Update();
-            powerCDTimer.Update();
-            secondaryCDTimer.Update();
-            specialCDTimer.Update();
-
-            animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
-
-            // Set jump animation/play sounds
-            if (Grounded)
+            try
             {
-                if (!animator.GetBool(Constants.GROUNDED_FLAG))
+                // Updates cooldown timers
+                gCDTimer.Update();
+                powerCDTimer.Update();
+                secondaryCDTimer.Update();
+                specialCDTimer.Update();
+
+                animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
+
+                // Set jump animation/play sounds
+                if (Grounded)
                 {
-                    animator.SetBool(Constants.GROUNDED_FLAG, true);
-                    Utilities.PlaySoundPitched(audioSource, landSound);
+                    if (!animator.GetBool(Constants.GROUNDED_FLAG))
+                    {
+                        animator.SetBool(Constants.GROUNDED_FLAG, true);
+                        Utilities.PlaySoundPitched(audioSource, landSound);
+                    }
+                }
+                else
+                {
+                    if (animator.GetBool(Constants.GROUNDED_FLAG))
+                    {
+                        animator.SetBool(Constants.GROUNDED_FLAG, false);
+                        Utilities.PlaySoundPitched(audioSource, jumpSound);
+                    }
                 }
             }
-            else
-            {
-                if (animator.GetBool(Constants.GROUNDED_FLAG))
-                {
-                    animator.SetBool(Constants.GROUNDED_FLAG, false);
-                    Utilities.PlaySoundPitched(audioSource, jumpSound);
-                }
-            }
+            catch (NullReferenceException) { }
         }
-        catch (NullReferenceException) { }
     }
 
     /// <summary>
@@ -171,6 +192,7 @@ public abstract class CharacterScript : DamagableObjectScript
     protected override void Start()
     {
         base.Start();
+        frozen = false;
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();

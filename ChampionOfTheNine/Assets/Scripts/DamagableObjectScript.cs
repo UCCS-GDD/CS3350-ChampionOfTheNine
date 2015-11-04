@@ -48,15 +48,22 @@ public abstract class DamagableObjectScript : MonoBehaviour
     /// Damages the character by the given amount
     /// </summary>
     /// <param name="amount">the amount</param>
-    public virtual void Damage(float amount)
+    /// <returns>false if something went wrong, true otherwise</returns>
+    public virtual bool Damage(float amount)
     {
-        // Subtracts from the health and plays sound
-        Health -= amount;
-        Utilities.PlaySoundPitched(audioSource, hitSound);
+        try
+        {
+            // Subtracts from the health and plays sound
+            Health -= amount;
+            Utilities.PlaySoundPitched(audioSource, hitSound);
 
-        // Checks for death
-        if (health <= 0)
-        { Death(); }
+            // Checks for death
+            if (health <= 0)
+            { Death(); }
+        }
+        catch (MissingReferenceException)
+        { return false; }
+        return true;
     }
 
     #endregion
