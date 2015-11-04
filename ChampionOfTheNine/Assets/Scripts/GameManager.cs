@@ -12,6 +12,7 @@ public class GameManager
 
     static GameManager instance;
     Dictionary<string, Savegame> saves;
+    enum CharacterTypes { Knight, Mage, Ranger };
 
     #endregion
 
