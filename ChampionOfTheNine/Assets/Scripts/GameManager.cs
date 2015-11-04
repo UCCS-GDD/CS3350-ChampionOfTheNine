@@ -12,8 +12,9 @@ public class GameManager
 
     static GameManager instance;
     Dictionary<string, Savegame> saves;
-    enum CharacterTypes { Knight, Mage, Ranger };
-
+    public enum CharacterTypes { Knight, Mage, Ranger };
+    private CharacterTypes type;
+    
     #endregion
 
     #region Constructor
@@ -49,6 +50,18 @@ public class GameManager
             { instance = new GameManager(); }
 
             return instance;
+        }
+    }
+
+    public CharacterTypes Type
+    {
+        get
+        {
+            return type;
+        }
+        set
+        {
+            type = value;
         }
     }
 
