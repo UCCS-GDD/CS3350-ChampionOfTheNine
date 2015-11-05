@@ -15,6 +15,7 @@ public class MageScript : CharacterScript
     [SerializeField]GameObject meteor;
     [SerializeField]GameObject lightning;
     [SerializeField]GameObject beam;
+    [SerializeField]AudioSource lightningSound;
 
     LightningSpellScript lightningProj = null;
     Timer lightningTimer;
@@ -132,6 +133,7 @@ public class MageScript : CharacterScript
             {
                 lightningProj = ((GameObject)Instantiate(lightning)).GetComponent<LightningSpellScript>();
                 lightningProj.Initialize(fireLocation.position, ShotAngle, targetTag);
+                lightningSound.Play();
             }
         }
     }
@@ -196,6 +198,7 @@ public class MageScript : CharacterScript
         Destroy(lightningProj.gameObject);
         lightningProj = null;
         gCDTimer.Start();
+        lightningSound.Stop();
     }
 
     /// <summary>

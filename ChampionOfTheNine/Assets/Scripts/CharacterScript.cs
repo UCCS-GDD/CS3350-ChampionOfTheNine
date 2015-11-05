@@ -8,7 +8,6 @@ using System.Collections.Generic;
 /// Abstract parent class for character scripts
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CharacterControllerScript))]
 public abstract class CharacterScript : DamagableObjectScript
 {
     #region Fields

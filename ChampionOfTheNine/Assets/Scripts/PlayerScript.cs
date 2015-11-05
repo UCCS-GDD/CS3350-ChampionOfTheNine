@@ -36,6 +36,10 @@ public class PlayerScript : CharacterControllerScript
     public override void Death()
     {
         WorldScript.Instance.Defeat(gameObject.tag);
+        Destroy(GetComponent<Collider2D>());
+        Destroy(GetComponent<SpriteRenderer>());
+        Destroy(this);
+        Destroy(character.Arm);
     }
 
     /// <summary>

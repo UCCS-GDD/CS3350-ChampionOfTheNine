@@ -77,43 +77,43 @@ public static class Constants
 
     public const string MAGE_PLAYER_PREFAB = "MagePlayer";
     public const float MAGE_AI_RANGE = 9;
-    public const float MAGE_AI_ANGLE_RANGE = 8;
+    public const float MAGE_AI_ANGLE_RANGE = 10;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 90;
     public const float MAGE_ENERGY = 500;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
-    public const float MAGE_REGEN = 5;
+    public const float MAGE_REGEN = 8;
     public const float MAGE_GCD = 0.4f;
 
     // Ice
     public const float ICE_SPEED = 20;
-    public const float ICE_DAMAGE = 10;
-    public const float ICE_COST = 5;
-    public const string ICE_CAST_SND = "arrowShoot";
+    public const float ICE_DAMAGE = 7;
+    public const float ICE_COST = 3;
+    public const string ICE_CAST_SND = "iceShoot";
 
     // Meteor
     public const float METEOR_SPEED = 20;
-    public const float METEOR_DAMAGE = 20;
+    public const float METEOR_DAMAGE = 25;
     public const float METEOR_COST = 50;
     public const float METEOR_CD = MAGE_GCD;
     public const float METEOR_ROT_SPEED = 360;
-    public const string METEOR_CAST_SND = "arrowShoot";
+    public const string METEOR_CAST_SND = "meteorShoot";
     public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
 
     // Lightning
-    public const float LIGHTNING_DAMAGE = 1;
-    public const float LIGHTNING_COST_PER_SEC = 80;
+    public const float LIGHTNING_DAMAGE = 2f;
+    public const float LIGHTNING_COST_PER_SEC = 150;
     public const float LIGHTNING_CD = MAGE_GCD;
     public const float LIGHTNING_CAST_TIME = 0.1f;
-    public const string LIGHTNING_CAST_SND = "arrowShoot";
+    public const string LIGHTNING_CAST_SND = "lightning";
 
     // Drain
     public const float DRAIN_TIME = MAGE_GCD;
     public const float DRAIN_DAMAGE = 80f;
     public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.2f;
-    public const float DRAIN_CD = 40f;
-    public const float DRAIN_RANGE = 7f;
+    public const float DRAIN_CD = 15f;
+    public const float DRAIN_RANGE = 12f;
     public const float DRAIN_MIN_HEIGHT = 1f;
     public const float DRAIN_MAX_HEIGHT = 6f;
     public const float DRAIN_FLASH_TIME = 0.1f;
@@ -168,7 +168,7 @@ public static class Constants
     #endregion
 
     // Castles
-    public const float CASTLE_HEALTH = 800;
+    public const float CASTLE_HEALTH = 600;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
 
