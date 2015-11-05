@@ -137,8 +137,8 @@ public static class Constants
 	public const float HEIGHT_DIFFERENCE_WEIGHT = 0.5f; // low value = downward direction, high value = upward direction. 0 - 1
 	public const float HEIGHT_DIFFERENCE_OFFSET = 0.4f;
 	public const float PARALLAX_SCALE = 0.01f;
-    public const int PLATFORM_LENGTH = 10;
-    public const int MAP_LENGTH = 60;
+    public const int PLATFORM_LENGTH = 9;
+    public const int MAP_LENGTH = 80;
     public const int BASE_LEVEL = 5;
     public const int SOIL_HEIGHT = 8;
     public const string GROUND_PREFAB = "ground";

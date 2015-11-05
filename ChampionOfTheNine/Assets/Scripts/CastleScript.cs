@@ -14,12 +14,6 @@ public class CastleScript : DamagableObjectScript
 
     #endregion
 
-    #region Properties
-
-
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>
@@ -34,14 +28,6 @@ public class CastleScript : DamagableObjectScript
         base.Start();
     }
 
-    ///// <summary>
-    ///// Update is called once per frame
-    ///// </summary>
-    //private void Update()
-    //{
-
-    //}
-
     #endregion
 
     /// <summary>
@@ -51,9 +37,10 @@ public class CastleScript : DamagableObjectScript
     {
         Utilities.PlaySoundPitched(audioSource, deathSound);
         spriteRenderer.sprite = destroyedSprite;
+        WorldScript.Instance.Defeat(gameObject.tag);
 
-        // Edit, this part currently only works if enemy castle
-        gameObject.transform.FindChild("EnemySpawnLocation").GetComponent<EnemySpawner>().CancelInvoke();
-        PlayerScript.PlayerWon();
+        try
+        { gameObject.transform.FindChild("EnemySpawnLocation").GetComponent<EnemySpawner>().CancelInvoke(); }
+        catch { }
     }
 }

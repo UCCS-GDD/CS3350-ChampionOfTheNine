@@ -13,31 +13,67 @@ public class WorldScript : MonoBehaviour
 
     bool debugMode = false;  // Turn this off for releases
 
+    static WorldScript instance;
+
     [SerializeField]RectTransform hudCanvas;
-    [SerializeField]Image healthBar;
-    [SerializeField]Image energyBar;
-    [SerializeField]GameObject playerCastle;
-    [SerializeField]GameObject starrySky;
-	[SerializeField]SpriteRenderer sky;
-    [SerializeField]SpriteRenderer darkness;
 	[SerializeField]AudioClip daySound;
 	[SerializeField]AudioClip nightSound;
-    [SerializeField]GameObject enemyCastlePrefab;
-    [SerializeField]GameObject[] cloudPrefabs;
+    [SerializeField]Image healthBar;
+    [SerializeField]Image energyBar;
+    [SerializeField]Image skyDarkness;
+    [SerializeField]Image defeatDarkness;
+	[SerializeField]SpriteRenderer sky;
+    [SerializeField]GameObject victoryText;
+    [SerializeField]GameObject loseText;
+    [SerializeField]GameObject playerCastle;
+    [SerializeField]GameObject starrySky;
     [SerializeField]GameObject rangerHUD;
     [SerializeField]GameObject mageHUD;
+    [SerializeField]GameObject enemyCastlePrefab;
+    [SerializeField]GameObject[] cloudPrefabs;
 
+    Timer defeatDarknessTimer;
+    Timer skyTimer;
     GameObject player;
+    GameObject[] parallaxBackgrounds;
     Vector3 playerLocation;
     Dictionary<SkyStateType, SkyState> skyStates;
     SkyStateType currSkyState;
 	AudioSource BGM;
-    Timer skyTimer;
-    GameObject[] parallaxBackgrounds;
 
 	int[] levels = new int[Constants.MAP_LENGTH];
 	float elevationWeight = 1;
 	float heightDifferenceWeight = 1;
+
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets the static reference to the world script
+    /// </summary>
+    public static WorldScript Instance
+    { get { return instance; } }
+
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// Handles the side with the given tag being defeated
+    /// </summary>
+    /// <param name="tag">the tag of the object</param>
+    public void Defeat(string tag)
+    {
+        if (!victoryText.activeSelf && !loseText.activeSelf)
+        {
+            if (tag == Constants.ENEMY_TAG)
+            { victoryText.SetActive(true); }
+            else
+            { loseText.SetActive(true); }
+            defeatDarknessTimer.Start();
+        }
+    }
 
     #endregion
 
@@ -51,6 +87,8 @@ public class WorldScript : MonoBehaviour
         // SEED IS HARDCODED IN DEBUG MODE
         if (debugMode)
         { Random.seed = 71; }
+
+        instance = this;
 
         // Creates the player and HUD
         player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType], 
@@ -121,6 +159,10 @@ public class WorldScript : MonoBehaviour
 
         // Spawns enemy castle
         Instantiate(enemyCastlePrefab, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
+
+        // Sets up the defeat darkness
+        defeatDarknessTimer = new Timer(Constants.DARKNESS_TIMER);
+        defeatDarknessTimer.Register(HandleDefeatDarknessTimerFinishing);
     }
 
     /// <summary>
@@ -146,9 +188,16 @@ public class WorldScript : MonoBehaviour
             skyTimer.Update();
             starrySky.transform.Rotate(0, 0, -360 * (Time.deltaTime / Constants.CYCLE_TIME));
             float timePct = skyTimer.ElapsedSeconds / skyTimer.TotalSeconds;
-            darkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, timePct);
+            skyDarkness.color = Color.Lerp(skyStates[currSkyState].StartDarkness, skyStates[currSkyState].EndDarkness, timePct);
             sky.color = Color.Lerp(skyStates[currSkyState].StartSkyColor, skyStates[currSkyState].EndSkyColor, timePct);
             BGM.volume = Mathf.Lerp(skyStates[currSkyState].StartVolume, skyStates[currSkyState].EndVolume, timePct);
+
+            // Updates the defeat darkness
+            if (defeatDarknessTimer.IsRunning)
+            {
+                defeatDarknessTimer.Update();
+                defeatDarkness.color = new Color(0, 0, 0, defeatDarknessTimer.ElapsedSeconds / defeatDarknessTimer.TotalSeconds);
+            }
         }
     }
 
@@ -239,6 +288,14 @@ public class WorldScript : MonoBehaviour
         currSkyState = skyStates[currSkyState].NextState;
         skyTimer.TotalSeconds = skyStates[currSkyState].TimeInState;
         skyTimer.Start();
+    }
+
+    /// <summary>
+    /// Handles the defeat darkness timer finishing
+    /// </summary>
+    private void HandleDefeatDarknessTimerFinishing()
+    {
+        Application.LoadLevel(Constants.MAP_SCENE);
     }
 
     #endregion

@@ -10,10 +10,6 @@ public class PlayerScript : CharacterControllerScript
 {
     #region Fields
 
-    Timer darknessTimer;
-    [SerializeField]Image darkness;
-    [SerializeField]GameObject victoryText;
-    [SerializeField]GameObject defeatText;
     Image energyBar;
     Image[] gcdBars;
     Image secondaryCDBar;
@@ -39,7 +35,7 @@ public class PlayerScript : CharacterControllerScript
     /// </summary>
     public override void Death()
     {
-        
+        WorldScript.Instance.Defeat(gameObject.tag);
     }
 
     /// <summary>
@@ -53,22 +49,6 @@ public class PlayerScript : CharacterControllerScript
         this.secondaryCDBar = secondaryCDBar;
         this.powerCDBar = powerCDBar;
         this.specialCDBar = specialCDBar;
-
-        darknessTimer = new Timer(Constants.DARKNESS_TIMER);
-        darknessTimer.Register(HandleDarknessTimerFinishing);
-    }
-
-    /// <summary>
-    /// Handles the player winning
-    /// </summary>
-    public static void PlayerWon()
-    {
-        PlayerScript pScript = GameObject.Find("Player").GetComponent<PlayerScript>();
-        if (!pScript.victoryText.activeSelf)
-        {
-            pScript.victoryText.SetActive(true);
-            pScript.darknessTimer.Start();
-        }
     }
 
     #endregion
@@ -113,12 +93,6 @@ public class PlayerScript : CharacterControllerScript
             secondaryCDBar.fillAmount = 1 - (character.SecondaryCDTimer.ElapsedSeconds / character.SecondaryCDTimer.TotalSeconds);
             powerCDBar.fillAmount = 1 - (character.PowerCDTimer.ElapsedSeconds / character.PowerCDTimer.TotalSeconds);
             specialCDBar.fillAmount = 1 - (character.SpecialCDTimer.ElapsedSeconds / character.SpecialCDTimer.TotalSeconds);
-
-            if (darknessTimer.IsRunning)
-            {
-                darknessTimer.Update();
-                darkness.color = new Color(0, 0, 0, darknessTimer.ElapsedSeconds / darknessTimer.TotalSeconds);
-            }
         }
     }
 
@@ -129,18 +103,6 @@ public class PlayerScript : CharacterControllerScript
     protected override void CharacterEnergyChanged(float pct)
     {
         energyBar.fillAmount = pct;
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    /// <summary>
-    /// Handles the darkness timer finishing
-    /// </summary>
-    private void HandleDarknessTimerFinishing()
-    {
-        Application.LoadLevel(Constants.MAP_SCENE);
     }
 
     #endregion
