@@ -14,8 +14,7 @@ public class TutorialRanger : Tutorial
 		base.Start ();
 
         // Creates the player and HUD
-        GameObject player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType],
-            new Vector2(0, 1), transform.rotation);
+        GameObject player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[CharacterType.Ranger], new Vector2(0, 1), transform.rotation);
         GameObject hud = Instantiate<GameObject>(rangerHUD);
         hud.transform.SetParent(hudCanvas, false);
         HUDScript hudScript = hud.GetComponent<HUDScript>();
