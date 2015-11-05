@@ -11,7 +11,7 @@ public class WorldScript : MonoBehaviour
 {
     #region Fields
 
-    bool debugMode = true;  // Turn this off for releases
+    bool debugMode = false;  // Turn this off for releases
 
     [SerializeField]GameObject starrySky;
 	[SerializeField]SpriteRenderer sky;

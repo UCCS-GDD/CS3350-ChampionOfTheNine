@@ -12,8 +12,7 @@ public class GameManager
 
     static GameManager instance;
     Dictionary<string, Savegame> saves;
-    
-    CharacterType playerClass;
+    Dictionary<CharacterType, GameObject> playerPrefabs;
     
     #endregion
 
@@ -29,18 +28,15 @@ public class GameManager
         if (saves == null)
         {
             saves = new Dictionary<string, Savegame>();
-
-            // Temporary for things to work
-            CurrentSaveName = "temp";
-            NewSavegame(CharacterType.Ranger);
-            //Save();
+            Save();
         }
-        else
-        {
-            CurrentSaveName = "temp";
-        }
-        //CurrentSaveName = "";
+        CurrentSaveName = "";
         Paused = false;
+
+        // Loads player prefabs
+        playerPrefabs = new Dictionary<CharacterType, GameObject>();
+        playerPrefabs.Add(CharacterType.Ranger, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.RANGER_PLAYER_PREFAB));
+        playerPrefabs.Add(CharacterType.Mage, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.MAGE_PLAYER_PREFAB));
     }
 
     #endregion
@@ -61,23 +57,17 @@ public class GameManager
         }
     }
 
-    public CharacterType Type
-    {
-        get
-        {
-            return playerClass;
-        }
-        set
-        {
-            playerClass = value;
-        }
-    }
-
     /// <summary>
     /// Gets the saves dictionary
     /// </summary>
     public Dictionary<string, Savegame> Saves
     { get { return saves; } }
+
+    /// <summary>
+    /// Gets the player prefab dictionary
+    /// </summary>
+    public Dictionary<CharacterType, GameObject> PlayerPrefabs
+    { get { return playerPrefabs; } }
 
     /// <summary>
     /// Gets or sets the current save name

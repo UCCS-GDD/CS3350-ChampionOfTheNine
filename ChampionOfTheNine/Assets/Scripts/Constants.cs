@@ -29,6 +29,7 @@ public static class Constants
 
     #region Ranger
 
+    public const string RANGER_PLAYER_PREFAB = "RangerPlayer";
     public const float RANGER_AI_RANGE = 9;
     public const float RANGER_AI_ANGLE_RANGE = 15;
     public const int RANGER_AI_SHOT_THRESHOLD = 5;
@@ -38,14 +39,6 @@ public static class Constants
     public const float RANGER_JUMP_SPEED = 10;
     public const float RANGER_REGEN = 20;
     public const float RANGER_GCD = 0.4f;
-    public const float RANGER_BOOST_CD = 30f;
-    public const float RANGER_BOOST_TIME = 6f;
-    public const float RANGER_BOOST_MOVE_MULT = 1.5f;
-    public const float RANGER_BOOST_JUMP_MULT = 1.2f;
-    public const float RANGER_BOOST_CD_MULT = 0.6f;
-    public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.2f;
-    public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
-    public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
     public const string RANGER_SHOOT_SND = "arrowShoot";
     public const string RANGER_SPECIAL_SND = "boost";
 
@@ -68,10 +61,21 @@ public static class Constants
     public const float EXP_ARROW_COST = 30;
     public const float EXP_ARROW_CD = 1.2f;
 
+    // Boost
+    public const float RANGER_BOOST_CD = 30f;
+    public const float RANGER_BOOST_TIME = 6f;
+    public const float RANGER_BOOST_MOVE_MULT = 1.5f;
+    public const float RANGER_BOOST_JUMP_MULT = 1.2f;
+    public const float RANGER_BOOST_CD_MULT = 0.6f;
+    public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.2f;
+    public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
+    public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
+
     #endregion
 
     #region Mage
 
+    public const string MAGE_PLAYER_PREFAB = "MagePlayer";
     public const float MAGE_AI_RANGE = 9;
     public const float MAGE_AI_ANGLE_RANGE = 8;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
@@ -172,6 +176,8 @@ public static class Constants
     public const string LEVEL_SCENE = "DynamicLevel";
     public const string MAP_SCENE = "Map";
     public const string MAIN_MENU_SCENE = "MainMenu";
+    public const string CHAR_CREATE_SCENE = "CharacterCreation";
+    public const string TUTORIAL_SCENE = "Tutorial";
 
     // Animator
     public const string GROUNDED_FLAG = "Grounded";

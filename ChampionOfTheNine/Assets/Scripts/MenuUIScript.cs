@@ -9,7 +9,7 @@ public class MenuUIScript : MonoBehaviour
 {
     #region Fields
 
-
+    string surveyLink = "";
 
     #endregion
 
@@ -20,7 +20,11 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        Application.LoadLevel(Constants.MAP_SCENE);
+        // Go to tutorial if no save, otherwise go to map
+        if (GameManager.Instance.Saves.Count == 0)
+        { Application.LoadLevel(Constants.TUTORIAL_SCENE); }
+        else
+        { Application.LoadLevel(Constants.MAP_SCENE); }
     }
 
     /// <summary>
@@ -37,6 +41,22 @@ public class MenuUIScript : MonoBehaviour
     public void BackButtonPressed()
     {
         Application.LoadLevel(Constants.MAIN_MENU_SCENE);
+    }
+
+    /// <summary>
+    /// Handles the tutorial button being pressed
+    /// </summary>
+    public void TutorialButtonPressed()
+    {
+        Application.LoadLevel(Constants.TUTORIAL_SCENE);
+    }
+
+    /// <summary>
+    /// Handles the survey button being pressed
+    /// </summary>
+    public void SurveyButtonPressed()
+    {
+        Application.OpenURL(surveyLink);
     }
 
     #endregion

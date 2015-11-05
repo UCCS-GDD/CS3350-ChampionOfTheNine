@@ -14,6 +14,7 @@ public class CharacterCreationScript : MonoBehaviour
     [SerializeField]GameObject ranger;
     [SerializeField]GameObject mage;
     [SerializeField]GameObject warrior;
+    [SerializeField]GameObject selectButton;
     CharacterType selectedType;
     Dictionary<CharacterType, GameObject> previewObjects;
 
@@ -40,6 +41,17 @@ public class CharacterCreationScript : MonoBehaviour
         previewObjects[selectedType].SetActive(false);
         previewObjects[type].SetActive(true);
         selectedType = type;
+        selectButton.SetActive(true);
+    }
+
+    /// <summary>
+    /// Handles the confirm selection button being pressed
+    /// </summary>
+    public void SelectButtonPressed()
+    {
+        GameManager.Instance.CurrentSaveName = "temp";
+        GameManager.Instance.NewSavegame(selectedType);
+        Application.LoadLevel(Constants.MAP_SCENE);
     }
 
     #endregion
