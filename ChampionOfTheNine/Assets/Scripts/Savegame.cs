@@ -13,8 +13,8 @@ public class Savegame
     #region Fields
 
     Dictionary<int, KingdomName> kingdomLocations;
-
     Dictionary<KingdomName, KingdomStatus> kingdomStatuses;
+    CharacterType playerType;
 
     #endregion
 
@@ -23,10 +23,11 @@ public class Savegame
     /// <summary>
     /// Constructor
     /// </summary>
-    public Savegame()
+    public Savegame(CharacterType playerType)
     {
         kingdomLocations = new Dictionary<int, KingdomName>();
         kingdomStatuses = new Dictionary<KingdomName, KingdomStatus>();
+        this.playerType = playerType;
     }
 
     #endregion
@@ -50,11 +51,13 @@ public class Savegame
         set { kingdomLocations = value; }
     }
 
-    #endregion
-
-    #region Public Methods
-
-
+    /// <summary>
+    /// Gets the player type
+    /// </summary>
+    public CharacterType PlayerType
+    {
+        get { return playerType; }
+    }
 
     #endregion
 }

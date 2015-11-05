@@ -12,7 +12,9 @@ public class GameManager
 
     static GameManager instance;
     Dictionary<string, Savegame> saves;
-
+    
+    CharacterType playerClass;
+    
     #endregion
 
     #region Constructor
@@ -27,9 +29,17 @@ public class GameManager
         if (saves == null)
         {
             saves = new Dictionary<string, Savegame>();
-            Serializer.Serialize(Constants.SAVES_FILE, saves);
+
+            // Temporary for things to work
+            CurrentSaveName = "temp";
+            NewSavegame(CharacterType.Ranger);
+            //Save();
         }
-        CurrentSaveName = "";
+        else
+        {
+            CurrentSaveName = "temp";
+        }
+        //CurrentSaveName = "";
         Paused = false;
     }
 
@@ -48,6 +58,18 @@ public class GameManager
             { instance = new GameManager(); }
 
             return instance;
+        }
+    }
+
+    public CharacterType Type
+    {
+        get
+        {
+            return playerClass;
+        }
+        set
+        {
+            playerClass = value;
         }
     }
 
@@ -82,12 +104,12 @@ public class GameManager
     /// <summary>
     /// Creates a new savegame
     /// </summary>
-    public void NewSavegame()
+    public void NewSavegame(CharacterType playerType)
     {
         if (!saves.ContainsKey(CurrentSaveName))
-        { saves.Add(CurrentSaveName, new Savegame()); }
+        { saves.Add(CurrentSaveName, new Savegame(playerType)); }
         else
-        { saves[CurrentSaveName] = new Savegame(); }
+        { saves[CurrentSaveName] = new Savegame(playerType); }
         Save();
     }
 
