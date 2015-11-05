@@ -8,7 +8,7 @@ using System.Text;
 /// </summary>
 public enum CharacterType 
 { 
-    Knight, 
+    Ranger, 
     Mage, 
-    Ranger 
+    Warrior 
 };
