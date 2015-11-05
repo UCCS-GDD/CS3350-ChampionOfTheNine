@@ -10,7 +10,7 @@ public class PauseQuitButtonScript : MonoBehaviour
 {
     #region Fields
 
-
+    [SerializeField]bool tutorial;
 
     #endregion
 
@@ -54,7 +54,10 @@ public class PauseQuitButtonScript : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Application.LoadLevel(Constants.MAIN_MENU_SCENE);
+        if (tutorial)
+        { Application.LoadLevel(Constants.CHAR_CREATE_SCENE); }
+        else
+        { Application.LoadLevel(Constants.MAIN_MENU_SCENE); }
     }
 
     #endregion
