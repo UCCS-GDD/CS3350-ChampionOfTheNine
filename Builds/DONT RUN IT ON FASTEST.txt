@@ -1,0 +1,3 @@
+Running the game on Fastest mode greatly pixelizes some of the sprites and may be the cause of a bug in the mage's drain ability.
+
+Run the game on Fantastic for best results.
