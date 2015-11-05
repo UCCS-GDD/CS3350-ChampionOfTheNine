@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Creator : MonoBehaviour {
+public class Creator : MonoBehaviour 
+{
 
 	GameObject character;
     GameObject playable;
@@ -20,7 +21,7 @@ public class Creator : MonoBehaviour {
 		{
 			character = Instantiate(knight);
             playable = Instantiate(rangedPlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Knight;
+            GameManager.Instance.Type = CharacterType.Knight;
 			first = false;
 		}
 		else
@@ -29,7 +30,7 @@ public class Creator : MonoBehaviour {
 			character = Instantiate(knight);
             Destroy(playable);
             playable = Instantiate(rangedPlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Knight;
+            GameManager.Instance.Type = CharacterType.Knight;
 		}
 	}
 	public void Ranger()
@@ -38,7 +39,7 @@ public class Creator : MonoBehaviour {
 		{
 			character = Instantiate(ranged);
             playable = Instantiate(rangedPlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Ranger;
+            GameManager.Instance.Type = CharacterType.Ranger;
 			first = false;
 		}
 		else
@@ -47,7 +48,7 @@ public class Creator : MonoBehaviour {
 			character = Instantiate(ranged);
             Destroy(playable);
             playable = Instantiate(rangedPlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Ranger;
+            GameManager.Instance.Type = CharacterType.Ranger;
 		}
 	}
 	public void Mage()
@@ -56,7 +57,7 @@ public class Creator : MonoBehaviour {
 		{
 			character = Instantiate(mage);
             playable = Instantiate(magePlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Mage;
+            GameManager.Instance.Type = CharacterType.Mage;
             first = false;
 		}
 		else
@@ -65,7 +66,7 @@ public class Creator : MonoBehaviour {
 			character = Instantiate(mage);
             Destroy(playable);
             playable = Instantiate(magePlay, new Vector3(0f, -3.9f), Quaternion.identity) as GameObject;
-            GameManager.Instance.Type = GameManager.CharacterTypes.Mage;
+            GameManager.Instance.Type = CharacterType.Mage;
 		}
 	}
 	public void Red(float newRed)
