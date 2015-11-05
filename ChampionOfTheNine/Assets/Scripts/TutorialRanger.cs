@@ -1,11 +1,26 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class TutorialRanger : Tutorial {
+public class TutorialRanger : Tutorial 
+{
+    [SerializeField]RectTransform hudCanvas;
+    [SerializeField]GameObject rangerHUD;
+    [SerializeField]Image healthBar;
+    [SerializeField]Image energyBar;
 
 	protected override void Start()
 	{
 		base.Start ();
+
+        // Creates the player and HUD
+        GameObject player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType],
+            new Vector2(0, 1), transform.rotation);
+        GameObject hud = Instantiate<GameObject>(rangerHUD);
+        hud.transform.SetParent(hudCanvas, false);
+        HUDScript hudScript = hud.GetComponent<HUDScript>();
+        player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar,
+            hudScript.PowerCDBar, hudScript.SpecialCDBar);
 		StageOne ();
 	}
 
@@ -57,9 +72,9 @@ public class TutorialRanger : Tutorial {
 	{
 		stage++;
 		TutorialDummy.PlayerMoved -= StageTwo;
-		ChangeText (new string[] {"Nice work. You now know the basics of movement so lets amp it up a bit.",
+		ChangeText (new string[] {"Nice work. You now know the basics of movement so let's amp it up a bit.",
 			"<b>Basic Ability</b>" +
-			"\nThe left mouse button will make your avatar fire a basic arrow, use it to attack the dummy."});
+			"\nThe left mouse button will make your avatar fire a basic arrow. Use it to attack the dummy."});
 		TutorialDummy.BasicAttack += StageThree;
 	}
 
@@ -68,7 +83,7 @@ public class TutorialRanger : Tutorial {
 		stage++;
 		TutorialDummy.BasicAttack -= StageThree;
 		ChangeText (new string[] {"You shot the dummy!" +
-			"\nGood work, now lets try something more fun.",
+			"\nGood work, now let's try something more fun.",
 			"<b>Secondary Ability</b>" +
 			"\nThe right mouse button will make your avatar fire an explosive arrow. Blow up the dummy."});
 		TutorialDummy.SecondaryAttack += StageFour;
@@ -79,7 +94,7 @@ public class TutorialRanger : Tutorial {
 		stage++;
 		TutorialDummy.SecondaryAttack -= StageFour;
 		ChangeText (new string[] {"Woah! That was an epic explosion." +
-			"\nLets get more advanced here shall we?",
+			"\nLet's get more advanced here shall we?",
 			"<b>Special Ability</b>" +
 			"\nHolding down [E] will fire a barrage of penetrating arrows. Test it on these dummies"});
 		TutorialDummy.SpecialAttack += StageFive;

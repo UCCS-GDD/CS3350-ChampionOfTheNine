@@ -294,7 +294,9 @@ public abstract class CharacterScript : DamagableObjectScript
     protected override void Death()
     {
         AudioSource.PlayClipAtPoint(deathSound, transform.position);
-        GetComponent<CharacterControllerScript>().Death();
+        try
+        { GetComponent<CharacterControllerScript>().Death(); }
+        catch (NullReferenceException) { }
     }
 
     /// <summary>

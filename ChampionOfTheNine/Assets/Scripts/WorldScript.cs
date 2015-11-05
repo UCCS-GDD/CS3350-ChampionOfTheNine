@@ -158,7 +158,8 @@ public class WorldScript : MonoBehaviour
         GenerateParallaxObjects();
 
         // Spawns enemy castle
-        Instantiate(enemyCastlePrefab, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
+        int castlePos = levels.Length - (Constants.PLATFORM_LENGTH - 3);
+        Instantiate(enemyCastlePrefab, new Vector2(castlePos, levels[castlePos] + 1), transform.rotation);
 
         // Sets up the defeat darkness
         defeatDarknessTimer = new Timer(Constants.DARKNESS_TIMER);

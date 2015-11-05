@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TutorialDummy : MonoBehaviour {
+public class TutorialDummy : DamagableObjectScript 
+{
 
 	public delegate void TutorialEvent();
 	public static event TutorialEvent PlayerMoved;
@@ -16,11 +17,15 @@ public class TutorialDummy : MonoBehaviour {
 	GameObject dummyTwo;
 
 	// Use this for initialization
-	void Start () {
-		character = GameObject.Find ("RangerPlayer");
+    protected override void Start()
+    {
+        maxHealth = 100000;
+        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + "arrowHit");
+		character = GameObject.Find ("RangerPlayer(Clone)");
 		InvokeRepeating ("ManualUpdate", 1, .01f);
 		dummyTwo = GameObject.Find ("DummyTwo");
 		dummyTwo.SetActive (false);
+        base.Start();
 	}
 
 	void ManualUpdate()
@@ -54,18 +59,30 @@ public class TutorialDummy : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collider.gameObject.name == "Arrow(Clone)") {
-			BasicAttack ();
-		} else if (collider.gameObject.name == "ExpArrow(Clone)") {
-			SecondaryAttack ();
-		} else if (collider.gameObject.name == "PierceArrow(Clone)") {
-			SpecialAttack();
-			Invoke ("RemoveDummyTwo", 2);
-		}
+        try
+        {
+            if (collider.gameObject.name == "Arrow(Clone)")
+            {
+                BasicAttack();
+            }
+            else if (collider.gameObject.name == "ExpArrow(Clone)")
+            {
+                SecondaryAttack();
+            }
+            else if (collider.gameObject.name == "PierceArrow(Clone)")
+            {
+                SpecialAttack();
+                Invoke("RemoveDummyTwo", 2);
+            }
+        }
+        catch (System.NullReferenceException) { }
 	}
 
 	void RemoveDummyTwo()
 	{
 		dummyTwo.SetActive (false);
 	}
+
+    protected override void Death()
+    { }
 }
