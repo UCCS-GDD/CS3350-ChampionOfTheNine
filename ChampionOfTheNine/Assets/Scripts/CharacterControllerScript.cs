@@ -65,12 +65,12 @@ public abstract class CharacterControllerScript : MonoBehaviour
     #region Protected Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Initializes the character controller
     /// </summary>
-    protected virtual void Start()
+    protected virtual void Initialize(Image healthBar, Image[] timerBars)
     {
         character = GetComponent<CharacterScript>();
-        character.Attach(this, CharacterEnergyChanged);
+        character.Initialize(this, CharacterEnergyChanged, healthBar, timerBars);
     }
 
     /// <summary>

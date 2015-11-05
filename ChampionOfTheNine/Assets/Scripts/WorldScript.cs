@@ -13,13 +13,19 @@ public class WorldScript : MonoBehaviour
 
     bool debugMode = false;  // Turn this off for releases
 
+    [SerializeField]RectTransform hudCanvas;
+    [SerializeField]Image healthBar;
+    [SerializeField]Image energyBar;
+    [SerializeField]GameObject playerCastle;
     [SerializeField]GameObject starrySky;
 	[SerializeField]SpriteRenderer sky;
     [SerializeField]SpriteRenderer darkness;
 	[SerializeField]AudioClip daySound;
 	[SerializeField]AudioClip nightSound;
-    [SerializeField]GameObject enemyCastle;
+    [SerializeField]GameObject enemyCastlePrefab;
     [SerializeField]GameObject[] cloudPrefabs;
+    [SerializeField]GameObject rangerHUD;
+    [SerializeField]GameObject mageHUD;
 
     GameObject player;
     Vector3 playerLocation;
@@ -45,8 +51,27 @@ public class WorldScript : MonoBehaviour
         // SEED IS HARDCODED IN DEBUG MODE
         if (debugMode)
         { Random.seed = 71; }
-        
-        player = GameObject.Find(Constants.PLAYER_TAG);
+
+        // Creates the player and HUD
+        player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType], 
+            playerCastle.transform.position, transform.rotation);
+        GameObject hud;
+        switch (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType)
+	    {
+		    case CharacterType.Ranger:
+                hud = Instantiate<GameObject>(rangerHUD);
+                break;
+            case CharacterType.Mage:
+                hud = Instantiate<GameObject>(mageHUD);
+                break;
+            default:
+                hud = Instantiate<GameObject>(rangerHUD);
+                break;
+        }
+        hud.transform.SetParent(hudCanvas, false);
+        HUDScript hudScript = hud.GetComponent<HUDScript>();
+        player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar, 
+            hudScript.PowerCDBar, hudScript.SpecialCDBar);
         playerLocation = player.transform.position;
 
         // Sets up the sky state dictionary
@@ -95,7 +120,7 @@ public class WorldScript : MonoBehaviour
         GenerateParallaxObjects();
 
         // Spawns enemy castle
-        Instantiate(enemyCastle, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
+        Instantiate(enemyCastlePrefab, new Vector2(levels.Length - 4, levels[levels.Length - 4] + 1), transform.rotation);
     }
 
     /// <summary>

@@ -174,12 +174,17 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     /// <param name="controller"></param>
     /// <param name="energyChanged"></param>
-    public virtual void Attach(CharacterControllerScript controller, MovementHandler energyChanged)
+    /// <param name="healthBar"></param>
+    /// <param name="timerBars"></param>
+    public virtual void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
     {
         // Registers for character controller input
         this.energyChanged = energyChanged;
         controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move, SetArmAngle);
         targetTag = controller.TargetTag;
+
+        if (healthBar != null)
+        { this.healthBar = healthBar; }
     }
 
     #endregion

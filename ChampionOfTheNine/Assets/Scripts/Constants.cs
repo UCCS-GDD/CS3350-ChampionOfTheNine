@@ -114,8 +114,8 @@ public static class Constants
     public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.2f;
     public const float DRAIN_CD = 40f;
     public const float DRAIN_RANGE = 7f;
-    public const float DRAIN_MIN_HEIGHT = 2f;
-    public const float DRAIN_MAX_HEIGHT = 7f;
+    public const float DRAIN_MIN_HEIGHT = 1f;
+    public const float DRAIN_MAX_HEIGHT = 6f;
     public const float DRAIN_FLASH_TIME = 0.1f;
     public const int DRAIN_SEGMENTS = 6;
     public const string DRAIN_SND = "boost";

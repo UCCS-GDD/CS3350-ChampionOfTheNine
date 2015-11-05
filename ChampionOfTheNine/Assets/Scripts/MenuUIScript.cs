@@ -20,11 +20,15 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        // Go to tutorial if no save, otherwise go to map
-        if (GameManager.Instance.Saves.Count == 0)
-        { Application.LoadLevel(Constants.TUTORIAL_SCENE); }
-        else
-        { Application.LoadLevel(Constants.MAP_SCENE); }
+        Application.LoadLevel(Constants.CHAR_CREATE_SCENE);
+        //// Go to tutorial if no save, otherwise go to map
+        //if (GameManager.Instance.Saves.Count == 0)
+        //{ 
+        //    //Application.LoadLevel(Constants.TUTORIAL_SCENE);
+        //    Application.LoadLevel(Constants.CHAR_CREATE_SCENE);
+        //}
+        //else
+        //{ Application.LoadLevel(Constants.MAP_SCENE); }
     }
 
     /// <summary>

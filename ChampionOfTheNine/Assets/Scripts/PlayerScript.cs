@@ -14,11 +14,11 @@ public class PlayerScript : CharacterControllerScript
     [SerializeField]Image darkness;
     [SerializeField]GameObject victoryText;
     [SerializeField]GameObject defeatText;
-    [SerializeField]Image energyBar;
-    [SerializeField]Image[] gcdBars;
-    [SerializeField]Image secondaryCDBar;
-    [SerializeField]Image powerCDBar;
-    [SerializeField]Image specialCDBar;
+    Image energyBar;
+    Image[] gcdBars;
+    Image secondaryCDBar;
+    Image powerCDBar;
+    Image specialCDBar;
 
     #endregion
 
@@ -43,6 +43,22 @@ public class PlayerScript : CharacterControllerScript
     }
 
     /// <summary>
+    /// Initializes the player
+    /// </summary>
+    public virtual void Initialize(Image healthBar, Image energyBar, Image[] gcdBars, Image[] timerBars, Image secondaryCDBar, Image powerCDBar, Image specialCDBar)
+    {
+        this.energyBar = energyBar;
+        base.Initialize(healthBar, timerBars);
+        this.gcdBars = gcdBars;
+        this.secondaryCDBar = secondaryCDBar;
+        this.powerCDBar = powerCDBar;
+        this.specialCDBar = specialCDBar;
+
+        darknessTimer = new Timer(Constants.DARKNESS_TIMER);
+        darknessTimer.Register(HandleDarknessTimerFinishing);
+    }
+
+    /// <summary>
     /// Handles the player winning
     /// </summary>
     public static void PlayerWon()
@@ -58,16 +74,6 @@ public class PlayerScript : CharacterControllerScript
     #endregion
 
     #region Protected Methods
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected override void Start()
-    {
-        base.Start();
-        darknessTimer = new Timer(Constants.DARKNESS_TIMER);
-        darknessTimer.Register(HandleDarknessTimerFinishing);
-    }
 
     /// <summary>
     /// Update is called once per frame

@@ -29,8 +29,15 @@ public class GameManager
         {
             saves = new Dictionary<string, Savegame>();
             Save();
+            CurrentSaveName = "";
         }
-        CurrentSaveName = "";
+        else
+        {
+            if (saves.Count > 0)
+            { CurrentSaveName = saves.First().Key; }
+            else
+            { CurrentSaveName = ""; }
+        }
         Paused = false;
 
         // Loads player prefabs

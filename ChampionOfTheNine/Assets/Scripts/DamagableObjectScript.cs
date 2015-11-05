@@ -12,7 +12,7 @@ public abstract class DamagableObjectScript : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]Image healthBar;
+    [SerializeField]protected Image healthBar;
 
     protected AudioSource audioSource;
     protected AudioClip hitSound;

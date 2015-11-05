@@ -44,9 +44,9 @@ public abstract class AIScript : CharacterControllerScript
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
+        base.Initialize(null, null);
         InvokeRepeating("FindTarget", Constants.AI_SCAN_DELAY, Constants.AI_SCAN_DELAY);
     }
 

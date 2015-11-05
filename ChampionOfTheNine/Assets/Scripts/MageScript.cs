@@ -83,27 +83,31 @@ public class MageScript : CharacterScript
             { lightningTimer.Finish(); }
         }
 
-        // Updates beams
-        if (drainTimer.IsRunning)
+        try
         {
-            // Updates flash
-            if (drainTimer.ElapsedSeconds % Constants.DRAIN_FLASH_TIME < Time.deltaTime)
+            // Updates beams
+            if (drainTimer.IsRunning)
             {
-                foreach (SpriteRenderer beam in beams)
-                { beam.color = beamColors[beam.color]; }
-            }
-            
-            // Damages targets and increases mana
-            for (int i = drainTargets.Count - 1; i >= 0; i--)
-            {
-                if (drainTargets[i].Damage(Constants.DRAIN_DAMAGE * (Time.deltaTime / Constants.DRAIN_TIME)))
-                { Energy = Mathf.Min(maxEnergy, Energy + (Constants.DRAIN_MANA_PER_TARGET * (Time.deltaTime / Constants.DRAIN_TIME))); }
-                else
-                { drainTargets.RemoveAt(i); }
-            }
+                // Updates flash
+                if (drainTimer.ElapsedSeconds % Constants.DRAIN_FLASH_TIME < Time.deltaTime)
+                {
+                    foreach (SpriteRenderer beam in beams)
+                    { beam.color = beamColors[beam.color]; }
+                }
 
-            drainTimer.Update();
+                // Damages targets and increases mana
+                for (int i = drainTargets.Count - 1; i >= 0; i--)
+                {
+                    if (drainTargets[i].Damage(Constants.DRAIN_DAMAGE * (Time.deltaTime / Constants.DRAIN_TIME)))
+                    { Energy = Mathf.Min(maxEnergy, Energy + (Constants.DRAIN_MANA_PER_TARGET * (Time.deltaTime / Constants.DRAIN_TIME))); }
+                    else
+                    { drainTargets.RemoveAt(i); }
+                }
+
+                drainTimer.Update();
+            }
         }
+        catch (System.NullReferenceException) { }
     }
 
     /// <summary>
@@ -169,7 +173,7 @@ public class MageScript : CharacterScript
                 {
                     drainTargets.Add(obj.GetComponent<DamagableObjectScript>());
                     Vector2 topLocation = new Vector2((obj.transform.position.x - fireLocation.position.x) / 2,
-                        Mathf.Max(obj.transform.position.y, fireLocation.position.y) + Random.Range(Constants.DRAIN_MIN_HEIGHT, 
+                        Mathf.Max(obj.transform.position.y - fireLocation.position.y, 0) + Random.Range(Constants.DRAIN_MIN_HEIGHT, 
                         Constants.DRAIN_MAX_HEIGHT)) + (Vector2)fireLocation.position;
                     Vector2 location = fireLocation.position;
                     bool goingLeft = fireLocation.position.x > obj.transform.position.x;

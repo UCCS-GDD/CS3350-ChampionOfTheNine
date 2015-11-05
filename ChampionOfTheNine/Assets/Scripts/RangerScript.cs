@@ -13,8 +13,8 @@ public class RangerScript : CharacterScript
     [SerializeField]GameObject arrow;
     [SerializeField]GameObject pierceArrow;
     [SerializeField]GameObject expArrow;
-    [SerializeField]Image pierceBar;
-    [SerializeField]Image boostBar;
+    Image pierceBar;
+    Image boostBar;
 
     Timer pierceShootWindow;
     Timer pierceShootCD;
@@ -28,6 +28,23 @@ public class RangerScript : CharacterScript
     #endregion
 
     #region Public Methods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="energyChanged"></param>
+    /// <param name="healthBar"></param>
+    /// <param name="timerBars"></param>
+    public override void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
+    {
+        base.Initialize(controller, energyChanged, healthBar, timerBars);
+        if (timerBars != null)
+        {
+            pierceBar = timerBars[0];
+            boostBar = timerBars[1];
+        }
+    }
 
     /// <summary>
     /// Calculates the angle at which the character should fire to hit the target position
@@ -53,6 +70,31 @@ public class RangerScript : CharacterScript
         { return Mathf.Max(angle1, angle2) + 180; }
         else
         { return Mathf.Min(angle1, angle2); }
+    }
+
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
+    public override void UpdateChar()
+    {
+        base.UpdateChar();
+
+        // Updates energy
+        if (Energy < maxEnergy)
+        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
+
+        try
+        {
+            // Updates timers
+            pierceShootCD.Update();
+            pierceShootWindow.Update();
+            boostTimer.Update();
+
+            // Updates ability bars
+            boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
+            pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
+        }
+        catch (System.NullReferenceException) { }
     }
 
     #endregion
@@ -104,31 +146,6 @@ public class RangerScript : CharacterScript
             projectile.ChangeSpeed(arrowSpeedMult);
         }
         return projectile;
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    public override void UpdateChar()
-    {
-        base.UpdateChar();
-
-        // Updates energy
-        if (Energy < maxEnergy)
-        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
-
-        try 
-	    {	        
-		    // Updates timers
-            pierceShootCD.Update();
-            pierceShootWindow.Update();
-            boostTimer.Update();
-
-            // Updates ability bars
-            boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
-            pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
-	    }
-	    catch (System.NullReferenceException) { }
     }
 
     /// <summary>
