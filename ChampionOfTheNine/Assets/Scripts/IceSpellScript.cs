@@ -8,12 +8,6 @@ using System.Text;
 /// </summary>
 public class IceSpellScript : ProjScript
 {
-    #region Fields
-
-    [SerializeField]GameObject particle;
-
-    #endregion
-
     #region Protected Methods
 
     /// <summary>
@@ -37,6 +31,7 @@ public class IceSpellScript : ProjScript
         if (hit != HitType.None)
         {
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position); 
             Destroy(gameObject);
         }
     }
@@ -46,15 +41,7 @@ public class IceSpellScript : ProjScript
     /// </summary>
     protected void Start()
     {
-        Instantiate(particle, transform.position, transform.rotation);
-    }
-
-    /// <summary>
-    /// Handles the projectile being destroyed
-    /// </summary>
-    protected void OnDestroy()
-    {
-        Instantiate(particle, transform.position, transform.rotation);
+        GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position); 
     }
 
     #endregion

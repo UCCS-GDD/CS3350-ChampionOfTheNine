@@ -53,10 +53,10 @@ public class MageScript : CharacterScript
         beamColors.Add(Constants.BEAM_COLOR_2, Constants.BEAM_COLOR_1);
 
         // Loads sounds
-        mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.ICE_CAST_SND);
-        secondaryAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.LIGHTNING_CAST_SND);
-        powerAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.METEOR_CAST_SND);
-        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.DRAIN_SND);
+        mainAbilitySound = GameManager.Instance.GameSounds[Constants.ICE_CAST_SND];
+        secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.LIGHTNING_CAST_SND];
+        powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
+        specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
         base.Start();
     }
 

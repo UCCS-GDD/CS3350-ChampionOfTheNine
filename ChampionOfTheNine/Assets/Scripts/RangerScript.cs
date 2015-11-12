@@ -122,10 +122,10 @@ public class RangerScript : CharacterScript
         pierceShootWindow.Register(HandlePierceWindowFinishing);
 
         // Loads sounds
-        mainAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SHOOT_SND);
+        mainAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SHOOT_SND];
         secondaryAbilitySound = mainAbilitySound;
         powerAbilitySound = mainAbilitySound;
-        specialAbilitySound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.RANGER_SPECIAL_SND);
+        specialAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SPECIAL_SND];
         base.Start();
     }
 

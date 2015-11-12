@@ -200,11 +200,11 @@ public abstract class CharacterScript : DamagableObjectScript
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        walkAudio.clip = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_WALK_SND);
-        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_HIT_SND);
-        deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_DEATH_SND);
-        jumpSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_JUMP_SND);
-        landSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CHAR_LAND_SND);
+        walkAudio.clip = GameManager.Instance.GameSounds[Constants.CHAR_WALK_SND];
+        hitSound = GameManager.Instance.GameSounds[Constants.CHAR_HIT_SND];
+        deathSound = GameManager.Instance.GameSounds[Constants.CHAR_DEATH_SND];
+        jumpSound = GameManager.Instance.GameSounds[Constants.CHAR_JUMP_SND];
+        landSound = GameManager.Instance.GameSounds[Constants.CHAR_LAND_SND];
     }
 
     /// <summary>

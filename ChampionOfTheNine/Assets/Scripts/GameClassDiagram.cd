@@ -17,7 +17,7 @@
   <Class Name="CharacterControllerScript">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQYBAAAACAEAAAAAAAAAAIEMAABAAAgAAAAAAAAAEA=</HashCode>
+      <HashCode>AASYBAAAAAAEAQAAAAAAAAIEMAABAAAgAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\CharacterControllerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -65,7 +65,7 @@
   <Class Name="Constants" Collapsed="true">
     <Position X="29.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gJhCQAgAQoOGj5IQBogAmMaShYEQAwbBCWg6RB/AQ0Q=</HashCode>
+      <HashCode>wJpuRggAQoOGr5YQB4n0msbSlcmZAwfBCWg6VX/EU8Y=</HashCode>
       <FileName>Assets\Scripts\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -86,23 +86,20 @@
   <Class Name="PlayerScript">
     <Position X="12.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQABAABACAABCAAAAQAAAAAAAAAAAAgAAAAAAAAQEA=</HashCode>
+      <HashCode>AISAAAAAAAAAAQAAAAAAAQAAAAAABAAgAAAAAAAAEkA=</HashCode>
       <FileName>Assets\Scripts\PlayerScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RangerScript">
     <Position X="18.25" Y="22" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAhAUCAAAiYIQACABEAAAgAAEIAAAABABIJEAAAKCAQ=</HashCode>
+      <HashCode>AAgAUCAAAiYIAQCABEAAAAAAEIAAAABAAIBEAAAKCAQ=</HashCode>
       <FileName>Assets\Scripts\RangerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="pierceShootWindow" />
       <Field Name="pierceShootCD" />
-      <Field Name="pierceAbilityCD" />
-      <Field Name="expArrowCD" />
       <Field Name="boostTimer" />
-      <Field Name="boostCD" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Timer">
@@ -125,7 +122,7 @@
   <Class Name="MageScript">
     <Position X="13.75" Y="22" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAIAAAABAAABAAAAAAAA=</HashCode>
+      <HashCode>AABAAAQAACAIBQAARAJgAAAAAoQAAABAQADAAgAACAA=</HashCode>
       <FileName>Assets\Scripts\MageScript.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -139,28 +136,28 @@
   <Class Name="IceSpellScript">
     <Position X="22.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAACAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\IceSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LightningSpellScript">
     <Position X="25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\LightningSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MeteorSpellScript">
     <Position X="27.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAEAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\MeteorSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIMageScript">
     <Position X="8" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\AIMageScript.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -174,7 +171,7 @@
   <Class Name="CharacterScript">
     <Position X="16" Y="12.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>hAAAAAAAkqAJCRRABQoFAgEAgIAABKBgAAJAAAAAigA=</HashCode>
+      <HashCode>xCAAIAAAkqAJCRRQBA4EEhEAgIBQAqBgACJACAAgiAA=</HashCode>
       <FileName>Assets\Scripts\CharacterScript.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -188,14 +185,21 @@
   <Class Name="Utilities" Collapsed="true">
     <Position X="31.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAA=</HashCode>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAA=</HashCode>
       <FileName>Assets\Scripts\Utilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameManager">
     <Position X="3.5" Y="14.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="GameManager.Updater" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAIgAAAAAAAAEAgAABCAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAQgEIgAAAAAAAAEBggAFCAAQABEAAAARAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\GameManager.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -205,7 +209,7 @@
   <Class Name="Savegame">
     <Position X="6.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAEAAAABAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAEAAAABAAAAAEAAAAAAAAAAAIAAAEAAAAA=</HashCode>
       <FileName>Assets\Scripts\Savegame.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -250,12 +254,12 @@
   <Class Name="WorldScript">
     <Position X="24.25" Y="22.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQCAgAAACACAAAAAAQYAAEigAEAAQQBABABgBEJAAA=</HashCode>
+      <HashCode>AAWCAhEAgChCACAAAAAYUAEigAFAAQQBQAgBgBEZAgA=</HashCode>
       <FileName>Assets\Scripts\WorldScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="currSkyState" />
       <Field Name="skyTimer" />
+      <Field Name="currSkyState" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Field Name="skyStates" />

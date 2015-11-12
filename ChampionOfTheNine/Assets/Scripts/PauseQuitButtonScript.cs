@@ -14,45 +14,12 @@ public class PauseQuitButtonScript : MonoBehaviour
 
     #endregion
 
-    #region Public Methods
-
-
-
-    #endregion
-
-    #region Protected Methods
-
-
-
-    #endregion
-
-    #region Properties
-
-
-
-    #endregion
-
     #region Private Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Activates when the mouse clicks on the collider
     /// </summary>
-    private void Start()
-    {
-
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update()
-    {
-
-    }
-
-
-
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
         if (tutorial)
         { Application.LoadLevel(Constants.CHAR_CREATE_SCENE); }

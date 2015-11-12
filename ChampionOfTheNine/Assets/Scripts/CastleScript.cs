@@ -22,8 +22,8 @@ public class CastleScript : DamagableObjectScript
     protected override void Start()
     {
         maxHealth = Constants.CASTLE_HEALTH;
-        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_HIT_SND);
-        deathSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CASTLE_DEATH_SND);
+        hitSound = GameManager.Instance.GameSounds[Constants.CASTLE_HIT_SND];
+        deathSound = GameManager.Instance.GameSounds[Constants.CASTLE_DEATH_SND];
         spriteRenderer = GetComponent<SpriteRenderer>();
         base.Start();
     }

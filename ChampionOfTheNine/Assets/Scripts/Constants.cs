@@ -14,18 +14,16 @@ public static class Constants
     public const string PLAYER_TAG = "Player";
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public const float GROUND_CHECK_RADIUS = 0.05f;
-    public const string SND_FOLDER = "Sounds/";
-    public const string PREFAB_FOLDER = "Prefabs/";
     public const float AI_SCAN_DELAY = 5;
     public const float PITCH_CHANGE = 0.2f;
     public const float DARKNESS_TIMER = 3f;
+    public const string SND_FOLDER = "Sounds/";
+    public const string PREFAB_FOLDER = "Prefabs/";
+    public const string PART_FOLDER = "Particles/";
 
-    // Character sounds
-    public const string CHAR_HIT_SND = "hurt";
-    public const string CHAR_DEATH_SND = "death";
-    public const string CHAR_JUMP_SND = "jump";
-    public const string CHAR_LAND_SND = "land";
-    public const string CHAR_WALK_SND = "Walking";
+    // Animator
+    public const string GROUNDED_FLAG = "Grounded";
+    public const string XVELOCTIY_FLAG = "XVelocity";
 
     #region Ranger
 
@@ -41,6 +39,7 @@ public static class Constants
     public const float RANGER_GCD = 0.4f;
     public const string RANGER_SHOOT_SND = "arrowShoot";
     public const string RANGER_SPECIAL_SND = "boost";
+    public const string ARROW_HIT_SND = "arrowHit";
 
     // Basic arrow
     public const float BASIC_ARROW_SPEED = 13;
@@ -124,6 +123,33 @@ public static class Constants
 
     #endregion
 
+    #region Castles
+
+    public const float CASTLE_HEALTH = 600;
+    public const string CASTLE_HIT_SND = "hit";
+    public const string CASTLE_DEATH_SND = "explosion";
+
+    #endregion
+
+    #region Particles
+
+    public const string BLOOD_PART = "BloodParticle";
+    public const string ICE_PART = "IceParticle";
+    public const string LIGHTNING_PART = "LightningParticle";
+    public const string SLAM_PART = "SlamParticle";
+
+    #endregion
+
+    #region Character sounds
+
+    public const string CHAR_HIT_SND = "hurt";
+    public const string CHAR_DEATH_SND = "death";
+    public const string CHAR_JUMP_SND = "jump";
+    public const string CHAR_LAND_SND = "land";
+    public const string CHAR_WALK_SND = "Walking";
+
+    #endregion
+
     #region Dynamic Map
 
     public static float[] PARALLAX_LEVELS = {1.3f, 3};
@@ -167,19 +193,13 @@ public static class Constants
 
     #endregion
 
-    // Castles
-    public const float CASTLE_HEALTH = 600;
-    public const string CASTLE_HIT_SND = "hit";
-    public const string CASTLE_DEATH_SND = "explosion";
+    #region Scenes
 
-    // Scenes
     public const string LEVEL_SCENE = "DynamicLevel";
     public const string MAP_SCENE = "Map";
     public const string MAIN_MENU_SCENE = "MainMenu";
     public const string CHAR_CREATE_SCENE = "CharacterCreation";
     public const string TUTORIAL_SCENE = "Tutorial";
 
-    // Animator
-    public const string GROUNDED_FLAG = "Grounded";
-    public const string XVELOCTIY_FLAG = "XVelocity";
+    #endregion
 }

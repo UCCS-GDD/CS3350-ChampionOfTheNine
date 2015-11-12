@@ -29,6 +29,8 @@ public class ArrowScript : ProjScript
         base.OnTriggerEnter2D(other);
         if (hit != HitType.None)
         {
+            if (hit == HitType.Target)
+            { GameManager.Instance.SpawnParticle(Constants.BLOOD_PART, transform.position); }
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
             Destroy(gameObject); 
         }

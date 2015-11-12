@@ -27,7 +27,9 @@ public class PierceArrowScript : ProjScript
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
-        if (hit == HitType.Ground)
+        if (hit == HitType.Target)
+        { GameManager.Instance.SpawnParticle(Constants.BLOOD_PART, transform.position); }
+        else if (hit == HitType.Ground)
         {
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
             Destroy(gameObject); 

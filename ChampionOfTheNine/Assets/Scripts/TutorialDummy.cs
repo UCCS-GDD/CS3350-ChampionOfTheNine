@@ -20,7 +20,7 @@ public class TutorialDummy : DamagableObjectScript
     protected override void Start()
     {
         maxHealth = 100000;
-        hitSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + "arrowHit");
+        hitSound = GameManager.Instance.GameSounds[Constants.ARROW_HIT_SND];
 		character = GameObject.Find ("RangerPlayer(Clone)");
 		InvokeRepeating ("ManualUpdate", 1, .01f);
 		dummyTwo = GameObject.Find ("DummyTwo");
