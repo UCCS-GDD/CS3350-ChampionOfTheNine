@@ -8,6 +8,12 @@ using System.Text;
 /// </summary>
 public class IceSpellScript : ProjScript
 {
+    #region Fields
+
+    [SerializeField]GameObject particle;
+
+    #endregion
+
     #region Protected Methods
 
     /// <summary>
@@ -33,6 +39,22 @@ public class IceSpellScript : ProjScript
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    protected void Start()
+    {
+        Instantiate(particle, transform.position, transform.rotation);
+    }
+
+    /// <summary>
+    /// Handles the projectile being destroyed
+    /// </summary>
+    protected void OnDestroy()
+    {
+        Instantiate(particle, transform.position, transform.rotation);
     }
 
     #endregion
