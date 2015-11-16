@@ -30,12 +30,12 @@ public class RangerScript : CharacterScript
     #region Public Methods
 
     /// <summary>
-    /// 
+    /// Initializes the character script; called from controller
     /// </summary>
-    /// <param name="controller"></param>
-    /// <param name="energyChanged"></param>
-    /// <param name="healthBar"></param>
-    /// <param name="timerBars"></param>
+    /// <param name="controller">the controller script</param>
+    /// <param name="energyChanged">the handler for when the energy changes</param>
+    /// <param name="healthBar">the health bar</param>
+    /// <param name="timerBars">the array of timer bars</param>
     public override void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
     {
         base.Initialize(controller, energyChanged, healthBar, timerBars);
@@ -73,7 +73,7 @@ public class RangerScript : CharacterScript
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Updates the character; not called on normal update cycle, called by controller
     /// </summary>
     public override void UpdateChar()
     {
@@ -125,7 +125,7 @@ public class RangerScript : CharacterScript
         mainAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SHOOT_SND];
         secondaryAbilitySound = mainAbilitySound;
         powerAbilitySound = mainAbilitySound;
-        specialAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SPECIAL_SND];
+        specialAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_BOOST_SND];
         base.Start();
     }
 

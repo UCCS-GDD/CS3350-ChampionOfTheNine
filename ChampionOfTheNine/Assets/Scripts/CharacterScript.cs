@@ -169,12 +169,12 @@ public abstract class CharacterScript : DamagableObjectScript
     }
 
     /// <summary>
-    /// 
+    /// Initializes the character script; called from controller
     /// </summary>
-    /// <param name="controller"></param>
-    /// <param name="energyChanged"></param>
-    /// <param name="healthBar"></param>
-    /// <param name="timerBars"></param>
+    /// <param name="controller">the controller script</param>
+    /// <param name="energyChanged">the handler for when the energy changes</param>
+    /// <param name="healthBar">the health bar</param>
+    /// <param name="timerBars">the array of timer bars</param>
     public virtual void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
     {
         // Registers for character controller input

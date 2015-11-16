@@ -34,11 +34,10 @@ public static class Constants
     public const float RANGER_HEALTH = 100;
     public const float RANGER_ENERGY = 100;
     public const float RANGER_MOVE_SPEED = 5;
-    public const float RANGER_JUMP_SPEED = 10;
+    public const float RANGER_JUMP_SPEED = 11;
     public const float RANGER_REGEN = 20;
     public const float RANGER_GCD = 0.4f;
     public const string RANGER_SHOOT_SND = "arrowShoot";
-    public const string RANGER_SPECIAL_SND = "boost";
     public const string ARROW_HIT_SND = "arrowHit";
 
     // Basic arrow
@@ -69,6 +68,7 @@ public static class Constants
     public const float RANGER_BOOST_ARROW_SPEED_MULT = 1.2f;
     public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
     public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
+    public const string RANGER_BOOST_SND = "boost";
 
     #endregion
 
@@ -120,6 +120,21 @@ public static class Constants
     public const string DRAIN_SND = "boost";
     public static Color BEAM_COLOR_1 = new Color(1, 1, 1, 1);
     public static Color BEAM_COLOR_2 = new Color(1, 1, 1, 0.4f);
+
+    #endregion
+
+    #region Warrior
+
+    public const string WARRIOR_PLAYER_PREFAB = "WarriorPlayer";
+    public const float WARRIOR_AI_RANGE = 1;
+    public const float WARRIOR_AI_ANGLE_RANGE = 10;
+    public const int WARRIOR_AI_SHOT_THRESHOLD = 5;
+    public const float WARRIOR_HEALTH = 120;
+    public const float WARRIOR_MAX_ENERGY = 100;
+    public const float WARRIOR_MOVE_SPEED = 3.5f;
+    public const float WARRIOR_JUMP_SPEED = 10;
+    public const float WARRIOR_REGEN = 8;
+    public const float WARRIOR_GCD = 0.4f;
 
     #endregion
 

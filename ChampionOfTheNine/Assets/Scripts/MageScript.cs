@@ -61,7 +61,7 @@ public class MageScript : CharacterScript
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Updates the character; not called on normal update cycle, called by controller
     /// </summary>
     public override void UpdateChar()
     {
