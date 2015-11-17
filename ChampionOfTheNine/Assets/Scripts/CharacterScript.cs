@@ -31,6 +31,7 @@ public abstract class CharacterScript : DamagableObjectScript
 
     Rigidbody2D rbody;
     Animator animator;
+    Vector3 baseScale;
 
     protected AudioClip jumpSound;
     protected AudioClip landSound;
@@ -200,6 +201,7 @@ public abstract class CharacterScript : DamagableObjectScript
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        baseScale = transform.localScale;
         walkAudio.clip = GameManager.Instance.GameSounds[Constants.CHAR_WALK_SND];
         hitSound = GameManager.Instance.GameSounds[Constants.CHAR_HIT_SND];
         deathSound = GameManager.Instance.GameSounds[Constants.CHAR_DEATH_SND];
@@ -239,13 +241,13 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         // Flips the character if needed
         float armAngle = angle;
-        if (transform.localScale.x != -1 && angle > 90 && angle < 270)
-        { transform.localScale = new Vector3(-1, 1, 1); }
-        else if (transform.localScale.x == -1)
+        if (transform.localScale.x > 0 && angle > 90 && angle < 270)
+        { transform.localScale = new Vector3(-baseScale.x, baseScale.y, baseScale.z); }
+        else if (transform.localScale.x < 0)
         {
             armAngle = 180 - armAngle;
             if (angle <= 90 || angle >= 270)
-            { transform.localScale = new Vector3(1, 1, 1); }
+            { transform.localScale = baseScale; }
         }
 
         arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);

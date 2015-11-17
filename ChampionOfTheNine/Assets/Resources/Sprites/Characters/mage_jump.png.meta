@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ec423887b603ed44ca9857c06c0f8b63
-timeCreated: 1446065618
+timeCreated: 1447789888
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,82 +61,82 @@ TextureImporter:
     - name: mage_jump_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 4
         y: 140
-        width: 44
-        height: 131
-      alignment: 9
-      pivot: {x: .529999971, y: 0}
+        width: 43
+        height: 130
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_1
       rect:
         serializedVersion: 2
-        x: 56
+        x: 57
         y: 140
-        width: 44
-        height: 131
-      alignment: 9
-      pivot: {x: .50999999, y: 0}
+        width: 43
+        height: 130
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_2
       rect:
         serializedVersion: 2
         x: 110
         y: 139
-        width: 44
+        width: 43
         height: 131
-      alignment: 9
-      pivot: {x: .50999999, y: 0}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_3
       rect:
         serializedVersion: 2
         x: 164
         y: 140
-        width: 44
-        height: 131
-      alignment: 9
+        width: 43
+        height: 130
+      alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_4
       rect:
         serializedVersion: 2
-        x: 2
+        x: 3
         y: 0
-        width: 44
-        height: 131
-      alignment: 9
-      pivot: {x: .50999999, y: 0}
+        width: 43
+        height: 130
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_5
       rect:
         serializedVersion: 2
-        x: 56
+        x: 57
         y: 0
-        width: 44
+        width: 43
         height: 131
-      alignment: 9
-      pivot: {x: .519999981, y: 0}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_6
       rect:
         serializedVersion: 2
-        x: 111
+        x: 112
         y: 0
-        width: 44
-        height: 131
-      alignment: 9
-      pivot: {x: .519999981, y: 0}
+        width: 43
+        height: 130
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: mage_jump_7
       rect:
         serializedVersion: 2
         x: 164
         y: 0
-        width: 44
-        height: 131
-      alignment: 9
-      pivot: {x: .49000001, y: 0}
+        width: 43
+        height: 130
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

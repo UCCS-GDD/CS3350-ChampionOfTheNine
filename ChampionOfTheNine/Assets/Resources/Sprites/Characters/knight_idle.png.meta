@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7b5d58e541396bc44b89c5220606c052
-timeCreated: 1447730045
+timeCreated: 1447786167
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -60,8 +60,8 @@ TextureImporter:
         y: 0
         width: 21
         height: 85
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .479000002, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: knight_idle_1
       rect:
@@ -80,8 +80,8 @@ TextureImporter:
         y: 0
         width: 23
         height: 83
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .521000028, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
