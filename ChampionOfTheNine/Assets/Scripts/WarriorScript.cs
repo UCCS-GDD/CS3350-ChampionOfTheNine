@@ -72,7 +72,7 @@ public class WarriorScript : CharacterScript
     /// </summary>
     protected override void FirePowerAbility()
     {
-
+        
     }
 
     /// <summary>

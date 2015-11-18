@@ -27,11 +27,12 @@ public abstract class CharacterScript : DamagableObjectScript
     protected float jumpSpeed;
     protected string targetTag;
     float energy;
-    bool frozen;
+    bool controllable = true;
 
     Rigidbody2D rbody;
     Animator animator;
     Vector3 baseScale;
+    Vector3 flippedScale;
 
     protected AudioClip jumpSound;
     protected AudioClip landSound;
@@ -45,12 +46,6 @@ public abstract class CharacterScript : DamagableObjectScript
     #endregion
 
     #region Properties
-
-    /// <summary>
-    /// Gets whether or not the character is frozen
-    /// </summary>
-    public bool Frozen
-    { get { return frozen; } }
 
     /// <summary>
     /// Gets and sets the character's energy, setting the energy bar appropriately
@@ -76,6 +71,20 @@ public abstract class CharacterScript : DamagableObjectScript
             if (transform.localScale.x < 0)
             { shotAngle = 180 - shotAngle; }
             return shotAngle;
+        }
+    }
+
+    /// <summary>
+    /// Gets and sets whether or not the character is controllable
+    /// </summary>
+    protected bool Controllable
+    {
+        get { return controllable; }
+        set
+        {
+            if (!value)
+            { rbody.velocity = Vector2.zero; }
+            controllable = value;
         }
     }
 
@@ -120,53 +129,39 @@ public abstract class CharacterScript : DamagableObjectScript
     #region Public Methods
 
     /// <summary>
-    /// Freezes or unfreezes the character
-    /// </summary>
-    /// <param name="freeze">freeze or not</param>
-    public virtual void SetFrozen(bool freeze)
-    {
-        if (freeze)
-        { rbody.velocity = Vector2.zero; }
-        frozen = freeze;
-    }
-
-    /// <summary>
     /// Updates the character; not called on normal update cycle, called by controller
     /// </summary>
     public virtual void UpdateChar()
     {
-        if (!frozen)
+        try
         {
-            try
+            // Updates cooldown timers
+            gCDTimer.Update();
+            powerCDTimer.Update();
+            secondaryCDTimer.Update();
+            specialCDTimer.Update();
+
+            animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
+
+            // Set jump animation/play sounds
+            if (Grounded)
             {
-                // Updates cooldown timers
-                gCDTimer.Update();
-                powerCDTimer.Update();
-                secondaryCDTimer.Update();
-                specialCDTimer.Update();
-
-                animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
-
-                // Set jump animation/play sounds
-                if (Grounded)
+                if (!animator.GetBool(Constants.GROUNDED_FLAG))
                 {
-                    if (!animator.GetBool(Constants.GROUNDED_FLAG))
-                    {
-                        animator.SetBool(Constants.GROUNDED_FLAG, true);
-                        Utilities.PlaySoundPitched(audioSource, landSound);
-                    }
-                }
-                else
-                {
-                    if (animator.GetBool(Constants.GROUNDED_FLAG))
-                    {
-                        animator.SetBool(Constants.GROUNDED_FLAG, false);
-                        Utilities.PlaySoundPitched(audioSource, jumpSound);
-                    }
+                    animator.SetBool(Constants.GROUNDED_FLAG, true);
+                    Utilities.PlaySoundPitched(audioSource, landSound);
                 }
             }
-            catch (NullReferenceException) { }
+            else
+            {
+                if (animator.GetBool(Constants.GROUNDED_FLAG))
+                {
+                    animator.SetBool(Constants.GROUNDED_FLAG, false);
+                    Utilities.PlaySoundPitched(audioSource, jumpSound);
+                }
+            }
         }
+        catch (NullReferenceException) { }
     }
 
     /// <summary>
@@ -197,11 +192,11 @@ public abstract class CharacterScript : DamagableObjectScript
     protected override void Start()
     {
         base.Start();
-        frozen = false;
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         baseScale = transform.localScale;
+        flippedScale = new Vector3(-baseScale.x, baseScale.y, baseScale.z);
         walkAudio.clip = GameManager.Instance.GameSounds[Constants.CHAR_WALK_SND];
         hitSound = GameManager.Instance.GameSounds[Constants.CHAR_HIT_SND];
         deathSound = GameManager.Instance.GameSounds[Constants.CHAR_DEATH_SND];
@@ -221,9 +216,12 @@ public abstract class CharacterScript : DamagableObjectScript
         else if (rbody.velocity.x == 0 && walkAudio.isPlaying)
         { walkAudio.Stop(); }
 
-        // Handles horizontal movement
-        float movement = input * moveSpeed;
-        rbody.velocity = new Vector2(movement, rbody.velocity.y);
+        if (controllable)
+        {
+            // Handles horizontal movement
+            float movement = input * moveSpeed;
+            rbody.velocity = new Vector2(movement, rbody.velocity.y);
+        }
     }
 
     /// <summary>
@@ -231,7 +229,8 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     protected virtual void Jump()
     {
-        rbody.velocity = new Vector2(0, jumpSpeed);
+        if (controllable)
+        { rbody.velocity = new Vector2(0, jumpSpeed); }
     }
 
     /// <summary>
@@ -239,18 +238,21 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     protected virtual void SetArmAngle(float angle)
     {
-        // Flips the character if needed
-        float armAngle = angle;
-        if (transform.localScale.x > 0 && angle > 90 && angle < 270)
-        { transform.localScale = new Vector3(-baseScale.x, baseScale.y, baseScale.z); }
-        else if (transform.localScale.x < 0)
+        if (controllable)
         {
-            armAngle = 180 - armAngle;
-            if (angle <= 90 || angle >= 270)
-            { transform.localScale = baseScale; }
-        }
+            // Flips the character if needed
+            float armAngle = angle;
+            if (transform.localScale.x > 0 && angle > 90 && angle < 270)
+            { transform.localScale = flippedScale; }
+            else if (transform.localScale.x < 0)
+            {
+                armAngle = 180 - armAngle;
+                if (angle <= 90 || angle >= 270)
+                { transform.localScale = baseScale; }
+            }
 
-        arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
+            arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
+        }
     }
 
     /// <summary>
@@ -281,7 +283,7 @@ public abstract class CharacterScript : DamagableObjectScript
         if (energy >= energyCost)
         {
             // Creates the projectile
-            projScript = ((GameObject)Instantiate(prefab)).GetComponent<ProjScript>();
+            projScript = Instantiate<GameObject>(prefab).GetComponent<ProjScript>();
 
             // Subtracts energy and starts timer
             energy -= energyCost;

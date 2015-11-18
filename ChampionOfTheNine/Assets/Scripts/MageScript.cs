@@ -131,7 +131,7 @@ public class MageScript : CharacterScript
             lightningTimer.Start();
             if (lightningProj == null)
             {
-                lightningProj = ((GameObject)Instantiate(lightning)).GetComponent<LightningSpellScript>();
+                lightningProj = Instantiate<GameObject>(lightning).GetComponent<LightningSpellScript>();
                 lightningProj.Initialize(fireLocation.position, ShotAngle, targetTag);
                 lightningSound.Play();
             }
@@ -163,11 +163,7 @@ public class MageScript : CharacterScript
     {
         if (!gCDTimer.IsRunning && !specialCDTimer.IsRunning && !drainTimer.IsRunning)
         {
-            gCDTimer.Start();
-            drainTimer.Start();
-            specialCDTimer.Start();
-
-            // Send beams to all nearby enemies
+            // Sends beams to all nearby enemies
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(targetTag);
             foreach (GameObject obj in enemies)
             {
@@ -180,12 +176,21 @@ public class MageScript : CharacterScript
                     Vector2 location = fireLocation.position;
                     bool goingLeft = fireLocation.position.x > obj.transform.position.x;
 
-                    // Calculate beam
+                    // Calculates beam
                     for (float i = 1; i <= Constants.DRAIN_SEGMENTS; i++)
                     { CalcAndSpawnBeam(i, ref location, topLocation, fireLocation.position, goingLeft); }
                     for (float i = Constants.DRAIN_SEGMENTS - 1; i >= 0; i--)
                     { CalcAndSpawnBeam(i, ref location, topLocation, obj.transform.position, goingLeft); }
                 }
+            }
+
+            // Activates cooldowns if anything was hit
+            if (drainTargets.Count > 0)
+            {
+                gCDTimer.Start();
+                drainTimer.Start();
+                specialCDTimer.Start();
+                Controllable = false;
             }
         }
     }
@@ -210,15 +215,17 @@ public class MageScript : CharacterScript
         { Destroy(beam.gameObject); }
         beams.Clear();
         drainTargets.Clear();
+        Controllable = true;
     }
 
     /// <summary>
-    /// 
+    /// Calculates the position of the next segment of the beam
     /// </summary>
-    /// <param name="num"></param>
-    /// <param name="location"></param>
-    /// <param name="topLocation"></param>
-    /// <param name="endpointLocation"></param>
+    /// <param name="num">the index of the current beam position</param>
+    /// <param name="location">the current beam location</param>
+    /// <param name="topLocation">the location of the top of the beam</param>
+    /// <param name="endpointLocation">the location of the other end of this half of the beam</param>
+    /// <param name="goingLeft">whether or not the beam is going left</param>
     protected void CalcAndSpawnBeam(float num, ref Vector2 location, Vector2 topLocation, Vector2 endpointLocation, bool goingLeft)
     {
         Vector2 oldLocation = location;
