@@ -71,9 +71,9 @@ public abstract class DamagableObjectScript : MonoBehaviour
     #region Protected Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Initializes the object
     /// </summary>
-    protected virtual void Start()
+    protected virtual void Initialize()
     {
         Health = maxHealth;
         audioSource = GetComponent<AudioSource>();

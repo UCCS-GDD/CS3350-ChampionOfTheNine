@@ -136,8 +136,7 @@ public class GameManager
                     { part.Play(); }
                 }
             }
-            catch (Exception)
-            { activeParticles.Dequeue(); }
+            catch (Exception) { }
         }
     }
 

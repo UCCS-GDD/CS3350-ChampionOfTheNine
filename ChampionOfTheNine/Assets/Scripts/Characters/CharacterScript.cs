@@ -12,36 +12,35 @@ public abstract class CharacterScript : DamagableObjectScript
 {
     #region Fields
 
-    [SerializeField]protected AudioSource walkAudio;
+    [SerializeField]AudioSource walkAudio;
     [SerializeField]Transform fireLocation;
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
+    protected Color energyColor;
     protected Rigidbody2D rbody;
+    protected Timer gCDTimer;
     protected Timer secondaryCDTimer;
     protected Timer powerCDTimer;
     protected Timer specialCDTimer;
-    protected Timer gCDTimer;
-    protected float maxEnergy;
-    protected float moveSpeed;
-    protected float jumpSpeed;
-    protected string targetTag;
-    float energy;
-    bool controllable = true;
-
-    Animator animator;
-    Vector3 baseScale;
-    Vector3 flippedScale;
-
-    protected AudioClip jumpSound;
-    protected AudioClip landSound;
     protected AudioClip mainAbilitySound;
     protected AudioClip secondaryAbilitySound;
     protected AudioClip powerAbilitySound;
     protected AudioClip specialAbilitySound;
-
-    protected MovementHandler energyChanged = Blank;
+    protected float maxEnergy;
+    protected float moveSpeed;
+    protected float jumpSpeed;
+    protected string targetTag;
+    
+    AudioClip jumpSound;
+    AudioClip landSound;
+    Animator animator;
+    Vector3 baseScale;
+    Vector3 flippedScale;
+    EnergyChangedHandler energyChanged = Blank;
+    float energy;
+    bool controllable = true;
 
     #endregion
 
@@ -61,16 +60,33 @@ public abstract class CharacterScript : DamagableObjectScript
     }
 
     /// <summary>
-    /// Gets the angle at which to shoot a projectile
+    /// Gets and sets the angle of the character's arm
     /// </summary>
-    protected float ShotAngle
+    public float ArmAngle
     {
+        set
+        {
+            if (controllable)
+            {
+                // Flips the character if needed
+                float armAngle = value;
+                if (transform.localScale.x > 0 && value > 90 && value < 270)
+                { transform.localScale = flippedScale; }
+                else if (transform.localScale.x < 0)
+                {
+                    armAngle = 180 - armAngle;
+                    if (value <= 90 || value >= 270)
+                    { transform.localScale = baseScale; }
+                }
+                arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
+            }
+        }
         get
         {
-            float shotAngle = arm.transform.rotation.eulerAngles.z;
+            float armAngle = arm.transform.rotation.eulerAngles.z;
             if (transform.localScale.x < 0)
-            { shotAngle = 180 - shotAngle; }
-            return shotAngle;
+            { armAngle = 180 - armAngle; }
+            return armAngle;
         }
     }
 
@@ -139,65 +155,47 @@ public abstract class CharacterScript : DamagableObjectScript
     /// </summary>
     public virtual void UpdateChar()
     {
-        try
+        // Updates cooldown timers
+        gCDTimer.Update();
+        powerCDTimer.Update();
+        secondaryCDTimer.Update();
+        specialCDTimer.Update();
+
+        animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
+
+        // Set jump animation/play sounds
+        if (Grounded)
         {
-            // Updates cooldown timers
-            gCDTimer.Update();
-            powerCDTimer.Update();
-            secondaryCDTimer.Update();
-            specialCDTimer.Update();
-
-            animator.SetFloat(Constants.XVELOCTIY_FLAG, Mathf.Abs(rbody.velocity.x));
-
-            // Set jump animation/play sounds
-            if (Grounded)
+            if (!animator.GetBool(Constants.GROUNDED_FLAG))
             {
-                if (!animator.GetBool(Constants.GROUNDED_FLAG))
-                {
-                    animator.SetBool(Constants.GROUNDED_FLAG, true);
-                    Utilities.PlaySoundPitched(audioSource, landSound);
-                }
-            }
-            else
-            {
-                if (animator.GetBool(Constants.GROUNDED_FLAG))
-                {
-                    animator.SetBool(Constants.GROUNDED_FLAG, false);
-                    Utilities.PlaySoundPitched(audioSource, jumpSound);
-                }
+                animator.SetBool(Constants.GROUNDED_FLAG, true);
+                Utilities.PlaySoundPitched(audioSource, landSound);
             }
         }
-        catch (NullReferenceException) { }
+        else
+        {
+            if (animator.GetBool(Constants.GROUNDED_FLAG))
+            {
+                animator.SetBool(Constants.GROUNDED_FLAG, false);
+                Utilities.PlaySoundPitched(audioSource, jumpSound);
+            }
+        }
     }
 
     /// <summary>
     /// Initializes the character script; called from controller
     /// </summary>
-    /// <param name="controller">the controller script</param>
+    /// <param name="targetTag">the tag of the targeted objects</param>
     /// <param name="energyChanged">the handler for when the energy changes</param>
     /// <param name="healthBar">the health bar</param>
     /// <param name="timerBars">the array of timer bars</param>
-    public virtual void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
+    public virtual void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
     {
-        // Registers for character controller input
         this.energyChanged = energyChanged;
-        controller.Register(Jump, FireMainAbility, FireSecondaryAbility, FirePowerAbility, FireSpecialAbility, Move, SetArmAngle);
-        targetTag = controller.TargetTag;
-
+        this.targetTag = targetTag;
         if (healthBar != null)
         { this.healthBar = healthBar; }
-    }
 
-    #endregion
-
-    #region Protected Methods
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected override void Start()
-    {
-        base.Start();
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -208,13 +206,14 @@ public abstract class CharacterScript : DamagableObjectScript
         deathSound = GameManager.Instance.GameSounds[Constants.CHAR_DEATH_SND];
         jumpSound = GameManager.Instance.GameSounds[Constants.CHAR_JUMP_SND];
         landSound = GameManager.Instance.GameSounds[Constants.CHAR_LAND_SND];
+        base.Initialize();
     }
 
     /// <summary>
     /// Moves the character using the given movement input
     /// </summary>
     /// <param name="input">the movement input</param>
-    protected virtual void Move(float input)
+    public virtual void Move(float input)
     {
         // Plays/stops sound
         if (Mathf.Abs(rbody.velocity.x) > 0 && !walkAudio.isPlaying)
@@ -233,33 +232,35 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <summary>
     /// Makes the character jump
     /// </summary>
-    protected virtual void Jump()
+    public virtual void Jump()
     {
         if (controllable)
         { rbody.velocity = new Vector2(0, jumpSpeed); }
     }
 
     /// <summary>
-    /// Sets the character's arm angle
+    /// Fires the character's main ability
     /// </summary>
-    protected virtual void SetArmAngle(float angle)
-    {
-        if (controllable)
-        {
-            // Flips the character if needed
-            float armAngle = angle;
-            if (transform.localScale.x > 0 && angle > 90 && angle < 270)
-            { transform.localScale = flippedScale; }
-            else if (transform.localScale.x < 0)
-            {
-                armAngle = 180 - armAngle;
-                if (angle <= 90 || angle >= 270)
-                { transform.localScale = baseScale; }
-            }
+    public abstract void FireMainAbility();
 
-            arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
-        }
-    }
+    /// <summary>
+    /// Fires the character's secondary ability
+    /// </summary>
+    public abstract void FireSecondaryAbility();
+
+    /// <summary>
+    /// Fires the character's power ability
+    /// </summary>
+    public abstract void FirePowerAbility();
+
+    /// <summary>
+    /// Fires the character's special ability
+    /// </summary>
+    public abstract void FireSpecialAbility();
+
+    #endregion
+
+    #region Protected Methods
 
     /// <summary>
     /// Fires a projectile attack straight forward from the character
@@ -274,7 +275,7 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
-        { projectile.Initialize(FireLocation, ShotAngle, targetTag, damage, projSpeed); }
+        { projectile.Initialize(FireLocation, ArmAngle, targetTag, damage, projSpeed); }
         return projectile;
     }
 
@@ -310,26 +311,6 @@ public abstract class CharacterScript : DamagableObjectScript
         { GetComponent<CharacterControllerScript>().Death(); }
         catch (NullReferenceException) { }
     }
-
-    /// <summary>
-    /// Fires the character's main ability
-    /// </summary>
-    protected abstract void FireMainAbility();
-
-    /// <summary>
-    /// Fires the character's secondary ability
-    /// </summary>
-    protected abstract void FireSecondaryAbility();
-
-    /// <summary>
-    /// Fires the character's power ability
-    /// </summary>
-    protected abstract void FirePowerAbility();
-
-    /// <summary>
-    /// Fires the character's special ability
-    /// </summary>
-    protected abstract void FireSpecialAbility();
 
     #endregion
 

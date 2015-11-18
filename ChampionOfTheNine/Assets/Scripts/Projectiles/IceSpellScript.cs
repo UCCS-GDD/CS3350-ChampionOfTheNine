@@ -11,18 +11,6 @@ public class IceSpellScript : ProjScript
     #region Protected Methods
 
     /// <summary>
-    /// Initializes the projectile
-    /// </summary>
-    /// <param name="targetTag">the tag of the targeted characters</param>
-    /// <param name="damage">the projectile's damage</param>
-    /// <param name="moveSpeed">the projectile's movement speed</param>
-    protected override void Initialize(string targetTag, float damage, float moveSpeed)
-    {
-        GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position);
-        base.Initialize(targetTag, damage, moveSpeed);
-    }
-
-    /// <summary>
     /// Handles the projectile colliding with something
     /// </summary>
     /// <param name="other">the other collider</param>
@@ -35,6 +23,14 @@ public class IceSpellScript : ProjScript
             GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position); 
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Start is called once on object creation
+    /// </summary>
+    protected void Start()
+    {
+        GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position);
     }
 
     #endregion

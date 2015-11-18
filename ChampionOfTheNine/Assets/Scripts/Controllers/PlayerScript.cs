@@ -23,7 +23,7 @@ public class PlayerScript : CharacterControllerScript
     /// <summary>
     /// Returns the tag of this character's target
     /// </summary>
-    public override string TargetTag
+    protected override string TargetTag
     { get { return Constants.ENEMY_TAG; } }
 
     #endregion
@@ -45,7 +45,8 @@ public class PlayerScript : CharacterControllerScript
     /// <summary>
     /// Initializes the player
     /// </summary>
-    public virtual void Initialize(Image healthBar, Image energyBar, Image[] gcdBars, Image[] timerBars, Image secondaryCDBar, Image powerCDBar, Image specialCDBar)
+    public virtual void Initialize(Image healthBar, Image energyBar, Image[] gcdBars, Image[] timerBars, Image secondaryCDBar, Image powerCDBar, 
+        Image specialCDBar)
     {
         this.energyBar = energyBar;
         base.Initialize(healthBar, timerBars);
@@ -67,24 +68,24 @@ public class PlayerScript : CharacterControllerScript
         base.NotPausedUpdate();
 
         // Handles horizontal movement
-        movement(Input.GetAxis("Horizontal"));
+        character.Move(Input.GetAxis("Horizontal"));
 
         // Handles jumping
         if (Input.GetButtonDown("Jump") && character.Grounded)
-        { jumpAbility(); }
+        { character.Jump(); }
 
         // Handles arm movement
-        armDirection(Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition));
+        character.ArmAngle = Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition);
 
         // Handles firing
         if (Input.GetAxis("SpecialFire") > 0)
-        { specialAbility(); }
+        { character.FireSpecialAbility(); }
         if (!character.GCDTimer.IsRunning && Input.GetAxis("PowerFire") > 0)
-        { powerAbility(); }
+        { character.FirePowerAbility(); }
         if (!character.GCDTimer.IsRunning && Input.GetAxis("SecondaryFire") > 0)
-        { secondaryAbility(); }
+        { character.FireSecondaryAbility(); }
         if (!character.GCDTimer.IsRunning && Input.GetAxis("MainFire") > 0)
-        { mainAbility(); }
+        { character.FireMainAbility(); }
 
         // Moves the camera
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);

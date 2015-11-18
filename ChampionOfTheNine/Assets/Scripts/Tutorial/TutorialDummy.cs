@@ -17,7 +17,7 @@ public class TutorialDummy : DamagableObjectScript
 	GameObject dummyTwo;
 
 	// Use this for initialization
-    protected override void Start()
+    protected void Start()
     {
         maxHealth = 100000;
         hitSound = GameManager.Instance.GameSounds[Constants.ARROW_HIT_SND];
@@ -25,7 +25,7 @@ public class TutorialDummy : DamagableObjectScript
 		InvokeRepeating ("ManualUpdate", 1, .01f);
 		dummyTwo = GameObject.Find ("DummyTwo");
 		dummyTwo.SetActive (false);
-        base.Start();
+        base.Initialize();
 	}
 
 	void ManualUpdate()

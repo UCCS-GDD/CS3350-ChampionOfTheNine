@@ -26,12 +26,16 @@ public class MageScript : CharacterScript
 
     #endregion
 
-    #region Protected Methods
-
+    #region Public Methods
+    
     /// <summary>
-    /// Start is called once on object creation
+    /// Initializes the character script; called from controller
     /// </summary>
-    protected override void Start()
+    /// <param name="targetTag">the tag of the targeted objects</param>
+    /// <param name="energyChanged">the handler for when the energy changes</param>
+    /// <param name="healthBar">the health bar</param>
+    /// <param name="timerBars">the array of timer bars</param>
+    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
     {
         // Sets fields
         maxHealth = Constants.MAGE_HEALTH;
@@ -57,7 +61,7 @@ public class MageScript : CharacterScript
         secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.LIGHTNING_CAST_SND];
         powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
-        base.Start();
+        base.Initialize(targetTag, energyChanged, healthBar, timerBars);
     }
 
     /// <summary>
@@ -76,7 +80,7 @@ public class MageScript : CharacterScript
         {
             if (Energy >= Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime)
             {
-                lightningProj.SetLocationAndDirection(FireLocation, ShotAngle);
+                lightningProj.SetLocationAndDirection(FireLocation, ArmAngle);
                 Energy -= (Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime);
                 lightningTimer.Update();
             }
@@ -84,37 +88,33 @@ public class MageScript : CharacterScript
             { lightningTimer.Finish(); }
         }
 
-        try
+        // Updates beams
+        if (drainTimer.IsRunning)
         {
-            // Updates beams
-            if (drainTimer.IsRunning)
+            // Updates flash
+            if (drainTimer.ElapsedSeconds % Constants.DRAIN_FLASH_TIME < Time.deltaTime)
             {
-                // Updates flash
-                if (drainTimer.ElapsedSeconds % Constants.DRAIN_FLASH_TIME < Time.deltaTime)
-                {
-                    foreach (SpriteRenderer beam in beams)
-                    { beam.color = beamColors[beam.color]; }
-                }
-
-                // Damages targets and increases mana
-                for (int i = drainTargets.Count - 1; i >= 0; i--)
-                {
-                    if (drainTargets[i].Damage(Constants.DRAIN_DAMAGE * (Time.deltaTime / Constants.DRAIN_TIME)))
-                    { Energy = Mathf.Min(maxEnergy, Energy + (Constants.DRAIN_MANA_PER_TARGET * (Time.deltaTime / Constants.DRAIN_TIME))); }
-                    else
-                    { drainTargets.RemoveAt(i); }
-                }
-
-                drainTimer.Update();
+                foreach (SpriteRenderer beam in beams)
+                { beam.color = beamColors[beam.color]; }
             }
+
+            // Damages targets and increases mana
+            for (int i = drainTargets.Count - 1; i >= 0; i--)
+            {
+                if (drainTargets[i].Damage(Constants.DRAIN_DAMAGE * (Time.deltaTime / Constants.DRAIN_TIME)))
+                { Energy = Mathf.Min(maxEnergy, Energy + (Constants.DRAIN_MANA_PER_TARGET * (Time.deltaTime / Constants.DRAIN_TIME))); }
+                else
+                { drainTargets.RemoveAt(i); }
+            }
+
+            drainTimer.Update();
         }
-        catch (System.NullReferenceException) { }
     }
 
     /// <summary>
     /// Fires the character's main ability
     /// </summary>
-    protected override void FireMainAbility()
+    public override void FireMainAbility()
     {
         ProjScript projectile = FireStraightProjectileAttack(ice, Constants.ICE_COST, gCDTimer, Constants.ICE_DAMAGE, Constants.ICE_SPEED);
         if (projectile != null)
@@ -124,7 +124,7 @@ public class MageScript : CharacterScript
     /// <summary>
     /// Fires the character's secondary ability
     /// </summary>
-    protected override void FireSecondaryAbility()
+    public override void FireSecondaryAbility()
     {
         if (!gCDTimer.IsRunning)
         {
@@ -132,7 +132,7 @@ public class MageScript : CharacterScript
             if (lightningProj == null)
             {
                 lightningProj = Instantiate<GameObject>(lightning).GetComponent<LightningSpellScript>();
-                lightningProj.Initialize(FireLocation, ShotAngle, targetTag, Constants.LIGHTNING_DAMAGE, 0);
+                lightningProj.Initialize(FireLocation, ArmAngle, targetTag, Constants.LIGHTNING_DAMAGE, 0);
                 lightningSound.Play();
             }
         }
@@ -141,7 +141,7 @@ public class MageScript : CharacterScript
     /// <summary>
     /// Fires the character's power ability
     /// </summary>
-    protected override void FirePowerAbility()
+    public override void FirePowerAbility()
     {
         if (!powerCDTimer.IsRunning)
         {
@@ -151,7 +151,7 @@ public class MageScript : CharacterScript
                 Utilities.PlaySoundPitched(audioSource, powerAbilitySound);
                 powerCDTimer.Start();
                 Vector2 shotLocation = (Vector2)transform.position + Constants.METEOR_START_LOC;
-                projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag, 
+                projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag,
                     Constants.METEOR_DAMAGE, Constants.METEOR_SPEED);
             }
         }
@@ -160,7 +160,7 @@ public class MageScript : CharacterScript
     /// <summary>
     /// Fires the character's special ability
     /// </summary>
-    protected override void FireSpecialAbility()
+    public override void FireSpecialAbility()
     {
         if (!gCDTimer.IsRunning && !specialCDTimer.IsRunning && !drainTimer.IsRunning)
         {
@@ -171,7 +171,7 @@ public class MageScript : CharacterScript
                 if (Vector2.Distance(FireLocation, obj.transform.position) < Constants.DRAIN_RANGE)
                 {
                     drainTargets.Add(obj.GetComponent<DamagableObjectScript>());
-                    Vector2 topLocation = new Vector2((obj.transform.position.x - FireLocation.x) / 2, Mathf.Max(obj.transform.position.y - 
+                    Vector2 topLocation = new Vector2((obj.transform.position.x - FireLocation.x) / 2, Mathf.Max(obj.transform.position.y -
                         FireLocation.y, 0) + Random.Range(Constants.DRAIN_MIN_HEIGHT, Constants.DRAIN_MAX_HEIGHT)) + FireLocation;
                     Vector2 location = FireLocation;
                     bool goingLeft = FireLocation.x > obj.transform.position.x;
@@ -194,6 +194,10 @@ public class MageScript : CharacterScript
             }
         }
     }
+
+    #endregion
+
+    #region Protected Methods
 
     /// <summary>
     /// Handles the lightning timer finishing

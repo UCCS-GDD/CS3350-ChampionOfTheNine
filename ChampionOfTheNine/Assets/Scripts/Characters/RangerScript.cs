@@ -32,53 +32,11 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Initializes the character script; called from controller
     /// </summary>
-    /// <param name="controller">the controller script</param>
+    /// <param name="targetTag">the tag of the targeted objects</param>
     /// <param name="energyChanged">the handler for when the energy changes</param>
     /// <param name="healthBar">the health bar</param>
     /// <param name="timerBars">the array of timer bars</param>
-    public override void Initialize(CharacterControllerScript controller, MovementHandler energyChanged, Image healthBar, Image[] timerBars)
-    {
-        base.Initialize(controller, energyChanged, healthBar, timerBars);
-        if (timerBars != null)
-        {
-            pierceBar = timerBars[0];
-            boostBar = timerBars[1];
-        }
-    }
-
-    /// <summary>
-    /// Updates the character; not called on normal update cycle, called by controller
-    /// </summary>
-    public override void UpdateChar()
-    {
-        base.UpdateChar();
-
-        // Updates energy
-        if (Energy < maxEnergy)
-        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
-
-        try
-        {
-            // Updates timers
-            pierceShootCD.Update();
-            pierceShootWindow.Update();
-            boostTimer.Update();
-
-            // Updates ability bars
-            boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
-            pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
-        }
-        catch (System.NullReferenceException) { }
-    }
-
-    #endregion
-
-    #region Protected Methods
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected override void Start()
+    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
     {
         // Sets fields
         maxHealth = Constants.RANGER_HEALTH;
@@ -100,15 +58,45 @@ public class RangerScript : CharacterScript
         secondaryAbilitySound = mainAbilitySound;
         powerAbilitySound = mainAbilitySound;
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_BOOST_SND];
-        base.Start();
+        if (timerBars != null)
+        {
+            pierceBar = timerBars[0];
+            boostBar = timerBars[1];
+        }
+        base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+    }
+
+    /// <summary>
+    /// Updates the character; not called on normal update cycle, called by controller
+    /// </summary>
+    public override void UpdateChar()
+    {
+        base.UpdateChar();
+
+        // Updates energy
+        if (Energy < maxEnergy)
+        { Energy = Mathf.Min(maxEnergy, Energy + (Constants.RANGER_REGEN * energyRegenMult * Time.deltaTime)); }
+
+        // Updates timers
+        pierceShootCD.Update();
+        pierceShootWindow.Update();
+        boostTimer.Update();
+
+        // Updates ability bars
+        try
+        {
+            boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds);
+            pierceBar.fillAmount = 1 - (pierceShootWindow.ElapsedSeconds / pierceShootWindow.TotalSeconds);
+        }
+        catch (System.NullReferenceException) { }
     }
 
     /// <summary>
     /// Fires the character's main ability
     /// </summary>
-    protected override void FireMainAbility() 
+    public override void FireMainAbility()
     {
-        ProjScript projectile = FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer, Constants.BASIC_ARROW_DAMAGE * arrowDamageMult, 
+        ProjScript projectile = FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer, Constants.BASIC_ARROW_DAMAGE * arrowDamageMult,
             Constants.BASIC_ARROW_SPEED * arrowSpeedMult);
         if (projectile != null)
         { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
@@ -117,14 +105,14 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Fires the character's secondary ability
     /// </summary>
-    protected override void FireSecondaryAbility()
+    public override void FireSecondaryAbility()
     {
         if (!secondaryCDTimer.IsRunning)
         {
             ProjScript projectile = FireStraightProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer, Constants.EXP_ARROW_DAMAGE * arrowDamageMult,
                 Constants.EXP_ARROW_SPEED * arrowSpeedMult);
             if (projectile != null)
-            { 
+            {
                 secondaryCDTimer.Start();
                 Utilities.PlaySoundPitched(audioSource, secondaryAbilitySound);
             }
@@ -134,7 +122,7 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Fires the character's power ability
     /// </summary>
-    protected override void FirePowerAbility()
+    public override void FirePowerAbility()
     {
         // Fires piercing arrow ability if possible
         if (!powerCDTimer.IsRunning && !pierceShootCD.IsRunning)
@@ -154,7 +142,7 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Fires the character's special ability
     /// </summary>
-    protected override void FireSpecialAbility()
+    public override void FireSpecialAbility()
     {
         if (!specialCDTimer.IsRunning)
         {
@@ -171,6 +159,10 @@ public class RangerScript : CharacterScript
             specialCDTimer.Start();
         }
     }
+
+    #endregion
+
+    #region Protected Methods
 
     /// <summary>
     /// Handles the pierce ability window finishing

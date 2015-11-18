@@ -22,7 +22,7 @@ public abstract class AIScript : CharacterControllerScript
     /// <summary>
     /// Returns the tag of this character's target
     /// </summary>
-    public override string TargetTag
+    protected override string TargetTag
     { get { return Constants.PLAYER_TAG; } }
 
     #endregion
@@ -66,15 +66,15 @@ public abstract class AIScript : CharacterControllerScript
             {
                 // Out of range, move towards target
                 if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << Constants.GROUND_LAYER) && character.Grounded)
-                { jumpAbility(); }
+                { character.Jump(); }
                 float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
-                movement(direction);
-                armDirection(90 - (direction * 135));
+                character.Move(direction);
+                character.ArmAngle = 90 - (direction * 135);
             }
             else
             {
                 // In range, attack
-                movement(0);
+                character.Move(0);
                 Attack();
             }
         }

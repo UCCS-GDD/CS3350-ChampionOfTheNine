@@ -19,13 +19,13 @@ public class CastleScript : DamagableObjectScript
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    protected override void Start()
+    protected void Start()
     {
         maxHealth = Constants.CASTLE_HEALTH;
         hitSound = GameManager.Instance.GameSounds[Constants.CASTLE_HIT_SND];
         deathSound = GameManager.Instance.GameSounds[Constants.CASTLE_DEATH_SND];
         spriteRenderer = GetComponent<SpriteRenderer>();
-        base.Start();
+        base.Initialize();
     }
 
     #endregion
@@ -40,7 +40,7 @@ public class CastleScript : DamagableObjectScript
         WorldScript.Instance.Defeat(gameObject.tag);
 
         try
-        { gameObject.transform.FindChild("EnemySpawnLocation").GetComponent<EnemySpawner>().CancelInvoke(); }
+        { gameObject.GetComponent<EnemySpawner>().enabled = false; }
         catch { }
     }
 }

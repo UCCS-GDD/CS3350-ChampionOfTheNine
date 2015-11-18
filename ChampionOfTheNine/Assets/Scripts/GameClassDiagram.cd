@@ -1,46 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="AIRangerScript">
-    <Position X="3.25" Y="15.75" Width="1.5" />
+    <Position X="5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Controllers\AIRangerScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIScript">
-    <Position X="5.5" Y="11.5" Width="1.5" />
+    <Position X="7.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAIAAAEAAAAIAAQAAgAAAAABAAJEA=</HashCode>
       <FileName>Assets\Scripts\Controllers\AIScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CharacterControllerScript">
-    <Position X="6.75" Y="7.75" Width="1.5" />
+    <Position X="8.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACYBAAAAAAEAQAAAAAAAAIEMAABQAAgAAAAAAAAAEA=</HashCode>
+      <HashCode>AACIAAAAAAAAAQAAAAAAAAAAAAAAQAAgAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Controllers\CharacterControllerScript.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="jumpAbility" />
-      <Field Name="mainAbility" />
-      <Field Name="secondaryAbility" />
-      <Field Name="powerAbility" />
-      <Field Name="specialAbility" />
-      <Field Name="armDirection" />
-      <Field Name="movement" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="ExpArrowScript">
-    <Position X="12.25" Y="11.75" Width="1.5" />
+    <Position X="14" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAABAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\ExpArrowScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ProjScript">
-    <Position X="18" Y="7.75" Width="1.5" />
+    <Position X="19.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAQA4wBAAAAAAAASAEAAQAAAAEAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAAAEAQA4wBAAAAAAAAAAEAAQAAAAEAAAAAAABA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\ProjScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -49,53 +40,53 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="AxeScript">
-    <Position X="14.5" Y="11.75" Width="1.5" />
+    <Position X="16.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAAAAAAAAAIAAAAAAAAEAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\AxeScript.cs</FileName>
       <NewMemberFileName>Assets\Scripts\Projectiles\ArrowScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DamagableObjectScript">
-    <Position X="2.5" Y="10.75" Width="1.5" />
+    <Position X="4.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACACIACAAIAAAAAAAAAAAAAAAEAAgAAACAAAQAAg=</HashCode>
+      <HashCode>AAAACACIAAAAIQAAAAAAAAAAAAAAEAAgAAACAAAQAAg=</HashCode>
       <FileName>Assets\Scripts\DamagableObjectScript.cs</FileName>
       <NewMemberFileName>Assets\Scripts\CharacterScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Constants">
+  <Class Name="Constants" Collapsed="true">
     <Position X="32.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>wJpuRgzAYoOGr5aQB4n0msbStcmZAQfBKWg613/Ec8Y=</HashCode>
+      <HashCode>wJpuxgzAYoOGr5aQB4n0msbStcmZAQfBqWg613/Ec9Y=</HashCode>
       <FileName>Assets\Scripts\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ExplosionScript">
-    <Position X="28" Y="7.75" Width="1.5" />
+    <Position X="29.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgQBAAAAAAAAAAEAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\ExplosionScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PierceArrowScript">
-    <Position X="16.75" Y="11.75" Width="1.5" />
+    <Position X="18.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\PierceArrowScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerScript">
-    <Position X="10" Y="11.5" Width="1.5" />
+    <Position X="11.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AICAAAAAAAAAAQAAAAAAAQAAAAAARAAgAAAAAAAAEkA=</HashCode>
       <FileName>Assets\Scripts\Controllers\PlayerScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RangerScript">
-    <Position X="17.75" Y="26.25" Width="1.5" />
+    <Position X="19.5" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAUGAAAiYIAQKABEAAAAAAEIAAAABAAIBAAAAICAA=</HashCode>
+      <HashCode>AAgAUGAAAgYIAQKABEAAAAAAEIAAAABAAIBAAAAICAA=</HashCode>
       <FileName>Assets\Scripts\Characters\RangerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -105,7 +96,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Timer">
-    <Position X="18.5" Y="21.5" Width="1.5" />
+    <Position X="20.25" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEQAEAAAADAAAAAAAAAAQAAAAAgBAAAAAQAAAAEAAAg=</HashCode>
       <FileName>Assets\Scripts\Timer.cs</FileName>
@@ -115,16 +106,16 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="TimerFinishedEvent">
-    <Position X="21.5" Y="22.5" Width="1.5" />
+    <Position X="20.25" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAABABAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MageScript">
-    <Position X="13.25" Y="26.25" Width="1.5" />
+    <Position X="15" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAQAACAIBQAARAJgAAAAAoQAAABAQADAAgAACAA=</HashCode>
+      <HashCode>AABAAAQAAAAIBQAARAJgAAAAAoQAAABAQADAAgAACAA=</HashCode>
       <FileName>Assets\Scripts\Characters\MageScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -136,51 +127,51 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="WarriorScript">
-    <Position X="15.5" Y="26.25" Width="1.5" />
+    <Position X="17.25" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQCAAACAABAAgAAAAAIAABABAAABAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAASAABAAgAAAAAIAABABAAABgAQAAKAA=</HashCode>
       <FileName>Assets\Scripts\Characters\WarriorScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IceSpellScript">
-    <Position X="19" Y="11.75" Width="1.5" />
+    <Position X="20.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\IceSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LightningSpellScript">
-    <Position X="21.25" Y="11.75" Width="1.5" />
+    <Position X="23" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\LightningSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MeteorSpellScript">
-    <Position X="23.5" Y="11.75" Width="1.5" />
+    <Position X="25.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAABAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\MeteorSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIMageScript">
-    <Position X="5.5" Y="15.75" Width="1.5" />
+    <Position X="7.25" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Controllers\AIMageScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIWarriorScript">
-    <Position X="7.75" Y="15.75" Width="1.5" />
+    <Position X="9.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Controllers\AIWarriorScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CharacterScript">
-    <Position X="15.5" Y="15" Width="1.5" />
+    <Position X="17.25" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>xCAAAAAAlqAJCRRQBA4UEhEEgIBQEqBgABJACAAAiAA=</HashCode>
+      <HashCode>xCAAAAAAloAJCRxQBA4UEhEEgIBQEqBgABpAAAAACAA=</HashCode>
       <FileName>Assets\Scripts\Characters\CharacterScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -191,21 +182,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CastleScript">
-    <Position X="0.5" Y="15" Width="1.5" />
+    <Position X="2.25" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAACAAAAAAAAAAAAAAAAAgAAAAAAAIAAA=</HashCode>
       <FileName>Assets\Scripts\CastleScript.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Utilities">
-    <Position X="30.5" Y="0.5" Width="1.5" />
+  <Class Name="Utilities" Collapsed="true">
+    <Position X="32.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAACAAAAAAAAAAAAAgACAAA=</HashCode>
       <FileName>Assets\Scripts\Utilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameManager">
-    <Position X="7.75" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="0.75" Width="1.5" />
     <NestedTypes>
       <Class Name="GameManager.Updater" Collapsed="true">
         <TypeIdentifier>
@@ -222,7 +213,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Savegame">
-    <Position X="10.75" Y="5.5" Width="1.5" />
+    <Position X="3.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAEAAAABAAAAAEAAAAAAAAAAAIAAAEAAAAA=</HashCode>
       <FileName>Assets\Scripts\Savegame.cs</FileName>
@@ -232,15 +223,15 @@
       <Property Name="KingdomLocations" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Serializer">
-    <Position X="28.75" Y="0.5" Width="1.5" />
+  <Class Name="Serializer" Collapsed="true">
+    <Position X="34" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAACBAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Serializer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SkyState">
-    <Position X="26" Y="31" Width="1.5" />
+    <Position X="27.75" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAcAAgIHAAIAAQAAAAUAIAIQACAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\SkyState.cs</FileName>
@@ -250,7 +241,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="KingdomButtonScript">
-    <Position X="10.75" Y="0.5" Width="1.5" />
+    <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>Assets\Scripts\Menus\KingdomButtonScript.cs</FileName>
@@ -260,14 +251,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="KingdomStatus">
-    <Position X="10.75" Y="8.75" Width="1.5" />
+    <Position X="3.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\KingdomStatus.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WorldScript">
-    <Position X="21.5" Y="25.25" Width="1.5" />
+    <Position X="23.25" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAWCAhEAgChCACAAAAAYUAEigAFAAQQBQAgBgBEZAgA=</HashCode>
       <FileName>Assets\Scripts\WorldScript.cs</FileName>
@@ -281,7 +272,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Tutorial">
-    <Position X="13" Y="15" Width="1.5" />
+    <Position X="14.75" Y="12" Width="1.5" />
     <NestedTypes>
       <Enum Name="Tutorial.Stage" Collapsed="true">
         <TypeIdentifier>
@@ -295,63 +286,56 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TutorialRanger">
-    <Position X="13" Y="19.5" Width="1.5" />
+    <Position X="14.75" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEABAAAECAAAAAAAAAAEAAAAAAAAABAABAAAAgUCgA=</HashCode>
       <FileName>Assets\Scripts\Tutorial\TutorialRanger.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PauseableObjectScript">
-    <Position X="15.75" Y="4" Width="1.5" />
+    <Position X="17.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQgAAAAAAAAAQAAAAIAAAAAAAAAQACAAQAAAAAAIAA=</HashCode>
       <FileName>Assets\Scripts\PauseableObjectScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemySpawner">
-    <Position X="25.75" Y="7.75" Width="1.5" />
+    <Position X="27.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAACAAAAAAAAAQAIAAAEgAAAQAAA=</HashCode>
       <FileName>Assets\Scripts\EnemySpawner.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="HitType">
-    <Position X="15" Y="8.75" Width="1.5" />
+    <Position X="16.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAEAEAA=</HashCode>
       <FileName>Assets\Scripts\HitType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="SkyStateType">
-    <Position X="24.5" Y="27.75" Width="1.5" />
+    <Position X="26.25" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAgACAAAAQAAAEAAAAAAAQAACAIAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\SkyStateType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="KingdomName">
-    <Position X="10.75" Y="3.75" Width="1.5" />
+    <Position X="3.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Assets\Scripts\KingdomName.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Delegate Name="ActionHandler" Collapsed="true">
-    <Position X="3.75" Y="9" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Controllers\CharacterControllerScript.cs</FileName>
-    </TypeIdentifier>
-  </Delegate>
-  <Delegate Name="MovementHandler" Collapsed="true">
-    <Position X="7.75" Y="12" Width="1.5" />
+  <Delegate Name="EnergyChangedHandler" Collapsed="true">
+    <Position X="32.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Controllers\CharacterControllerScript.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="TimerFinishedEventHandler" Collapsed="true">
-    <Position X="30.5" Y="2.75" Width="1.5" />
+    <Position X="34" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>
