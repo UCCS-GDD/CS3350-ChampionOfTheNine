@@ -11,8 +11,10 @@ public class WarriorScript : CharacterScript
     #region Fields
 
     [SerializeField]GameObject explosion;
+    [SerializeField]GameObject axe;
     float leapTargetX;
     bool leaping = false;
+    bool hasAxe = true;
 
     #endregion
 
@@ -98,7 +100,13 @@ public class WarriorScript : CharacterScript
     /// </summary>
     protected override void FireSecondaryAbility()
     {
-
+        if (hasAxe && !Leaping && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
+        {
+            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer);
+            hasAxe = false;
+            secondaryCDTimer.Start();
+            secondaryCDTimer.IsRunning = false;
+        }
     }
 
     /// <summary>
@@ -129,6 +137,21 @@ public class WarriorScript : CharacterScript
     protected override void FireSpecialAbility()
     {
 
+    }
+
+    /// <summary>
+    /// Handles when the warrior enters a collision
+    /// </summary>
+    /// <param name="collision">the collsion</param>
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Picks up the axe pickup
+        if (!hasAxe && collision.gameObject.tag == Constants.AXE_PICKUP_TAG)
+        {
+            hasAxe = true;
+            Destroy(collision.gameObject);
+            secondaryCDTimer.IsRunning = true;
+        }
     }
 
     #endregion

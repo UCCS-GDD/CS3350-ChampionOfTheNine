@@ -140,6 +140,14 @@ public static class Constants
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
 
+    // Throwing axe
+    public const float AXE_CD = WARRIOR_GCD;
+    public const float AXE_SPEED = 15;
+    public const float AXE_DAMAGE = 120;
+    public const float AXE_ENERGY = 0;
+    public const float AXE_ROT_SPEED = -1000;
+    public const string AXE_PICKUP_TAG = "AxePickup";
+
     // Leap attack
     public const float LEAP_CD = 1;
     public const float LEAP_SPEED = 25;

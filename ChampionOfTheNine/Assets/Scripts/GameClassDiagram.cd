@@ -40,7 +40,7 @@
   <Class Name="ProjScript">
     <Position X="18" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAQA4wBAAAAAAAASAEAAQAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAAAEAQA4wBAAAAAAAASAEAAQAAAAEAAAAAAABA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\ProjScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -48,11 +48,12 @@
       <Field Name="lifeTimer" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="ArrowScript">
+  <Class Name="AxeScript">
     <Position X="14.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\ArrowScript.cs</FileName>
+      <FileName>Assets\Scripts\Projectiles\AxeScript.cs</FileName>
+      <NewMemberFileName>Assets\Scripts\Projectiles\ArrowScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DamagableObjectScript">
@@ -66,7 +67,7 @@
   <Class Name="Constants">
     <Position X="32.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>wJpuRgxAYoOGr5aQB4n0msbSlcmZAQfBKWg613/Ec8Y=</HashCode>
+      <HashCode>wJpuRgzAYoOGr5aQB4n0msbStcmZAQfBKWg613/Ec8Y=</HashCode>
       <FileName>Assets\Scripts\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -144,21 +145,21 @@
   <Class Name="IceSpellScript">
     <Position X="19" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\IceSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LightningSpellScript">
     <Position X="21.25" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAQAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\LightningSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MeteorSpellScript">
     <Position X="23.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAARAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAABAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Projectiles\MeteorSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
