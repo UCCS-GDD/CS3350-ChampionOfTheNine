@@ -118,6 +118,19 @@ public class GameManager
             PauseableObjectScript[] objs = GameObject.FindObjectsOfType<PauseableObjectScript>();
             foreach (PauseableObjectScript obj in objs)
             { obj.Paused = value; }
+
+            // Pauses unpauses particles
+            if (value)
+            {
+                foreach (ParticleSystem part in activeParticles)
+                { part.Pause(); }
+            }
+            else
+            {
+                foreach (ParticleSystem part in activeParticles)
+                { part.Play(); }
+            }
+            
             paused = value;
         }
     }
