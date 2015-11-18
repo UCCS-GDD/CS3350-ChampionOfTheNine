@@ -5,34 +5,51 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls the enemy spawner
 /// </summary>
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : PauseableObjectScript
 {
     #region Fields
 
     [SerializeField]GameObject enemyRanger;
     [SerializeField]GameObject enemyMage;
+    [SerializeField]Transform spawnLocation;
+    Timer spawnTimer;
 
     #endregion
 
-    #region Private Methods
+    #region Protected Methods
 
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    private void Start()
+    protected void Start()
     {
-        InvokeRepeating("SpawnEnemy", 1, 5);
+        Initialize();
+        spawnTimer = new Timer(Constants.AI_MIN_SPAWN_TIME);
+        spawnTimer.Register(SpawnEnemy);
+        spawnTimer.Start();
+    }
+
+    /// <summary>
+    /// Updates the object when it isn't paused
+    /// </summary>
+    protected override void NotPausedUpdate()
+    {
+        spawnTimer.Update();
     }
 
     /// <summary>
     /// Spawns an enemy
     /// </summary>
-    private void SpawnEnemy()
+    protected void SpawnEnemy()
     {
         GameObject spawn = enemyRanger;
         if (Random.Range(0, 10) < 5)
         { spawn = enemyMage; }
-        Instantiate(spawn, transform.position, transform.rotation);
+        Instantiate(spawn, spawnLocation.position, transform.rotation);
+
+        // Resets the spawn timer
+        spawnTimer.TotalSeconds = Random.Range(Constants.AI_MIN_SPAWN_TIME, Constants.AI_MAX_SPAWN_TIME);
+        spawnTimer.Start();
     }
 
     #endregion

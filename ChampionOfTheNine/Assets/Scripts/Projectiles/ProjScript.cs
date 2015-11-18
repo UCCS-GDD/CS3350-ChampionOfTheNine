@@ -14,6 +14,7 @@ public abstract class ProjScript : PauseableObjectScript
     protected float moveSpeed;
     protected HitType hit = HitType.None;
     protected string targetTag;
+    Timer lifeTimer;
 
     #endregion
 
@@ -86,8 +87,15 @@ public abstract class ProjScript : PauseableObjectScript
     protected virtual void Initialize(string targetTag)
     {
         base.Initialize();
-        rbody.velocity = new Vector2(moveSpeed, 0);
         this.targetTag = targetTag;
+        lifeTimer = new Timer(0);
+        if (moveSpeed > 0)
+        {
+            rbody.velocity = new Vector2(moveSpeed, 0);
+            lifeTimer.TotalSeconds = Constants.PROJ_MAX_DIST / moveSpeed;
+            lifeTimer.Register(LifeTimerFinished);
+            lifeTimer.Start();
+        }
     }
 
     /// <summary>
@@ -111,12 +119,8 @@ public abstract class ProjScript : PauseableObjectScript
     /// </summary>
     protected override void NotPausedUpdate()
     {
-        // Updates the projectile angle
-        float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);
-        if (rbody.velocity.x < 0)
-        { shotAngle -= Mathf.PI; }
-
-        transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * shotAngle);
+        UpdateAngle();
+        lifeTimer.Update();
     }
 
     /// <summary>
@@ -136,6 +140,25 @@ public abstract class ProjScript : PauseableObjectScript
         transform.localRotation = Quaternion.Euler(0, 0, shotAngle * Mathf.Rad2Deg);
 
         rbody.velocity = new Vector2(Mathf.Cos(shotAngle) * moveSpeed, Mathf.Sin(shotAngle) * moveSpeed);
+    }
+
+    /// <summary>
+    /// Updates the angle of the projectile
+    /// </summary>
+    protected virtual void UpdateAngle()
+    {
+        float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);
+        if (rbody.velocity.x < 0)
+        { shotAngle -= Mathf.PI; }
+        transform.localRotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * shotAngle);
+    }
+
+    /// <summary>
+    /// Handles the life timer finishing
+    /// </summary>
+    protected virtual void LifeTimerFinished()
+    {
+        Destroy(gameObject);
     }
 
     #endregion

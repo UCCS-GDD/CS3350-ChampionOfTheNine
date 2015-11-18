@@ -18,6 +18,7 @@ public class IceSpellScript : ProjScript
     {
         moveSpeed = Constants.ICE_SPEED;
         damage = Constants.ICE_DAMAGE;
+        GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position);
         base.Initialize(targetTag);
     }
 
@@ -34,14 +35,6 @@ public class IceSpellScript : ProjScript
             GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position); 
             Destroy(gameObject);
         }
-    }
-
-    /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    protected void Start()
-    {
-        GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position); 
     }
 
     #endregion

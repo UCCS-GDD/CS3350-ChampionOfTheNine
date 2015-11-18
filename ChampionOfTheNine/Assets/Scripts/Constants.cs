@@ -21,6 +21,9 @@ public static class Constants
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
     public const float CHAR_GRAV_SCALE = 4;
+    public const float AI_MIN_SPAWN_TIME = 2;
+    public const float AI_MAX_SPAWN_TIME = 6;
+    public const float PROJ_MAX_DIST = 20;
 
     // Animator
     public const string GROUNDED_FLAG = "Grounded";

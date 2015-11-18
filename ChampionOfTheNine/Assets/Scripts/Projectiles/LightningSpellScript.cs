@@ -22,9 +22,9 @@ public class LightningSpellScript : ProjScript
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Updates the projectile's angle
     /// </summary>
-    protected override void NotPausedUpdate()
+    protected override void UpdateAngle()
     { }
 
     /// <summary>

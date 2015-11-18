@@ -29,9 +29,9 @@ public class MeteorSpellScript : ProjScript
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Updates the projectile's angle
     /// </summary>
-    protected override void NotPausedUpdate()
+    protected override void UpdateAngle()
     {
         // Rotates the meteor
         meteor.Rotate(0, 0, Constants.METEOR_ROT_SPEED * Time.deltaTime);
