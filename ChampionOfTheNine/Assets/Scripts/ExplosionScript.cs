@@ -5,11 +5,10 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that controls an explosion
 /// </summary>
-public class ExplosionScript : MonoBehaviour
+public class ExplosionScript : PauseableObjectScript
 {
     #region Fields
 
-    Animator animator;
     float damage;
     string targetTag;
 
@@ -24,28 +23,21 @@ public class ExplosionScript : MonoBehaviour
     /// <param name="targetTag">the tag of the targeted characters</param>
     public void Initialize(float damage, string targetTag)
     {
+        base.Initialize();
         this.damage = damage;
         this.targetTag = targetTag;
     }
 
     #endregion
 
-    #region Private Methods
+    #region Protected Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Updates the object while it isn't paused
     /// </summary>
-    private void Start()
+    protected override void NotPausedUpdate()
     {
-        animator = GetComponent<Animator>();
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
         { Destroy(gameObject); }
     }
 

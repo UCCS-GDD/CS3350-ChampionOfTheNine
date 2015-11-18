@@ -12,7 +12,7 @@ public abstract class PauseableObjectScript : MonoBehaviour
     #region Fields
 
     protected Rigidbody2D rbody;
-    Animator anim;
+    protected Animator anim;
     Vector2 pausedVelocity = Vector2.zero;
     bool paused = false;
 
@@ -41,12 +41,6 @@ public abstract class PauseableObjectScript : MonoBehaviour
             { anim.enabled = !value; }
         }
     }
-
-    #endregion
-
-    #region Public Methods
-
-
 
     #endregion
 
