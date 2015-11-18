@@ -49,7 +49,7 @@ public class ExplosionScript : PauseableObjectScript
     {
         // Checks for if enemy
         if (other.gameObject.tag == targetTag)
-        { other.gameObject.GetComponent<CharacterScript>().Damage(damage); }
+        { other.gameObject.GetComponent<DamagableObjectScript>().Damage(damage); }
     }
 
     #endregion

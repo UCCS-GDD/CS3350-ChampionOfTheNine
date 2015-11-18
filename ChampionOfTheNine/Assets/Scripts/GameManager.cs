@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 
 /// <summary>
 /// Singleton class that stores game data
@@ -114,24 +115,29 @@ public class GameManager
         get { return paused; }
         set
         {
+            paused = value;
+
             // Pauses/unpauses game objects
             PauseableObjectScript[] objs = GameObject.FindObjectsOfType<PauseableObjectScript>();
             foreach (PauseableObjectScript obj in objs)
             { obj.Paused = value; }
 
             // Pauses unpauses particles
-            if (value)
+            try
             {
-                foreach (ParticleSystem part in activeParticles)
-                { part.Pause(); }
+                if (value)
+                {
+                    foreach (ParticleSystem part in activeParticles)
+                    { part.Pause(); }
+                }
+                else
+                {
+                    foreach (ParticleSystem part in activeParticles)
+                    { part.Play(); }
+                }
             }
-            else
-            {
-                foreach (ParticleSystem part in activeParticles)
-                { part.Play(); }
-            }
-            
-            paused = value;
+            catch (Exception)
+            { activeParticles.Dequeue(); }
         }
     }
 
@@ -198,7 +204,7 @@ public class GameManager
                     activeParticles.Dequeue();
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             { activeParticles.Dequeue(); }
         }
     }
