@@ -47,32 +47,6 @@ public class RangerScript : CharacterScript
     }
 
     /// <summary>
-    /// Calculates the angle at which the character should fire to hit the target position
-    /// </summary>
-    /// <param name="targetPosition">the target position</param>
-    /// <returns>the angle</returns>
-    public float GetPredictedShotAngle(Vector2 targetPosition, float arrowSpeed)
-    {
-        Vector2 disp = (Vector2)fireLocation.position - targetPosition;
-
-        // Calculates equation components
-        float speedSquared = Mathf.Pow(arrowSpeed, 2);
-        float topSqrt = Mathf.Sqrt(Mathf.Pow(speedSquared, 2) - (Physics2D.gravity.y * ((Physics2D.gravity.y * Mathf.Pow(disp.x, 2)) + 
-            (2 * disp.y * speedSquared))));
-        float bottom = Physics2D.gravity.y * disp.x;
-
-        // Calculates angles
-        float angle1 = Mathf.Atan((speedSquared + topSqrt) / bottom) * Mathf.Rad2Deg;
-        float angle2 = Mathf.Atan((speedSquared - topSqrt) / bottom) * Mathf.Rad2Deg;
-
-        // Picks and returns better angle
-        if (disp.x > 0)
-        { return Mathf.Max(angle1, angle2) + 180; }
-        else
-        { return Mathf.Min(angle1, angle2); }
-    }
-
-    /// <summary>
     /// Updates the character; not called on normal update cycle, called by controller
     /// </summary>
     public override void UpdateChar()
@@ -118,8 +92,8 @@ public class RangerScript : CharacterScript
         boostTimer = new Timer(Constants.RANGER_BOOST_TIME);
         specialCDTimer = new Timer(Constants.RANGER_BOOST_CD);
         secondaryCDTimer = new Timer(Constants.EXP_ARROW_CD);
-        boostTimer.Register(HandleBoostTimerFinishing);
-        pierceShootWindow.Register(HandlePierceWindowFinishing);
+        boostTimer.Register(BoostTimerFinished);
+        pierceShootWindow.Register(PierceWindowFinished);
 
         // Loads sounds
         mainAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SHOOT_SND];
@@ -210,7 +184,7 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Handles the pierce ability window finishing
     /// </summary>
-    protected void HandlePierceWindowFinishing()
+    protected void PierceWindowFinished()
     {
         powerCDTimer.Start();
     }
@@ -218,7 +192,7 @@ public class RangerScript : CharacterScript
     /// <summary>
     /// Handles the boost timer finishing
     /// </summary>
-    protected void HandleBoostTimerFinishing()
+    protected void BoostTimerFinished()
     {
         // Change multipliers
         moveSpeed = Constants.RANGER_MOVE_SPEED;

@@ -22,6 +22,12 @@ public class WarriorScript : CharacterScript
     public override void UpdateChar()
     {
         base.UpdateChar();
+
+        // Checks for leap finishing
+        if (!Controllable && Grounded)
+        {
+            Controllable = true;
+        }
     }
 
     #endregion
@@ -34,13 +40,13 @@ public class WarriorScript : CharacterScript
     protected override void Start()
     {
         // Sets fields
-        maxHealth = Constants.MAGE_HEALTH;
-        moveSpeed = Constants.MAGE_MOVE_SPEED;
-        jumpSpeed = Constants.MAGE_JUMP_SPEED;
-        maxEnergy = Constants.MAGE_ENERGY;
-        gCDTimer = new Timer(Constants.MAGE_GCD);
+        maxHealth = Constants.WARRIOR_HEALTH;
+        moveSpeed = Constants.WARRIOR_MOVE_SPEED;
+        jumpSpeed = Constants.WARRIOR_JUMP_SPEED;
+        maxEnergy = Constants.WARRIOR_ENERGY;
+        gCDTimer = new Timer(Constants.WARRIOR_GCD);
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
-        powerCDTimer = new Timer(Constants.METEOR_CD);
+        powerCDTimer = new Timer(Constants.LEAP_CD);
         specialCDTimer = new Timer(Constants.DRAIN_CD);
 
         // Loads sounds
@@ -72,7 +78,16 @@ public class WarriorScript : CharacterScript
     /// </summary>
     protected override void FirePowerAbility()
     {
-        
+        if (!gCDTimer.IsRunning && !powerCDTimer.IsRunning)
+        {
+            Controllable = false;
+            powerCDTimer.Start();
+            gCDTimer.Start();
+
+            float leapAngle = CalculateLaunchAngle(Utilities.MousePosition, Constants.LEAP_SPEED, Constants.CHAR_GRAV_SCALE);
+            //transform.localRotation = Quaternion.Euler(0, 0, leapAngle);
+            rbody.velocity = new Vector2(Mathf.Cos(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED, Mathf.Sin(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED);
+        }
     }
 
     /// <summary>

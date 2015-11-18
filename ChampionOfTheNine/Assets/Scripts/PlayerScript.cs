@@ -89,7 +89,7 @@ public class PlayerScript : CharacterControllerScript
             { mainAbility(); }
 
             // Moves the camera
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
+            //Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 3, Camera.main.transform.position.z);
 
             // Updates cooldown bars
             foreach (Image bar in gcdBars)

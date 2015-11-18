@@ -91,9 +91,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="RangerScript">
-    <Position X="15.25" Y="19.25" Width="1.5" />
+    <Position X="15.25" Y="19.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAUCAAAiYIAQCABEAAAAAAEIAAAABAAIBEAAAKCAQ=</HashCode>
+      <HashCode>AAgAUCAAAiYIAQCABEAAAAAAEIAAAABAAIBEAAAICAQ=</HashCode>
       <FileName>Assets\Scripts\RangerScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -103,7 +103,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Timer">
-    <Position X="16" Y="14.75" Width="1.5" />
+    <Position X="16" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEQAEAAAADAAAAAAAAAAQAAAAAgBAAAAAQAAAAEAAAg=</HashCode>
       <FileName>Assets\Scripts\Timer.cs</FileName>
@@ -113,14 +113,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="TimerFinishedEvent">
-    <Position X="16" Y="11.75" Width="1.5" />
+    <Position X="19" Y="15.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAABABAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TimerFinishedEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MageScript">
-    <Position X="10.75" Y="19.25" Width="1.5" />
+    <Position X="10.75" Y="19.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAQAACAIBQAARAJgAAAAAoQAAABAQADAAgAACAA=</HashCode>
       <FileName>Assets\Scripts\MageScript.cs</FileName>
@@ -134,7 +134,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="WarriorScript">
-    <Position X="13" Y="19.25" Width="1.5" />
+    <Position X="13" Y="19.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAABAAAAAAAAIAAAABAAABAAAAACAA=</HashCode>
       <FileName>Assets\Scripts\WarriorScript.cs</FileName>
@@ -178,7 +178,7 @@
   <Class Name="CharacterScript">
     <Position X="13" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>xCAAAAAAkqAJCRRQBA4EEhEEgIBQEqBgAAJACAAAiAA=</HashCode>
+      <HashCode>xCAAAAAAkqAJCRRQBA4UEhEEgIBQEqBgABJACgAAiAA=</HashCode>
       <FileName>Assets\Scripts\CharacterScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -238,7 +238,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SkyState">
-    <Position X="23.5" Y="18.25" Width="1.5" />
+    <Position X="23.5" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAcAAgIHAAIAAQAAAAUAIAIQACAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\SkyState.cs</FileName>
@@ -265,7 +265,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="WorldScript">
-    <Position X="19" Y="12.5" Width="1.5" />
+    <Position X="19" Y="18.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAWCAhEAgChCACAAAAAYUAEigAFAAQQBQAgBgBEZAgA=</HashCode>
       <FileName>Assets\Scripts\WorldScript.cs</FileName>
@@ -307,7 +307,7 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="SkyStateType">
-    <Position X="22" Y="15" Width="1.5" />
+    <Position X="22" Y="21" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAgACAAAAQAAAEAAAAAAAQAACAIAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\SkyStateType.cs</FileName>

@@ -20,6 +20,7 @@ public static class Constants
     public const string SND_FOLDER = "Sounds/";
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
+    public const float CHAR_GRAV_SCALE = 4;
 
     // Animator
     public const string GROUNDED_FLAG = "Grounded";
@@ -130,11 +131,15 @@ public static class Constants
     public const float WARRIOR_AI_ANGLE_RANGE = 10;
     public const int WARRIOR_AI_SHOT_THRESHOLD = 5;
     public const float WARRIOR_HEALTH = 120;
-    public const float WARRIOR_MAX_ENERGY = 100;
+    public const float WARRIOR_ENERGY = 100;
     public const float WARRIOR_MOVE_SPEED = 3.5f;
     public const float WARRIOR_JUMP_SPEED = 10;
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
+
+    // Leap attack
+    public const float LEAP_CD = 1;
+    public const float LEAP_SPEED = 40;
 
     #endregion
 

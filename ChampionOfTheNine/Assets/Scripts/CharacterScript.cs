@@ -18,6 +18,7 @@ public abstract class CharacterScript : DamagableObjectScript
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
+    protected Rigidbody2D rbody;
     protected Timer secondaryCDTimer;
     protected Timer powerCDTimer;
     protected Timer specialCDTimer;
@@ -29,7 +30,6 @@ public abstract class CharacterScript : DamagableObjectScript
     float energy;
     bool controllable = true;
 
-    Rigidbody2D rbody;
     Animator animator;
     Vector3 baseScale;
     Vector3 flippedScale;
@@ -180,6 +180,34 @@ public abstract class CharacterScript : DamagableObjectScript
 
         if (healthBar != null)
         { this.healthBar = healthBar; }
+    }
+
+    /// <summary>
+    /// Calculates the angle at which an object should be launched to hit the target position
+    /// </summary>
+    /// <param name="targetPosition">the target position</param>
+    /// <param name="objectSpeed">the speed at which the object will be launched</param>
+    /// <param name="gravityScale">value by which to scale gravity (defaults to 1)</param>
+    /// <returns>the angle</returns>
+    public virtual float CalculateLaunchAngle(Vector2 targetPosition, float objectSpeed, float gravityScale = 1)
+    {
+        Vector2 disp = (Vector2)fireLocation.position - targetPosition;
+
+        // Calculates equation components
+        float g = Physics2D.gravity.y * gravityScale;
+        float speedSquared = Mathf.Pow(objectSpeed, 2);
+        float topSqrt = Mathf.Sqrt(Mathf.Pow(speedSquared, 2) - (g * ((g * Mathf.Pow(disp.x, 2)) + (2 * disp.y * speedSquared))));
+        float bottom = g * disp.x;
+
+        // Calculates angles
+        float angle1 = Mathf.Atan((speedSquared + topSqrt) / bottom) * Mathf.Rad2Deg;
+        float angle2 = Mathf.Atan((speedSquared - topSqrt) / bottom) * Mathf.Rad2Deg;
+
+        // Picks and returns better angle
+        if (disp.x > 0)
+        { return Mathf.Max(angle1, angle2) + 180; }
+        else
+        { return Mathf.Min(angle1, angle2); }
     }
 
     #endregion
