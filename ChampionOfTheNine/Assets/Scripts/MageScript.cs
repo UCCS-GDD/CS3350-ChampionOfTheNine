@@ -76,7 +76,7 @@ public class MageScript : CharacterScript
         {
             if (Energy >= Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime)
             {
-                lightningProj.SetLocationAndDirection(fireLocation.position, ShotAngle);
+                lightningProj.SetLocationAndDirection(FireLocation, ShotAngle);
                 Energy -= (Constants.LIGHTNING_COST_PER_SEC * Time.deltaTime);
                 lightningTimer.Update();
             }
@@ -132,7 +132,7 @@ public class MageScript : CharacterScript
             if (lightningProj == null)
             {
                 lightningProj = Instantiate<GameObject>(lightning).GetComponent<LightningSpellScript>();
-                lightningProj.Initialize(fireLocation.position, ShotAngle, targetTag);
+                lightningProj.Initialize(FireLocation, ShotAngle, targetTag);
                 lightningSound.Play();
             }
         }
@@ -167,18 +167,17 @@ public class MageScript : CharacterScript
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(targetTag);
             foreach (GameObject obj in enemies)
             {
-                if (Vector2.Distance(fireLocation.position, obj.transform.position) < Constants.DRAIN_RANGE)
+                if (Vector2.Distance(FireLocation, obj.transform.position) < Constants.DRAIN_RANGE)
                 {
                     drainTargets.Add(obj.GetComponent<DamagableObjectScript>());
-                    Vector2 topLocation = new Vector2((obj.transform.position.x - fireLocation.position.x) / 2,
-                        Mathf.Max(obj.transform.position.y - fireLocation.position.y, 0) + Random.Range(Constants.DRAIN_MIN_HEIGHT, 
-                        Constants.DRAIN_MAX_HEIGHT)) + (Vector2)fireLocation.position;
-                    Vector2 location = fireLocation.position;
-                    bool goingLeft = fireLocation.position.x > obj.transform.position.x;
+                    Vector2 topLocation = new Vector2((obj.transform.position.x - FireLocation.x) / 2, Mathf.Max(obj.transform.position.y - 
+                        FireLocation.y, 0) + Random.Range(Constants.DRAIN_MIN_HEIGHT, Constants.DRAIN_MAX_HEIGHT)) + FireLocation;
+                    Vector2 location = FireLocation;
+                    bool goingLeft = FireLocation.x > obj.transform.position.x;
 
                     // Calculates beam
                     for (float i = 1; i <= Constants.DRAIN_SEGMENTS; i++)
-                    { CalcAndSpawnBeam(i, ref location, topLocation, fireLocation.position, goingLeft); }
+                    { CalcAndSpawnBeam(i, ref location, topLocation, FireLocation, goingLeft); }
                     for (float i = Constants.DRAIN_SEGMENTS - 1; i >= 0; i--)
                     { CalcAndSpawnBeam(i, ref location, topLocation, obj.transform.position, goingLeft); }
                 }

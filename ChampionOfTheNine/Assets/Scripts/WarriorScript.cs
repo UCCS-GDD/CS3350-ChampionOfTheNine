@@ -10,7 +10,27 @@ public class WarriorScript : CharacterScript
 {
     #region Fields
 
+    [SerializeField]GameObject explosion;
+    float leapTargetX;
+    bool leaping = false;
 
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets or sets whether or not the warrior is leaping
+    /// Also sets if the warrior is controllable
+    /// </summary>
+    public bool Leaping
+    {
+        get { return leaping; }
+        set 
+        { 
+            leaping = value;
+            Controllable = !value;
+        }
+    }
 
     #endregion
 
@@ -24,9 +44,17 @@ public class WarriorScript : CharacterScript
         base.UpdateChar();
 
         // Checks for leap finishing
-        if (!Controllable && Grounded)
+        if (Leaping)
         {
-            Controllable = true;
+            if (Mathf.Abs(transform.position.x - leapTargetX) < Constants.LEAP_TARGET_WINDOW && rbody.velocity.x != 0)
+            {
+                rbody.velocity = Vector2.down * 10;
+            }
+            else if (Grounded && !gCDTimer.IsRunning)
+            {
+                Leaping = false;
+                ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE, targetTag);
+            }
         }
     }
 
@@ -80,13 +108,18 @@ public class WarriorScript : CharacterScript
     {
         if (!gCDTimer.IsRunning && !powerCDTimer.IsRunning)
         {
-            Controllable = false;
-            powerCDTimer.Start();
-            gCDTimer.Start();
+            float leapAngle = Utilities.CalculateLaunchAngle(transform.position, Utilities.MousePosition, Constants.LEAP_SPEED, Constants.CHAR_GRAV_SCALE);
+            if (!float.IsNaN(leapAngle))
+            {
+                Leaping = true;
+                powerCDTimer.Start();
+                gCDTimer.Start();
 
-            float leapAngle = CalculateLaunchAngle(Utilities.MousePosition, Constants.LEAP_SPEED, Constants.CHAR_GRAV_SCALE);
-            //transform.localRotation = Quaternion.Euler(0, 0, leapAngle);
-            rbody.velocity = new Vector2(Mathf.Cos(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED, Mathf.Sin(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED);
+                leapTargetX = Utilities.MousePosition.x;
+                //transform.localRotation = Quaternion.Euler(0, 0, leapAngle);
+                rbody.velocity = new Vector2(Mathf.Cos(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED, 
+                    Mathf.Sin(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED);
+            }
         }
     }
 

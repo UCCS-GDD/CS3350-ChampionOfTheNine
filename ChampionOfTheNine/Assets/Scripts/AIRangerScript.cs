@@ -30,7 +30,7 @@ public class AIRangerScript : AIScript
             int choice = Random.Range(0, Constants.RANGER_AI_SHOT_THRESHOLD);
             if (choice == 0)
             {
-                armDirection(character.CalculateLaunchAngle(target.transform.position, Constants.BASIC_ARROW_SPEED) +
+                armDirection(Utilities.CalculateLaunchAngle(character.FireLocation, target.transform.position, Constants.BASIC_ARROW_SPEED) +
                     Random.Range(-Constants.RANGER_AI_ANGLE_RANGE, Constants.RANGER_AI_ANGLE_RANGE));
                 mainAbility();
             }

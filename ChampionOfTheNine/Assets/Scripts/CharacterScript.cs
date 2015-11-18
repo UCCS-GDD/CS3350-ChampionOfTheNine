@@ -12,8 +12,8 @@ public abstract class CharacterScript : DamagableObjectScript
 {
     #region Fields
 
-    [SerializeField]protected Transform fireLocation;
     [SerializeField]protected AudioSource walkAudio;
+    [SerializeField]Transform fireLocation;
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
@@ -124,6 +124,12 @@ public abstract class CharacterScript : DamagableObjectScript
     public GameObject Arm
     { get { return arm; } }
 
+    /// <summary>
+    /// Gets the position of the fire location
+    /// </summary>
+    public Vector2 FireLocation
+    { get { return fireLocation.position; } }
+
     #endregion
 
     #region Public Methods
@@ -180,34 +186,6 @@ public abstract class CharacterScript : DamagableObjectScript
 
         if (healthBar != null)
         { this.healthBar = healthBar; }
-    }
-
-    /// <summary>
-    /// Calculates the angle at which an object should be launched to hit the target position
-    /// </summary>
-    /// <param name="targetPosition">the target position</param>
-    /// <param name="objectSpeed">the speed at which the object will be launched</param>
-    /// <param name="gravityScale">value by which to scale gravity (defaults to 1)</param>
-    /// <returns>the angle</returns>
-    public virtual float CalculateLaunchAngle(Vector2 targetPosition, float objectSpeed, float gravityScale = 1)
-    {
-        Vector2 disp = (Vector2)fireLocation.position - targetPosition;
-
-        // Calculates equation components
-        float g = Physics2D.gravity.y * gravityScale;
-        float speedSquared = Mathf.Pow(objectSpeed, 2);
-        float topSqrt = Mathf.Sqrt(Mathf.Pow(speedSquared, 2) - (g * ((g * Mathf.Pow(disp.x, 2)) + (2 * disp.y * speedSquared))));
-        float bottom = g * disp.x;
-
-        // Calculates angles
-        float angle1 = Mathf.Atan((speedSquared + topSqrt) / bottom) * Mathf.Rad2Deg;
-        float angle2 = Mathf.Atan((speedSquared - topSqrt) / bottom) * Mathf.Rad2Deg;
-
-        // Picks and returns better angle
-        if (disp.x > 0)
-        { return Mathf.Max(angle1, angle2) + 180; }
-        else
-        { return Mathf.Min(angle1, angle2); }
     }
 
     #endregion
@@ -294,7 +272,7 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
-        { projectile.Initialize(fireLocation.position, ShotAngle, targetTag); }
+        { projectile.Initialize(FireLocation, ShotAngle, targetTag); }
         return projectile;
     }
 

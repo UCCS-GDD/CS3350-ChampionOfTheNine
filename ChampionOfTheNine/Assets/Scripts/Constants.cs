@@ -139,7 +139,9 @@ public static class Constants
 
     // Leap attack
     public const float LEAP_CD = 1;
-    public const float LEAP_SPEED = 40;
+    public const float LEAP_SPEED = 25;
+    public const float LEAP_TARGET_WINDOW = 0.3f;
+    public const float LEAP_DAMAGE = 70;
 
     #endregion
 

@@ -46,9 +46,7 @@ public class ExplosionScript : MonoBehaviour
     private void Update()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
-        {
-            Destroy(gameObject);
-        }
+        { Destroy(gameObject); }
     }
 
     /// <summary>
@@ -59,9 +57,7 @@ public class ExplosionScript : MonoBehaviour
     {
         // Checks for if enemy
         if (other.gameObject.tag == targetTag)
-        {
-            other.gameObject.GetComponent<CharacterScript>().Damage(damage);
-        }
+        { other.gameObject.GetComponent<CharacterScript>().Damage(damage); }
     }
 
     #endregion
