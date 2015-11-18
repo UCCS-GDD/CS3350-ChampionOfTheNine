@@ -104,30 +104,14 @@ public class RangerScript : CharacterScript
     }
 
     /// <summary>
-    /// Fires a projectile attack straight forward from the character
-    /// </summary>
-    /// <param name="prefab">the projectile prefab</param>
-    /// <param name="energyCost">the energy cost of the attack</param>
-    /// <param name="cooldown">the cooldown timer to start</param>
-    /// <returns>the projectile, if one was fired</returns>
-    protected override ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
-    {
-        ProjScript projectile = base.FireStraightProjectileAttack(prefab, energyCost, cooldown);
-        if (projectile != null)
-        {
-            Utilities.PlaySoundPitched(audioSource, mainAbilitySound);
-            projectile.ChangeDamage(arrowDamageMult);
-            projectile.ChangeSpeed(arrowSpeedMult);
-        }
-        return projectile;
-    }
-
-    /// <summary>
     /// Fires the character's main ability
     /// </summary>
     protected override void FireMainAbility() 
     {
-        FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer);
+        ProjScript projectile = FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer, Constants.BASIC_ARROW_DAMAGE * arrowDamageMult, 
+            Constants.BASIC_ARROW_SPEED * arrowSpeedMult);
+        if (projectile != null)
+        { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
 
     /// <summary>
@@ -137,9 +121,13 @@ public class RangerScript : CharacterScript
     {
         if (!secondaryCDTimer.IsRunning)
         {
-            ProjScript projectile = FireStraightProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer);
+            ProjScript projectile = FireStraightProjectileAttack(expArrow, Constants.EXP_ARROW_COST, gCDTimer, Constants.EXP_ARROW_DAMAGE * arrowDamageMult,
+                Constants.EXP_ARROW_SPEED * arrowSpeedMult);
             if (projectile != null)
-            { secondaryCDTimer.Start(); }
+            { 
+                secondaryCDTimer.Start();
+                Utilities.PlaySoundPitched(audioSource, secondaryAbilitySound);
+            }
         }
     }
 
@@ -156,7 +144,10 @@ public class RangerScript : CharacterScript
             { pierceShootWindow.Start(); }
 
             // Fires arrow
-            FireStraightProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD);
+            ProjScript projectile = FireStraightProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD, Constants.PIERCE_ARROW_DAMAGE *
+                arrowDamageMult, Constants.PIERCE_ARROW_SPEED * arrowSpeedMult);
+            if (projectile != null)
+            { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
         }
     }
 

@@ -14,12 +14,12 @@ public class IceSpellScript : ProjScript
     /// Initializes the projectile
     /// </summary>
     /// <param name="targetTag">the tag of the targeted characters</param>
-    protected override void Initialize(string targetTag)
+    /// <param name="damage">the projectile's damage</param>
+    /// <param name="moveSpeed">the projectile's movement speed</param>
+    protected override void Initialize(string targetTag, float damage, float moveSpeed)
     {
-        moveSpeed = Constants.ICE_SPEED;
-        damage = Constants.ICE_DAMAGE;
         GameManager.Instance.SpawnParticle(Constants.ICE_PART, transform.position);
-        base.Initialize(targetTag);
+        base.Initialize(targetTag, damage, moveSpeed);
     }
 
     /// <summary>

@@ -11,17 +11,6 @@ public class LightningSpellScript : ProjScript
     #region Protected Methods
 
     /// <summary>
-    /// Initializes the projectile
-    /// </summary>
-    /// <param name="targetTag">the tag of the targeted characters</param>
-    protected override void Initialize(string targetTag)
-    {
-        moveSpeed = 0;
-        damage = Constants.LIGHTNING_DAMAGE;
-        base.Initialize(targetTag);
-    }
-
-    /// <summary>
     /// Updates the projectile's angle
     /// </summary>
     protected override void UpdateAngle()

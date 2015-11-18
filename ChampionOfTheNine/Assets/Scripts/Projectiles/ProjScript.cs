@@ -26,9 +26,11 @@ public abstract class ProjScript : PauseableObjectScript
     /// <param name="fromPosition">the position of the projectile</param>
     /// <param name="toPosition">the target position</param>
     /// <param name="targetTag">the tag of the targeted characters</param>
-    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag)
+    /// <param name="damage">the projectile's damage</param>
+    /// <param name="moveSpeed">the projectile's movement speed</param>
+    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag, float damage, float moveSpeed)
     {
-        Initialize(targetTag);
+        Initialize(targetTag, damage, moveSpeed);
         SetLocationAndDirection(fromPosition, toPosition);
     }
 
@@ -38,28 +40,12 @@ public abstract class ProjScript : PauseableObjectScript
     /// <param name="position">the position of the projectile</param>
     /// <param name="angle">the angle, in degrees</param>
     /// <param name="targetTag">the tag of the targeted characters</param>
-    public virtual void Initialize(Vector2 position, float angle, string targetTag)
+    /// <param name="damage">the projectile's damage</param>
+    /// <param name="moveSpeed">the projectile's movement speed</param>
+    public virtual void Initialize(Vector2 position, float angle, string targetTag, float damage, float moveSpeed)
     {
-        Initialize(targetTag);
+        Initialize(targetTag, damage, moveSpeed);
         SetLocationAndDirection(position, angle);
-    }
-
-    /// <summary>
-    /// Changes the speed of the projectile by the given multiplier
-    /// </summary>
-    /// <param name="multiplier">the speed multiplier</param>
-    public virtual void ChangeSpeed(float multiplier)
-    {
-        rbody.velocity *= multiplier;
-    }
-
-    /// <summary>
-    /// Changes the damage of the projectile by the given multiplier
-    /// </summary>
-    /// <param name="multiplier">the damage multiplier</param>
-    public virtual void ChangeDamage(float multiplier)
-    {
-        damage *= multiplier;
     }
 
     /// <summary>
@@ -84,10 +70,14 @@ public abstract class ProjScript : PauseableObjectScript
     /// Initializes the projectile
     /// </summary>
     /// <param name="targetTag">the tag of the targeted characters</param>
-    protected virtual void Initialize(string targetTag)
+    /// <param name="damage">the projectile's damage</param>
+    /// <param name="moveSpeed">the projectile's movement speed</param>
+    protected virtual void Initialize(string targetTag, float damage, float moveSpeed)
     {
         base.Initialize();
         this.targetTag = targetTag;
+        this.damage = damage;
+        this.moveSpeed = moveSpeed;
         lifeTimer = new Timer(0);
         if (moveSpeed > 0)
         {

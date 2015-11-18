@@ -16,17 +16,6 @@ public class ExpArrowScript : ProjScript
     #region Protected Methods
 
     /// <summary>
-    /// Initializes the projectile
-    /// </summary>
-    /// <param name="targetTag">the tag of the targeted characters</param>
-    protected override void Initialize(string targetTag)
-    {
-        moveSpeed = Constants.EXP_ARROW_SPEED;
-        damage = Constants.EXP_ARROW_DAMAGE;
-        base.Initialize(targetTag);
-    }
-
-    /// <summary>
     /// Handles the projectile colliding with something
     /// </summary>
     /// <param name="other">the other collider</param>

@@ -267,12 +267,14 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <param name="prefab">the projectile prefab</param>
     /// <param name="energyCost">the energy cost of the attack</param>
     /// <param name="cooldown">the cooldown timer to start</param>
+    /// <param name="damage">the projectile's damage</param>
+    /// <param name="projSpeed">the projectile's movement speed</param>
     /// <returns>the projectile, if one was fired</returns>
-    protected virtual ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown)
+    protected virtual ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown, float damage, float projSpeed)
     {
         ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
-        { projectile.Initialize(FireLocation, ShotAngle, targetTag); }
+        { projectile.Initialize(FireLocation, ShotAngle, targetTag, damage, projSpeed); }
         return projectile;
     }
 

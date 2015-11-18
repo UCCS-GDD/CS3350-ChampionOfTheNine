@@ -116,7 +116,7 @@ public class MageScript : CharacterScript
     /// </summary>
     protected override void FireMainAbility()
     {
-        ProjScript projectile = FireStraightProjectileAttack(ice, Constants.ICE_COST, gCDTimer);
+        ProjScript projectile = FireStraightProjectileAttack(ice, Constants.ICE_COST, gCDTimer, Constants.ICE_DAMAGE, Constants.ICE_SPEED);
         if (projectile != null)
         { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
@@ -132,7 +132,7 @@ public class MageScript : CharacterScript
             if (lightningProj == null)
             {
                 lightningProj = Instantiate<GameObject>(lightning).GetComponent<LightningSpellScript>();
-                lightningProj.Initialize(FireLocation, ShotAngle, targetTag);
+                lightningProj.Initialize(FireLocation, ShotAngle, targetTag, Constants.LIGHTNING_DAMAGE, 0);
                 lightningSound.Play();
             }
         }
@@ -151,7 +151,8 @@ public class MageScript : CharacterScript
                 Utilities.PlaySoundPitched(audioSource, powerAbilitySound);
                 powerCDTimer.Start();
                 Vector2 shotLocation = (Vector2)transform.position + Constants.METEOR_START_LOC;
-                projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag);
+                projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag, 
+                    Constants.METEOR_DAMAGE, Constants.METEOR_SPEED);
             }
         }
     }

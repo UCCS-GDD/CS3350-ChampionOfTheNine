@@ -102,7 +102,7 @@ public class WarriorScript : CharacterScript
     {
         if (hasAxe && !Leaping && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
         {
-            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer);
+            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE, Constants.AXE_SPEED);
             hasAxe = false;
             secondaryCDTimer.Start();
             secondaryCDTimer.IsRunning = false;
