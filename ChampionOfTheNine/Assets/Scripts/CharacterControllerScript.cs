@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Abstract parent script for character controllers
 /// </summary>
-public abstract class CharacterControllerScript : MonoBehaviour
+public abstract class CharacterControllerScript : PauseableObjectScript
 {
     #region Fields
 
@@ -69,19 +69,17 @@ public abstract class CharacterControllerScript : MonoBehaviour
     /// </summary>
     protected virtual void Initialize(Image healthBar, Image[] timerBars)
     {
+        base.Initialize();
         character = GetComponent<CharacterScript>();
         character.Initialize(this, CharacterEnergyChanged, healthBar, timerBars);
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Updates the object while it isn't paused
     /// </summary>
-    protected virtual void Update()
+    protected override void NotPausedUpdate()
     {
-        if (!GameManager.Instance.Paused)
-        {
-            character.UpdateChar();
-        }
+        character.UpdateChar();
     }
 
     /// <summary>

@@ -31,7 +31,7 @@ public class MeteorSpellScript : ProjScript
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected override void Update()
+    protected override void NotPausedUpdate()
     {
         // Rotates the meteor
         meteor.Rotate(0, 0, Constants.METEOR_ROT_SPEED * Time.deltaTime);

@@ -5,8 +5,7 @@ using System.Collections;
 /// Abstract parent script that controls projectiles
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
-public abstract class ProjScript : MonoBehaviour 
+public abstract class ProjScript : PauseableObjectScript
 {
     #region Fields
 
@@ -15,7 +14,6 @@ public abstract class ProjScript : MonoBehaviour
     protected float moveSpeed;
     protected HitType hit = HitType.None;
     protected string targetTag;
-    Rigidbody2D rbody;
 
     #endregion
 
@@ -87,7 +85,7 @@ public abstract class ProjScript : MonoBehaviour
     /// <param name="targetTag">the tag of the targeted characters</param>
     protected virtual void Initialize(string targetTag)
     {
-        rbody = GetComponent<Rigidbody2D>();
+        base.Initialize();
         rbody.velocity = new Vector2(moveSpeed, 0);
         this.targetTag = targetTag;
     }
@@ -111,7 +109,7 @@ public abstract class ProjScript : MonoBehaviour
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected virtual void Update()
+    protected override void NotPausedUpdate()
     {
         // Updates the projectile angle
         float shotAngle = Mathf.Atan(rbody.velocity.y / rbody.velocity.x);

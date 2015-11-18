@@ -16,6 +16,7 @@ public class GameManager
     Dictionary<string, AudioClip> gameSounds;
     Dictionary<string, GameObject> particles;
     Queue<ParticleSystem> activeParticles;
+    bool paused = false;
     
     #endregion
 
@@ -43,7 +44,6 @@ public class GameManager
             else
             { CurrentSaveName = ""; }
         }
-        Paused = false;
 
         // Loads player prefabs
         playerPrefabs = new Dictionary<CharacterType, GameObject>();
@@ -110,7 +110,17 @@ public class GameManager
     /// Gets or sets whether or not the game is paused
     /// </summary>
     public bool Paused
-    { get; set; }
+    { 
+        get { return paused; }
+        set
+        {
+            // Pauses/unpauses game objects
+            PauseableObjectScript[] objs = GameObject.FindObjectsOfType<PauseableObjectScript>();
+            foreach (PauseableObjectScript obj in objs)
+            { obj.Paused = value; }
+            paused = value;
+        }
+    }
 
     #endregion
 

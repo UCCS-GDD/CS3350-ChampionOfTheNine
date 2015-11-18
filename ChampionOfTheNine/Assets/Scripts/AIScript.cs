@@ -53,32 +53,29 @@ public abstract class AIScript : CharacterControllerScript
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected override void Update()
+    protected override void NotPausedUpdate()
     {
-        if (!GameManager.Instance.Paused)
-        {
-            base.Update();
+        base.NotPausedUpdate();
 
-            // Finds a new target if it doesn't have one
-            if (target == null)
-            { FindTarget(); }
+        // Finds a new target if it doesn't have one
+        if (target == null)
+        { FindTarget(); }
+        else
+        {
+            if (Vector2.Distance(transform.position, target.transform.position) > targetRange)
+            {
+                // Out of range, move towards target
+                if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << Constants.GROUND_LAYER) && character.Grounded)
+                { jumpAbility(); }
+                float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
+                movement(direction);
+                armDirection(90 - (direction * 135));
+            }
             else
             {
-                if (Vector2.Distance(transform.position, target.transform.position) > targetRange)
-                {
-                    // Out of range, move towards target
-                    if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << Constants.GROUND_LAYER) && character.Grounded)
-                    { jumpAbility(); }
-                    float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
-                    movement(direction);
-                    armDirection(90 - (direction * 135));
-                }
-                else
-                {
-                    // In range, attack
-                    movement(0);
-                    Attack();
-                }
+                // In range, attack
+                movement(0);
+                Attack();
             }
         }
     }

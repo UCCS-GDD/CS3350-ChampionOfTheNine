@@ -24,7 +24,7 @@ public class LightningSpellScript : ProjScript
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    protected override void Update()
+    protected override void NotPausedUpdate()
     { }
 
     /// <summary>
