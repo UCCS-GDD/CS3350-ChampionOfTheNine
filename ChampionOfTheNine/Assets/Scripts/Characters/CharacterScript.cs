@@ -62,32 +62,10 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <summary>
     /// Gets and sets the angle of the character's arm
     /// </summary>
-    public float ArmAngle
+    protected float ArmAngle
     {
-        set
-        {
-            if (controllable)
-            {
-                // Flips the character if needed
-                float armAngle = value;
-                if (transform.localScale.x > 0 && value > 90 && value < 270)
-                { transform.localScale = flippedScale; }
-                else if (transform.localScale.x < 0)
-                {
-                    armAngle = 180 - armAngle;
-                    if (value <= 90 || value >= 270)
-                    { transform.localScale = baseScale; }
-                }
-                arm.transform.rotation = Quaternion.Euler(0, 0, armAngle);
-            }
-        }
-        get
-        {
-            float armAngle = arm.transform.rotation.eulerAngles.z;
-            if (transform.localScale.x < 0)
-            { armAngle = 180 - armAngle; }
-            return armAngle;
-        }
+        set { arm.transform.rotation = Quaternion.Euler(0, 0, Utilities.GetAngleDegrees(value, transform.localScale.x)); }
+        get { return Utilities.GetAngleDegrees(arm.transform.rotation.eulerAngles.z, transform.localScale.x); }
     }
 
     /// <summary>
@@ -195,7 +173,6 @@ public abstract class CharacterScript : DamagableObjectScript
         this.targetTag = targetTag;
         if (healthBar != null)
         { this.healthBar = healthBar; }
-
         Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -207,6 +184,23 @@ public abstract class CharacterScript : DamagableObjectScript
         jumpSound = GameManager.Instance.GameSounds[Constants.CHAR_JUMP_SND];
         landSound = GameManager.Instance.GameSounds[Constants.CHAR_LAND_SND];
         base.Initialize();
+    }
+
+    /// <summary>
+    /// Sets the angle of the character's arm, flipping the character as needed
+    /// </summary>
+    /// <param name="angle">the new angle</param>
+    public virtual void SetArmAngle(float angle)
+    {
+        if (controllable)
+        {
+            // Flips the character if needed
+            if (transform.localScale.x > 0 && angle > 90 && angle < 270)
+            { transform.localScale = flippedScale; }
+            else if (transform.localScale.x < 0 && (angle <= 90 || angle >= 270))
+            { transform.localScale = baseScale; }
+            ArmAngle = angle; 
+        }
     }
 
     /// <summary>

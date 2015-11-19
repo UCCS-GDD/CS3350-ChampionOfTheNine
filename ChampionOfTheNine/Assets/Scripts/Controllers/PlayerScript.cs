@@ -65,8 +65,6 @@ public class PlayerScript : CharacterControllerScript
     /// </summary>
     protected override void NotPausedUpdate()
     {
-        base.NotPausedUpdate();
-
         // Handles horizontal movement
         character.Move(Input.GetAxis("Horizontal"));
 
@@ -75,7 +73,7 @@ public class PlayerScript : CharacterControllerScript
         { character.Jump(); }
 
         // Handles arm movement
-        character.ArmAngle = Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition);
+        character.SetArmAngle(Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition));
 
         // Handles firing
         if (Input.GetAxis("SpecialFire") > 0)
@@ -96,6 +94,8 @@ public class PlayerScript : CharacterControllerScript
         secondaryCDBar.fillAmount = 1 - (character.SecondaryCDTimer.ElapsedSeconds / character.SecondaryCDTimer.TotalSeconds);
         powerCDBar.fillAmount = 1 - (character.PowerCDTimer.ElapsedSeconds / character.PowerCDTimer.TotalSeconds);
         specialCDBar.fillAmount = 1 - (character.SpecialCDTimer.ElapsedSeconds / character.SpecialCDTimer.TotalSeconds);
+
+        base.NotPausedUpdate();
     }
 
     /// <summary>

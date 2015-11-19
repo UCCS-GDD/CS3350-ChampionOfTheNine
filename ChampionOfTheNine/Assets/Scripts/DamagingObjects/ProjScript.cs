@@ -4,16 +4,12 @@ using System.Collections;
 /// <summary>
 /// Abstract parent script that controls projectiles
 /// </summary>
-[RequireComponent(typeof(Collider2D))]
-public abstract class ProjScript : PauseableObjectScript
+public abstract class ProjScript : DamagingObjectScript
 {
     #region Fields
 
     [SerializeField]protected AudioClip hitSound;
-    protected float damage;
     protected float moveSpeed;
-    protected HitType hit = HitType.None;
-    protected string targetTag;
     Timer lifeTimer;
 
     #endregion
@@ -74,9 +70,7 @@ public abstract class ProjScript : PauseableObjectScript
     /// <param name="moveSpeed">the projectile's movement speed</param>
     protected virtual void Initialize(string targetTag, float damage, float moveSpeed)
     {
-        base.Initialize();
-        this.targetTag = targetTag;
-        this.damage = damage;
+        base.Initialize(damage, targetTag);
         this.moveSpeed = moveSpeed;
         lifeTimer = new Timer(0);
         if (moveSpeed > 0)
@@ -86,22 +80,6 @@ public abstract class ProjScript : PauseableObjectScript
             lifeTimer.Register(LifeTimerFinished);
             lifeTimer.Start();
         }
-    }
-
-    /// <summary>
-    /// Handles the projectile colliding with something
-    /// </summary>
-    /// <param name="other">the other collider</param>
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        // Checks for if enemy
-        if (other.gameObject.tag == targetTag)
-        {
-            other.gameObject.GetComponent<DamagableObjectScript>().Damage(damage);
-            hit = HitType.Target;
-        }
-        else if (other.gameObject.layer == Constants.GROUND_LAYER)
-        { hit = HitType.Ground; }
     }
 
     /// <summary>

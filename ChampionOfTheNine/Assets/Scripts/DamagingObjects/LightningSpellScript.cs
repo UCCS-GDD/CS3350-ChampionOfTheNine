@@ -8,8 +8,6 @@ using System.Text;
 /// </summary>
 public class LightningSpellScript : ProjScript
 {
-    #region Protected Methods
-
     /// <summary>
     /// Updates the projectile's angle
     /// </summary>
@@ -24,6 +22,4 @@ public class LightningSpellScript : ProjScript
     {
         base.OnTriggerEnter2D(other);
     }
-
-    #endregion
 }

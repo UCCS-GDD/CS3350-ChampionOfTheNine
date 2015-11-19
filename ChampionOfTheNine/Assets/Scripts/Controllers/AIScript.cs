@@ -69,7 +69,7 @@ public abstract class AIScript : CharacterControllerScript
                 { character.Jump(); }
                 float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
                 character.Move(direction);
-                character.ArmAngle = 90 - (direction * 135);
+                character.SetArmAngle(90 - (direction * 135));
             }
             else
             {

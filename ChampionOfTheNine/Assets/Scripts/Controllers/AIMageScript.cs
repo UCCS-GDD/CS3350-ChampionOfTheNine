@@ -28,8 +28,8 @@ public class AIMageScript : AIScript
             int choice = Random.Range(0, Constants.MAGE_AI_SHOT_THRESHOLD);
             if (choice == 0)
             {
-                character.ArmAngle = Utilities.GetAngleDegrees(character.Arm.transform.position, target.transform.position) +
-                    Random.Range(-Constants.MAGE_AI_ANGLE_RANGE, Constants.MAGE_AI_ANGLE_RANGE);
+                character.SetArmAngle(Utilities.GetAngleDegrees(character.Arm.transform.position, target.transform.position) +
+                    Random.Range(-Constants.MAGE_AI_ANGLE_RANGE, Constants.MAGE_AI_ANGLE_RANGE));
                 character.FireMainAbility();
             }
             else

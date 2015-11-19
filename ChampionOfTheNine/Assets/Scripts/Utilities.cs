@@ -33,12 +33,7 @@ public static class Utilities
     /// <returns>the angle, in degrees</returns>
     public static float GetAngleDegrees(Vector2 start, Vector2 end)
     {
-        float angle = Mathf.Asin((end.y - start.y) / Vector2.Distance(end, start));
-        if (end.x - start.x < 0)
-        { angle = Mathf.PI - angle; }
-        angle *= Mathf.Rad2Deg;
-
-        return angle;
+        return GetAngleDegrees(Mathf.Asin((end.y - start.y) / Vector2.Distance(end, start)) * Mathf.Rad2Deg, end.x - start.x);
     }
 
     /// <summary>
@@ -68,5 +63,20 @@ public static class Utilities
         { return Mathf.Max(angle1, angle2) + 180; }
         else
         { return Mathf.Min(angle1, angle2); }
+    }
+
+    /// <summary>
+    /// Gets an angle flipped appropriately
+    /// </summary>
+    /// <param name="angle">the angle</param>
+    /// <param name="flipTest">what to test for flipping</param>
+    /// <returns>the adjusted angle</returns>
+    public static float GetAngleDegrees(float angle, float flipTest)
+    {
+        if (flipTest < 0)
+        { angle = 180 - angle; }
+        while (angle < 0)
+        { angle += 360; }
+        return angle;
     }
 }

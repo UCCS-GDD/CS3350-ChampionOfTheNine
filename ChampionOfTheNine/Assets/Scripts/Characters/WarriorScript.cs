@@ -13,8 +13,14 @@ public class WarriorScript : CharacterScript
 
     [SerializeField]GameObject explosion;
     [SerializeField]GameObject axe;
+    [SerializeField]GameObject sword;
+    Transform swordTransform;
+    SwordScript swordScript;
     float leapTargetX;
+    float slashStartRot;
+    float slashEndRot;
     bool leaping = false;
+    bool slashing = false;
     bool hasAxe = true;
 
     #endregion
@@ -25,13 +31,26 @@ public class WarriorScript : CharacterScript
     /// Gets or sets whether or not the warrior is leaping
     /// Also sets if the warrior is controllable
     /// </summary>
-    public bool Leaping
+    private bool Leaping
     {
         get { return leaping; }
         set 
         { 
             leaping = value;
             Controllable = !value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether or not the warrior is slashing
+    /// </summary>
+    private bool Slashing
+    {
+        get { return slashing; }
+        set
+        {
+            slashing = value;
+            swordScript.enabled = value;
         }
     }
 
@@ -57,6 +76,10 @@ public class WarriorScript : CharacterScript
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
         powerCDTimer = new Timer(Constants.LEAP_CD);
         specialCDTimer = new Timer(Constants.DRAIN_CD);
+        swordTransform = sword.transform;
+        swordScript = sword.GetComponent<SwordScript>();
+        swordScript.Initialize(Constants.SLASH_DAMAGE, targetTag);
+        swordScript.enabled = false;
 
         // Loads sounds
         mainAbilitySound = GameManager.Instance.GameSounds[Constants.ICE_CAST_SND];
@@ -72,10 +95,23 @@ public class WarriorScript : CharacterScript
     public override void UpdateChar()
     {
         base.UpdateChar();
-
-        // Checks for leap finishing
-        if (Leaping)
+        if (Slashing)
         {
+            // Updates slash
+            if (gCDTimer.IsRunning)
+            {
+                ArmAngle = Mathf.Lerp(slashStartRot, slashEndRot, gCDTimer.ElapsedSeconds / gCDTimer.TotalSeconds);
+                swordTransform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, -80, gCDTimer.ElapsedSeconds / gCDTimer.TotalSeconds));
+            }
+            else
+            {
+                Slashing = false;
+                swordTransform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+        }
+        else if (Leaping)
+        {
+            // Updates leap
             if (Mathf.Abs(transform.position.x - leapTargetX) < Constants.LEAP_TARGET_WINDOW && rbody.velocity.x != 0)
             {
                 rbody.velocity = Vector2.down * 10;
@@ -93,7 +129,13 @@ public class WarriorScript : CharacterScript
     /// </summary>
     public override void FireMainAbility()
     {
-
+        if (Controllable && !gCDTimer.IsRunning)
+        {
+            gCDTimer.Start();
+            Slashing = true;
+            slashStartRot = ArmAngle + (Constants.SLASH_HALF_ANGLE * Mathf.Sign(transform.localScale.x));
+            slashEndRot = ArmAngle - (Constants.SLASH_HALF_ANGLE * Mathf.Sign(transform.localScale.x));
+        }
     }
 
     /// <summary>
@@ -101,7 +143,7 @@ public class WarriorScript : CharacterScript
     /// </summary>
     public override void FireSecondaryAbility()
     {
-        if (hasAxe && !Leaping && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
+        if (hasAxe && Controllable && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
         {
             FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE, Constants.AXE_SPEED);
             hasAxe = false;

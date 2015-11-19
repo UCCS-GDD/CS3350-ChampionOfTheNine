@@ -140,6 +140,11 @@ public static class Constants
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
 
+    // Slash
+    public const float SLASH_HALF_ANGLE = 60;
+    public const float SLASH_SWORD_ANGLE = 10;
+    public const float SLASH_DAMAGE = 1;
+
     // Throwing axe
     public const float AXE_CD = WARRIOR_GCD;
     public const float AXE_SPEED = 15;

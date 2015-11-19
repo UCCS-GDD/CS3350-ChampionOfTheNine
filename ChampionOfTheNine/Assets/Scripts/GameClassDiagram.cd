@@ -25,17 +25,16 @@
     <Position X="14" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\ExpArrowScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\ExpArrowScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ProjScript">
     <Position X="19.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAQA4wBAAAAAAAAAAEAAQAAAAEAAAAAAABA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\ProjScript.cs</FileName>
+      <HashCode>AAAAAAAAEAQAYQAAAAAAAAAAAAAAQAAAAEAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\DamagingObjects\ProjScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="hit" />
       <Field Name="lifeTimer" />
     </ShowAsAssociation>
   </Class>
@@ -43,7 +42,7 @@
     <Position X="16.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAIAAAAAAAAEAAAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\AxeScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\AxeScript.cs</FileName>
       <NewMemberFileName>Assets\Scripts\Projectiles\ArrowScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
@@ -58,22 +57,23 @@
   <Class Name="Constants" Collapsed="true">
     <Position X="32.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>wJpuxgzAYoOGr5aQB4n0msbStcmZAQfBqWg613/Ec9Y=</HashCode>
+      <HashCode>wJpuxgzAYoOGr5aQB4n0msbStcnZAQfBqWg613/Ec9Y=</HashCode>
       <FileName>Assets\Scripts\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ExplosionScript">
+  <Class Name="DamagingObjectScript">
     <Position X="29.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgQBAAAAAAAAAAEAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ExplosionScript.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgwBAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DamagingObjects\DamagingObjectScript.cs</FileName>
+      <NewMemberFileName>Assets\Scripts\DamagingObjects\ExplosionScript.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PierceArrowScript">
     <Position X="18.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\PierceArrowScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\PierceArrowScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerScript">
@@ -129,7 +129,7 @@
   <Class Name="WarriorScript">
     <Position X="17.25" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAASAABAAgAAAAAIAABABAAABgAQAAKAA=</HashCode>
+      <HashCode>AAgAAAAAQAAIASAABAAkAAAAAIAABABAAABgAwAAqAA=</HashCode>
       <FileName>Assets\Scripts\Characters\WarriorScript.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -137,21 +137,21 @@
     <Position X="20.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\IceSpellScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\IceSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LightningSpellScript">
     <Position X="23" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\LightningSpellScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\LightningSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MeteorSpellScript">
     <Position X="25.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAEAABAAAAEAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Projectiles\MeteorSpellScript.cs</FileName>
+      <FileName>Assets\Scripts\DamagingObjects\MeteorSpellScript.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AIMageScript">
@@ -171,7 +171,7 @@
   <Class Name="CharacterScript">
     <Position X="17.25" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>xCAAAAAAloAJCRxQBA4UEhEEgIBQEqBgABpAAAAACAA=</HashCode>
+      <HashCode>xCAAAAAAloAJCRxQBA4UEhEEgIBQEqBgABpAAAAAiAA=</HashCode>
       <FileName>Assets\Scripts\Characters\CharacterScript.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
