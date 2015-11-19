@@ -48,7 +48,7 @@ public abstract class DamagableObjectScript : MonoBehaviour
     /// Damages the character by the given amount
     /// </summary>
     /// <param name="amount">the amount</param>
-    /// <returns>false if something went wrong, true otherwise</returns>
+    /// <returns>false if something went wrong or the object was destroyed, true otherwise</returns>
     public virtual bool Damage(float amount)
     {
         try
@@ -59,7 +59,10 @@ public abstract class DamagableObjectScript : MonoBehaviour
 
             // Checks for death
             if (health <= 0)
-            { Death(); }
+            { 
+                Death();
+                return false;
+            }
         }
         catch (MissingReferenceException)
         { return false; }

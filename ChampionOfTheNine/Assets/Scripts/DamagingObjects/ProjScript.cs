@@ -24,9 +24,10 @@ public abstract class ProjScript : DamagingObjectScript
     /// <param name="targetTag">the tag of the targeted characters</param>
     /// <param name="damage">the projectile's damage</param>
     /// <param name="moveSpeed">the projectile's movement speed</param>
-    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag, float damage, float moveSpeed)
+    /// <param name="damageHandler">the delegate to call when the object damages something (optional)</param>
+    public virtual void Initialize(Vector2 fromPosition, Vector2 toPosition, string targetTag, float damage, float moveSpeed, DamageHandler damageHandler = null)
     {
-        Initialize(targetTag, damage, moveSpeed);
+        Initialize(targetTag, damage, moveSpeed, damageHandler);
         SetLocationAndDirection(fromPosition, toPosition);
     }
 
@@ -38,9 +39,10 @@ public abstract class ProjScript : DamagingObjectScript
     /// <param name="targetTag">the tag of the targeted characters</param>
     /// <param name="damage">the projectile's damage</param>
     /// <param name="moveSpeed">the projectile's movement speed</param>
-    public virtual void Initialize(Vector2 position, float angle, string targetTag, float damage, float moveSpeed)
+    /// <param name="damageHandler">the delegate to call when the object damages something (optional)</param>
+    public virtual void Initialize(Vector2 position, float angle, string targetTag, float damage, float moveSpeed, DamageHandler damageHandler = null)
     {
-        Initialize(targetTag, damage, moveSpeed);
+        Initialize(targetTag, damage, moveSpeed, damageHandler);
         SetLocationAndDirection(position, angle);
     }
 
@@ -68,9 +70,10 @@ public abstract class ProjScript : DamagingObjectScript
     /// <param name="targetTag">the tag of the targeted characters</param>
     /// <param name="damage">the projectile's damage</param>
     /// <param name="moveSpeed">the projectile's movement speed</param>
-    protected virtual void Initialize(string targetTag, float damage, float moveSpeed)
+    /// <param name="damageHandler">the delegate to call when the object damages something (optional)</param>
+    protected virtual void Initialize(string targetTag, float damage, float moveSpeed, DamageHandler damageHandler = null)
     {
-        base.Initialize(damage, targetTag);
+        base.Initialize(damage, targetTag, damageHandler);
         this.moveSpeed = moveSpeed;
         lifeTimer = new Timer(0);
         if (moveSpeed > 0)

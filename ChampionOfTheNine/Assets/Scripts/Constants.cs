@@ -139,11 +139,13 @@ public static class Constants
     public const float WARRIOR_JUMP_SPEED = 10;
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
+    public const float WARRIOR_MAX_DAMAGE_BOOST = 1;
 
     // Slash
     public const float SLASH_HALF_ANGLE = 60;
     public const float SLASH_SWORD_ANGLE = 10;
     public const float SLASH_DAMAGE = 1;
+    public const float SLASH_ADR = 0.5f;
 
     // Throwing axe
     public const float AXE_CD = WARRIOR_GCD;
@@ -152,12 +154,14 @@ public static class Constants
     public const float AXE_ENERGY = 0;
     public const float AXE_ROT_SPEED = -1000;
     public const string AXE_PICKUP_TAG = "AxePickup";
+    public const float AXE_ADR = 20;
 
     // Leap attack
     public const float LEAP_CD = 1;
     public const float LEAP_SPEED = 25;
     public const float LEAP_TARGET_WINDOW = 0.3f;
-    public const float LEAP_DAMAGE = 70;
+    public const float LEAP_DAMAGE = 60;
+    public const float LEAP_ADR = 20;
 
     #endregion
 

@@ -163,7 +163,7 @@ public class WorldScript : MonoBehaviour
 
         // Sets up the defeat darkness
         defeatDarknessTimer = new Timer(Constants.DARKNESS_TIMER);
-        defeatDarknessTimer.Register(HandleDefeatDarknessTimerFinishing);
+        defeatDarknessTimer.Register(DefeatDarknessTimerFinished);
     }
 
     /// <summary>
@@ -294,7 +294,7 @@ public class WorldScript : MonoBehaviour
     /// <summary>
     /// Handles the defeat darkness timer finishing
     /// </summary>
-    private void HandleDefeatDarknessTimerFinishing()
+    private void DefeatDarknessTimerFinished()
     {
         Application.LoadLevel(Constants.MAP_SCENE);
     }

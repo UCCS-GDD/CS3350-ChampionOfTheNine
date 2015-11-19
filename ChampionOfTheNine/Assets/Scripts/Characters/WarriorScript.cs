@@ -15,6 +15,7 @@ public class WarriorScript : CharacterScript
     [SerializeField]GameObject axe;
     [SerializeField]GameObject sword;
     Transform swordTransform;
+    Collider2D swordCollider;
     SwordScript swordScript;
     float leapTargetX;
     float slashStartRot;
@@ -50,7 +51,26 @@ public class WarriorScript : CharacterScript
         set
         {
             slashing = value;
-            swordScript.enabled = value;
+            swordCollider.enabled = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets the warrior's current damage multiplier
+    /// </summary>
+    private float DamageMult
+    { get { return 1 + (Constants.WARRIOR_MAX_DAMAGE_BOOST * (Energy / maxEnergy)); } }
+
+    /// <summary>
+    /// Gets and sets the character's energy, setting the energy bar appropriately
+    /// </summary>
+    protected override float Energy
+    {
+        get { return base.Energy; }
+        set
+        {
+            base.Energy = value;
+            swordScript.Damage = Constants.SLASH_DAMAGE * DamageMult;
         }
     }
 
@@ -78,8 +98,9 @@ public class WarriorScript : CharacterScript
         specialCDTimer = new Timer(Constants.DRAIN_CD);
         swordTransform = sword.transform;
         swordScript = sword.GetComponent<SwordScript>();
-        swordScript.Initialize(Constants.SLASH_DAMAGE, targetTag);
-        swordScript.enabled = false;
+        swordScript.Initialize(Constants.SLASH_DAMAGE, targetTag, SlashDamageHandler);
+        swordCollider = sword.GetComponent<Collider2D>();
+        swordCollider.enabled = false;
 
         // Loads sounds
         mainAbilitySound = GameManager.Instance.GameSounds[Constants.ICE_CAST_SND];
@@ -87,6 +108,7 @@ public class WarriorScript : CharacterScript
         powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+        Energy = 0;
     }
 
     /// <summary>
@@ -119,7 +141,8 @@ public class WarriorScript : CharacterScript
             else if (Grounded && !gCDTimer.IsRunning)
             {
                 Leaping = false;
-                ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE, targetTag);
+                ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE * 
+                    DamageMult, targetTag, LeapDamageHandler);
             }
         }
     }
@@ -145,7 +168,7 @@ public class WarriorScript : CharacterScript
     {
         if (hasAxe && Controllable && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
         {
-            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE, Constants.AXE_SPEED);
+            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE * DamageMult, Constants.AXE_SPEED, AxeDamageHandler);
             hasAxe = false;
             secondaryCDTimer.Start();
             secondaryCDTimer.IsRunning = false;
@@ -199,6 +222,33 @@ public class WarriorScript : CharacterScript
             Destroy(collision.gameObject);
             secondaryCDTimer.IsRunning = true;
         }
+    }
+
+    /// <summary>
+    /// Handles the slash damaging something
+    /// </summary>
+    /// <param name="targetLived">whether or not the target lived</param>
+    protected void SlashDamageHandler(bool targetLived)
+    {
+        Energy += Constants.SLASH_ADR;
+    }
+
+    /// <summary>
+    /// Handles the axe damaging something
+    /// </summary>
+    /// <param name="targetLived">whether or not the target lived</param>
+    protected void AxeDamageHandler(bool targetLived)
+    {
+        Energy += Constants.AXE_ADR;
+    }
+
+    /// <summary>
+    /// Handles the leap damaging something
+    /// </summary>
+    /// <param name="targetLived">whether or not the target lived</param>
+    protected void LeapDamageHandler(bool targetLived)
+    {
+        Energy += Constants.LEAP_ADR;
     }
 
     #endregion

@@ -15,6 +15,7 @@ public abstract class PauseableObjectScript : MonoBehaviour
     protected Animator anim;
     Vector2 pausedVelocity = Vector2.zero;
     bool paused = false;
+    bool defaultKinematic;
 
     #endregion
 
@@ -35,7 +36,7 @@ public abstract class PauseableObjectScript : MonoBehaviour
             }
             else
             { rbody.velocity = pausedVelocity; }
-            rbody.isKinematic = value;
+            rbody.isKinematic = value || defaultKinematic;
             paused = value;
             if (anim != null)
             { anim.enabled = !value; }
@@ -53,6 +54,7 @@ public abstract class PauseableObjectScript : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        defaultKinematic = rbody.isKinematic;
     }
 
     /// <summary>

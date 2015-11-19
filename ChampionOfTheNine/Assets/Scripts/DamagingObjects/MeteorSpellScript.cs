@@ -36,7 +36,7 @@ public class MeteorSpellScript : ProjScript
         if (hit == HitType.Ground)
         {
             ExplosionScript explosionScript = ((GameObject)Instantiate(explosion, transform.position, transform.localRotation)).GetComponent<ExplosionScript>();
-            explosionScript.Initialize(damage, targetTag);
+            explosionScript.Initialize(Damage, targetTag);
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
             Destroy(gameObject);
         }

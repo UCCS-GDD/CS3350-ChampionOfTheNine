@@ -25,7 +25,7 @@ public class ExpArrowScript : ProjScript
         if (hit != HitType.None)
         {
             ExplosionScript explosionScript = ((GameObject)Instantiate(explosion, transform.position, transform.localRotation)).GetComponent<ExplosionScript>();
-            explosionScript.Initialize(damage, targetTag);
+            explosionScript.Initialize(Damage, targetTag);
             AudioSource.PlayClipAtPoint(hitSound, transform.position);
             Destroy(gameObject);
         }

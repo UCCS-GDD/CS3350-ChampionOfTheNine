@@ -49,7 +49,7 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <summary>
     /// Gets and sets the character's energy, setting the energy bar appropriately
     /// </summary>
-    protected float Energy
+    protected virtual float Energy
     {
         get { return energy; }
         set
@@ -265,11 +265,12 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <param name="damage">the projectile's damage</param>
     /// <param name="projSpeed">the projectile's movement speed</param>
     /// <returns>the projectile, if one was fired</returns>
-    protected virtual ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown, float damage, float projSpeed)
+    protected virtual ProjScript FireStraightProjectileAttack(GameObject prefab, float energyCost, Timer cooldown, float damage, 
+        float projSpeed, DamageHandler damageHandler = null)
     {
         ProjScript projectile = FireProjectileAttack(prefab, energyCost, cooldown);
         if (projectile != null)
-        { projectile.Initialize(FireLocation, ArmAngle, targetTag, damage, projSpeed); }
+        { projectile.Initialize(FireLocation, ArmAngle, targetTag, damage, projSpeed, damageHandler); }
         return projectile;
     }
 
