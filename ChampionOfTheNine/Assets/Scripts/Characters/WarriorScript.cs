@@ -104,9 +104,9 @@ public class WarriorScript : CharacterScript
 
         // Loads sounds
         mainAbilitySound = GameManager.Instance.GameSounds[Constants.ICE_CAST_SND];
-        secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.LIGHTNING_CAST_SND];
-        powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
-        specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
+        secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SHOOT_SND];
+        powerAbilitySound = GameManager.Instance.GameSounds[Constants.LEAP_SND];
+        specialAbilitySound = GameManager.Instance.GameSounds[Constants.WARRIOR_BOOST_SND];
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
         Energy = 0;
     }
@@ -168,10 +168,13 @@ public class WarriorScript : CharacterScript
     {
         if (hasAxe && Controllable && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
         {
-            FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE * DamageMult, Constants.AXE_SPEED, AxeDamageHandler);
-            hasAxe = false;
-            secondaryCDTimer.Start();
-            secondaryCDTimer.IsRunning = false;
+            if (FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE * DamageMult, Constants.AXE_SPEED, AxeDamageHandler) != null)
+            {
+                hasAxe = false;
+                secondaryCDTimer.Start();
+                secondaryCDTimer.IsRunning = false;
+                Utilities.PlaySoundPitched(audioSource, secondaryAbilitySound);
+            }
         }
     }
 
@@ -202,7 +205,10 @@ public class WarriorScript : CharacterScript
     /// </summary>
     public override void FireSpecialAbility()
     {
-
+        if (!specialCDTimer.IsRunning)
+        {
+            
+        }
     }
 
     #endregion

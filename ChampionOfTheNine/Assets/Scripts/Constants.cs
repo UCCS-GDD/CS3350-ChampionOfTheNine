@@ -153,8 +153,8 @@ public static class Constants
     public const float AXE_DAMAGE = 120;
     public const float AXE_ENERGY = 0;
     public const float AXE_ROT_SPEED = -1000;
-    public const string AXE_PICKUP_TAG = "AxePickup";
     public const float AXE_ADR = 20;
+    public const string AXE_PICKUP_TAG = "AxePickup";
 
     // Leap attack
     public const float LEAP_CD = 1;
@@ -162,6 +162,10 @@ public static class Constants
     public const float LEAP_TARGET_WINDOW = 0.3f;
     public const float LEAP_DAMAGE = 60;
     public const float LEAP_ADR = 20;
+    public const string LEAP_SND = "leap";
+
+    // Boost
+    public const string WARRIOR_BOOST_SND = "warriorBoost";
 
     #endregion
 
