@@ -10,5 +10,6 @@ public enum HitType
 {
     None,
     Target,
-    Ground
+    Ground,
+    TargetAttack
 }

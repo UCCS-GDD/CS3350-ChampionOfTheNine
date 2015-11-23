@@ -24,6 +24,7 @@ public static class Constants
     public const float AI_MIN_SPAWN_TIME = 2;
     public const float AI_MAX_SPAWN_TIME = 6;
     public const float PROJ_MAX_DIST = 20;
+    public const string ATTACK_TAG = "Attack";
 
     // Animator
     public const string GROUNDED_FLAG = "Grounded";

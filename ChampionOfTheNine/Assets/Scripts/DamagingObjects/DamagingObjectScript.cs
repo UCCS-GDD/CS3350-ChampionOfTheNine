@@ -16,7 +16,7 @@ public abstract class DamagingObjectScript : PauseableObjectScript
     protected DamageHandler damageHandler;
 
     #endregion
-
+    
     #region Properties
 
     /// <summary>
@@ -68,6 +68,8 @@ public abstract class DamagingObjectScript : PauseableObjectScript
             }
             else if (other.gameObject.layer == Constants.GROUND_LAYER)
             { hit = HitType.Ground; }
+            else if (other.gameObject.tag == Constants.ATTACK_TAG && other.gameObject.GetComponent<DamagingObjectScript>().targetTag != targetTag)
+            { hit = HitType.TargetAttack; }
         }
     }
 
