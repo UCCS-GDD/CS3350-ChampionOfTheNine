@@ -99,7 +99,7 @@ public class RangerScript : CharacterScript
         ProjScript projectile = FireStraightProjectileAttack(arrow, Constants.BASIC_ARROW_COST, gCDTimer, Constants.BASIC_ARROW_DAMAGE * arrowDamageMult,
             Constants.BASIC_ARROW_SPEED * arrowSpeedMult);
         if (projectile != null)
-        { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
+        { GameManager.Instance.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public class RangerScript : CharacterScript
             if (projectile != null)
             {
                 secondaryCDTimer.Start();
-                Utilities.PlaySoundPitched(audioSource, secondaryAbilitySound);
+                GameManager.Instance.PlaySoundPitched(audioSource, secondaryAbilitySound);
             }
         }
     }
@@ -135,7 +135,7 @@ public class RangerScript : CharacterScript
             ProjScript projectile = FireStraightProjectileAttack(pierceArrow, Constants.PIERCE_ARROW_COST, pierceShootCD, Constants.PIERCE_ARROW_DAMAGE *
                 arrowDamageMult, Constants.PIERCE_ARROW_SPEED * arrowSpeedMult);
             if (projectile != null)
-            { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
+            { GameManager.Instance.PlaySoundPitched(audioSource, mainAbilitySound); }
         }
     }
 

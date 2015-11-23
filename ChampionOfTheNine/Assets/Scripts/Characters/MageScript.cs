@@ -118,7 +118,7 @@ public class MageScript : CharacterScript
     {
         ProjScript projectile = FireStraightProjectileAttack(ice, Constants.ICE_COST, gCDTimer, Constants.ICE_DAMAGE, Constants.ICE_SPEED);
         if (projectile != null)
-        { Utilities.PlaySoundPitched(audioSource, mainAbilitySound); }
+        { GameManager.Instance.PlaySoundPitched(audioSource, mainAbilitySound); }
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public class MageScript : CharacterScript
             ProjScript projectile = FireProjectileAttack(meteor, Constants.METEOR_COST, gCDTimer);
             if (projectile != null)
             {
-                Utilities.PlaySoundPitched(audioSource, powerAbilitySound);
+                GameManager.Instance.PlaySoundPitched(audioSource, powerAbilitySound);
                 powerCDTimer.Start();
                 Vector2 shotLocation = (Vector2)transform.position + Constants.METEOR_START_LOC;
                 projectile.Initialize(shotLocation, Utilities.GetAngleDegrees(shotLocation, Utilities.MousePosition), targetTag,

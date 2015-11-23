@@ -15,17 +15,6 @@ public static class Utilities
     { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
 
     /// <summary>
-    /// Plays a sound with a randomly modified pitch
-    /// </summary>
-    /// <param name="source">the audio source</param>
-    /// <param name="clip">the sound</param>
-    public static void PlaySoundPitched(AudioSource source, AudioClip clip)
-    {
-        source.pitch = 1 + Random.Range(-Constants.PITCH_CHANGE, Constants.PITCH_CHANGE);
-        source.PlayOneShot(clip);
-    }
-
-    /// <summary>
     /// Gets the angle between two points
     /// </summary>
     /// <param name="start">the start point</param>

@@ -35,7 +35,7 @@ public class CastleScript : DamagableObjectScript
     /// </summary>
     protected override void Death()
     {
-        Utilities.PlaySoundPitched(audioSource, deathSound);
+        GameManager.Instance.PlaySoundPitched(audioSource, deathSound);
         spriteRenderer.sprite = destroyedSprite;
         WorldScript.Instance.Defeat(gameObject.tag);
 

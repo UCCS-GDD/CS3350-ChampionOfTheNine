@@ -55,7 +55,7 @@ public abstract class DamagableObjectScript : MonoBehaviour
         {
             // Subtracts from the health and plays sound
             Health -= amount;
-            Utilities.PlaySoundPitched(audioSource, hitSound);
+            GameManager.Instance.PlaySoundPitched(audioSource, hitSound);
 
             // Checks for death
             if (health <= 0)

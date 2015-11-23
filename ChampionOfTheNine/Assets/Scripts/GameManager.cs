@@ -16,6 +16,8 @@ public class GameManager
     Dictionary<CharacterType, GameObject> playerPrefabs;
     Dictionary<string, AudioClip> gameSounds;
     Dictionary<string, GameObject> particles;
+    string lastSound = "";
+    Timer lastSoundTimer;
     Queue<ParticleSystem> activeParticles;
     bool paused = false;
     
@@ -50,8 +52,11 @@ public class GameManager
         playerPrefabs = new Dictionary<CharacterType, GameObject>();
         playerPrefabs.Add(CharacterType.Ranger, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.RANGER_PLAYER_PREFAB));
         playerPrefabs.Add(CharacterType.Mage, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.MAGE_PLAYER_PREFAB));
+        playerPrefabs.Add(CharacterType.Warrior, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.WARRIOR_PLAYER_PREFAB));
 
         // Loads the game sounds
+        lastSoundTimer = new Timer(0);
+        lastSoundTimer.Register(LastSoundTimerFinished);
         gameSounds = new Dictionary<string, AudioClip>();
         AudioClip[] sounds = Resources.LoadAll<AudioClip>(Constants.SND_FOLDER);
         foreach (AudioClip sound in sounds)
@@ -145,6 +150,23 @@ public class GameManager
     #region Public Methods
 
     /// <summary>
+    /// Plays a sound with a randomly modified pitch
+    /// </summary>
+    /// <param name="source">the audio source</param>
+    /// <param name="clip">the sound</param>
+    public void PlaySoundPitched(AudioSource source, AudioClip clip)
+    {
+        if (lastSound != clip.name)
+        {
+            source.pitch = 1 + UnityEngine.Random.Range(-Constants.PITCH_CHANGE, Constants.PITCH_CHANGE);
+            source.PlayOneShot(clip);
+            lastSoundTimer.TotalSeconds = clip.length / 2;
+            lastSoundTimer.Start();
+            lastSound = clip.name;
+        }
+    }
+
+    /// <summary>
     /// Spawns a particle emitter at the given location
     /// </summary>
     /// <param name="name">the name of the particle emitter prefab to spawn</param>
@@ -206,6 +228,15 @@ public class GameManager
             catch (Exception)
             { activeParticles.Dequeue(); }
         }
+        lastSoundTimer.Update();
+    }
+
+    /// <summary>
+    /// Handles the last sound timer finishing
+    /// </summary>
+    private void LastSoundTimerFinished()
+    {
+        lastSound = "";
     }
 
     #endregion

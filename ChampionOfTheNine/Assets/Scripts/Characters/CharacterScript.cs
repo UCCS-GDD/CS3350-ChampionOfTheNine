@@ -147,7 +147,7 @@ public abstract class CharacterScript : DamagableObjectScript
             if (!animator.GetBool(Constants.GROUNDED_FLAG))
             {
                 animator.SetBool(Constants.GROUNDED_FLAG, true);
-                Utilities.PlaySoundPitched(audioSource, landSound);
+                GameManager.Instance.PlaySoundPitched(audioSource, landSound);
             }
         }
         else
@@ -155,7 +155,7 @@ public abstract class CharacterScript : DamagableObjectScript
             if (animator.GetBool(Constants.GROUNDED_FLAG))
             {
                 animator.SetBool(Constants.GROUNDED_FLAG, false);
-                Utilities.PlaySoundPitched(audioSource, jumpSound);
+                GameManager.Instance.PlaySoundPitched(audioSource, jumpSound);
             }
         }
     }

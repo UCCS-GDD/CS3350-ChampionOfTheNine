@@ -23,6 +23,7 @@ public class WarriorScript : CharacterScript
     bool leaping = false;
     bool slashing = false;
     bool hasAxe = true;
+    bool recharge = false;
 
     #endregion
 
@@ -69,8 +70,21 @@ public class WarriorScript : CharacterScript
         get { return base.Energy; }
         set
         {
-            base.Energy = value;
-            swordScript.Damage = Constants.SLASH_DAMAGE * DamageMult;
+            // Handles the energy maxing out
+            if (value >= Constants.WARRIOR_ENERGY)
+            {
+                base.Energy = Constants.WARRIOR_ENERGY;
+                gCDTimer.TotalSeconds = Constants.WARRIOR_RECHARGE_TIME;
+                gCDTimer.Register(RechargeTimerFinished);
+                gCDTimer.Start();
+                recharge = true;
+                Slashing = false;
+            }
+            else
+            {
+                base.Energy = value;
+                swordScript.Damage = Constants.SLASH_DAMAGE * DamageMult;
+            }
         }
     }
 
@@ -109,6 +123,7 @@ public class WarriorScript : CharacterScript
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.WARRIOR_BOOST_SND];
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
         Energy = 0;
+        gCDTimer.Finish();
     }
 
     /// <summary>
@@ -117,6 +132,11 @@ public class WarriorScript : CharacterScript
     public override void UpdateChar()
     {
         base.UpdateChar();
+        if (recharge)
+        { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_RECHARGE_LOSS * Time.deltaTime); }
+        else
+        { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_LOSS * Time.deltaTime); }
+
         if (Slashing)
         {
             // Updates slash
@@ -173,7 +193,7 @@ public class WarriorScript : CharacterScript
                 hasAxe = false;
                 secondaryCDTimer.Start();
                 secondaryCDTimer.IsRunning = false;
-                Utilities.PlaySoundPitched(audioSource, secondaryAbilitySound);
+                GameManager.Instance.PlaySoundPitched(audioSource, secondaryAbilitySound);
             }
         }
     }
@@ -255,6 +275,15 @@ public class WarriorScript : CharacterScript
     protected void LeapDamageHandler(bool targetLived)
     {
         Energy += Constants.LEAP_ADR;
+    }
+
+    /// <summary>
+    /// Handles the global cooldown timer when in recharge mode finishing
+    /// </summary>
+    protected void RechargeTimerFinished()
+    {
+        gCDTimer = new Timer(Constants.WARRIOR_GCD);
+        recharge = false;
     }
 
     #endregion

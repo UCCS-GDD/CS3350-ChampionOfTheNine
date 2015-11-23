@@ -70,6 +70,8 @@ public abstract class DamagingObjectScript : PauseableObjectScript
             { hit = HitType.Ground; }
             else if (other.gameObject.tag == Constants.ATTACK_TAG && other.gameObject.GetComponent<DamagingObjectScript>().targetTag != targetTag)
             { hit = HitType.TargetAttack; }
+            else
+            { hit = HitType.None; }
         }
     }
 
