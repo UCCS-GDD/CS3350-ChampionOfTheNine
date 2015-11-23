@@ -131,8 +131,8 @@ public static class Constants
     #region Warrior
 
     public const string WARRIOR_PLAYER_PREFAB = "WarriorPlayer";
-    public const float WARRIOR_AI_RANGE = 1;
-    public const float WARRIOR_AI_ANGLE_RANGE = 10;
+    public const float WARRIOR_AI_RANGE = 1.2f;
+    public const float WARRIOR_AI_ANGLE_RANGE = 5;
     public const int WARRIOR_AI_SHOT_THRESHOLD = 5;
     public const float WARRIOR_HEALTH = 120;
     public const float WARRIOR_ENERGY = 100;

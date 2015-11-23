@@ -11,6 +11,7 @@ public class EnemySpawner : PauseableObjectScript
 
     [SerializeField]GameObject enemyRanger;
     [SerializeField]GameObject enemyMage;
+    [SerializeField]GameObject enemyWarrior;
     [SerializeField]Transform spawnLocation;
     Timer spawnTimer;
 
@@ -43,8 +44,11 @@ public class EnemySpawner : PauseableObjectScript
     protected void SpawnEnemy()
     {
         GameObject spawn = enemyRanger;
-        if (Random.Range(0, 10) < 5)
+        int rand = Random.Range(0, 3);
+        if (rand == 1)
         { spawn = enemyMage; }
+        else if (rand == 2)
+        { spawn = enemyWarrior; }
         Instantiate(spawn, spawnLocation.position, transform.rotation);
 
         // Resets the spawn timer
