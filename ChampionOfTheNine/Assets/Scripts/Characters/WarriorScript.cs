@@ -14,6 +14,8 @@ public class WarriorScript : CharacterScript
     [SerializeField]GameObject explosion;
     [SerializeField]GameObject axe;
     [SerializeField]GameObject sword;
+    Image boostBar;
+    Timer boostTimer;
     Transform swordTransform;
     Collider2D swordCollider;
     SwordScript swordScript;
@@ -70,20 +72,23 @@ public class WarriorScript : CharacterScript
         get { return base.Energy; }
         set
         {
-            // Handles the energy maxing out
-            if (value >= Constants.WARRIOR_ENERGY)
+            if (!boostTimer.IsRunning)
             {
-                base.Energy = Constants.WARRIOR_ENERGY;
-                gCDTimer.TotalSeconds = Constants.WARRIOR_RECHARGE_TIME;
-                gCDTimer.Register(RechargeTimerFinished);
-                gCDTimer.Start();
-                recharge = true;
-                Slashing = false;
-            }
-            else
-            {
-                base.Energy = value;
-                swordScript.Damage = Constants.SLASH_DAMAGE * DamageMult;
+                // Handles the energy maxing out
+                if (value >= Constants.WARRIOR_ENERGY)
+                {
+                    base.Energy = Constants.WARRIOR_ENERGY;
+                    gCDTimer.TotalSeconds = Constants.WARRIOR_RECHARGE_TIME;
+                    gCDTimer.Register(RechargeTimerFinished);
+                    gCDTimer.Start();
+                    recharge = true;
+                    Slashing = false;
+                }
+                else
+                {
+                    base.Energy = value;
+                    swordScript.Damage = Constants.SLASH_DAMAGE * DamageMult;
+                }
             }
         }
     }
@@ -110,6 +115,7 @@ public class WarriorScript : CharacterScript
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
         powerCDTimer = new Timer(Constants.LEAP_CD);
         specialCDTimer = new Timer(Constants.DRAIN_CD);
+        boostTimer = new Timer(Constants.WARRIOR_BOOST_TIME);
         swordTransform = sword.transform;
         swordScript = sword.GetComponent<SwordScript>();
         swordScript.Initialize(Constants.SLASH_DAMAGE, targetTag, SlashDamageHandler);
@@ -121,6 +127,8 @@ public class WarriorScript : CharacterScript
         secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.RANGER_SHOOT_SND];
         powerAbilitySound = GameManager.Instance.GameSounds[Constants.LEAP_SND];
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.WARRIOR_BOOST_SND];
+        if (timerBars != null)
+        { boostBar = timerBars[0]; }
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
         Energy = 0;
         gCDTimer.Finish();
@@ -136,6 +144,7 @@ public class WarriorScript : CharacterScript
         { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_RECHARGE_LOSS * Time.deltaTime); }
         else
         { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_LOSS * Time.deltaTime); }
+        boostTimer.Update();
 
         if (Slashing)
         {
@@ -227,7 +236,10 @@ public class WarriorScript : CharacterScript
     {
         if (!specialCDTimer.IsRunning)
         {
-            
+            Energy = 99;
+            GameManager.Instance.PlaySoundPitched(audioSource, specialAbilitySound);
+            boostTimer.Start();
+            specialCDTimer.Start();
         }
     }
 
@@ -284,6 +296,14 @@ public class WarriorScript : CharacterScript
     {
         gCDTimer = new Timer(Constants.WARRIOR_GCD);
         recharge = false;
+    }
+
+    /// <summary>
+    /// Handles the boost timer finishing
+    /// </summary>
+    protected void BoostTimerFinished()
+    {
+        Energy = 100;
     }
 
     #endregion

@@ -13,9 +13,9 @@ public class RangerScript : CharacterScript
     [SerializeField]GameObject arrow;
     [SerializeField]GameObject pierceArrow;
     [SerializeField]GameObject expArrow;
+
     Image pierceBar;
     Image boostBar;
-
     Timer pierceShootWindow;
     Timer pierceShootCD;
     Timer boostTimer;

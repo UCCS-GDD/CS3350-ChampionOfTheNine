@@ -170,6 +170,7 @@ public static class Constants
 
     // Boost
     public const string WARRIOR_BOOST_SND = "warriorBoost";
+    public const float WARRIOR_BOOST_TIME = 6f;
 
     #endregion
 
