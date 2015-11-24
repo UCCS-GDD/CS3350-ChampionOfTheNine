@@ -62,6 +62,7 @@ public class MageScript : CharacterScript
         powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+        Energy = maxEnergy;
     }
 
     /// <summary>

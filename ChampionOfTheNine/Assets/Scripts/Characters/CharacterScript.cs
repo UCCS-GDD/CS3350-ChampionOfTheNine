@@ -173,7 +173,6 @@ public abstract class CharacterScript : DamagableObjectScript
         this.targetTag = targetTag;
         if (healthBar != null)
         { this.healthBar = healthBar; }
-        Energy = maxEnergy;
         rbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         baseScale = transform.localScale;

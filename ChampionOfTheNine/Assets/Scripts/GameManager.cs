@@ -199,9 +199,12 @@ public class GameManager
     /// </summary>
     /// <param name="name">the name of the particle emitter prefab to spawn</param>
     /// <param name="position">the position at which to spawn the particle emitter</param>
-    public void SpawnParticle(string name, Vector3 position)
+    /// <returns>the particle system game object</returns>
+    public GameObject SpawnParticle(string name, Vector3 position)
     {
-        activeParticles.Enqueue(((GameObject)GameObject.Instantiate(particles[name], position, Quaternion.identity)).GetComponent<ParticleSystem>());
+        GameObject particle = ((GameObject)GameObject.Instantiate(particles[name], position, particles[name].transform.rotation));
+        activeParticles.Enqueue(particle.GetComponent<ParticleSystem>());
+        return particle;
     }
 
     /// <summary>

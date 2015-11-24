@@ -19,6 +19,7 @@ public class WarriorScript : CharacterScript
     Transform swordTransform;
     Collider2D swordCollider;
     SwordScript swordScript;
+    float leapStartX;
     float leapTargetX;
     float slashStartRot;
     float slashEndRot;
@@ -83,6 +84,7 @@ public class WarriorScript : CharacterScript
                     gCDTimer.Start();
                     recharge = true;
                     Slashing = false;
+                    GameManager.Instance.SpawnParticle(Constants.RECHARGE_PART, transform.position + new Vector3(0, 1.6f)).transform.SetParent(transform);
                 }
                 else
                 {
@@ -116,6 +118,7 @@ public class WarriorScript : CharacterScript
         powerCDTimer = new Timer(Constants.LEAP_CD);
         specialCDTimer = new Timer(Constants.WARRIOR_BOOST_CD);
         boostTimer = new Timer(Constants.WARRIOR_BOOST_TIME);
+        boostTimer.Register(BoostTimerFinished);
         swordTransform = sword.transform;
         swordScript = sword.GetComponent<SwordScript>();
         swordScript.Initialize(Constants.SLASH_DAMAGE, targetTag, SlashDamageHandler);
@@ -131,7 +134,6 @@ public class WarriorScript : CharacterScript
         { boostBar = timerBars[0]; }
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
         Energy = 0;
-        gCDTimer.Finish();
     }
 
     /// <summary>
@@ -140,10 +142,12 @@ public class WarriorScript : CharacterScript
     public override void UpdateChar()
     {
         base.UpdateChar();
+
+        // Updates energy
         if (recharge)
-        { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_RECHARGE_LOSS * Time.deltaTime); }
+        { Energy = Mathf.Max(0, Energy - (Constants.WARRIOR_ADR_RECHARGE_LOSS * Time.deltaTime)); }
         else
-        { Energy = Mathf.Max(0, Energy - Constants.WARRIOR_ADR_LOSS * Time.deltaTime); }
+        { Energy = Mathf.Max(0, Energy - (Constants.WARRIOR_ADR_LOSS * Time.deltaTime)); }
         boostTimer.Update();
 
         if (Slashing)
@@ -163,13 +167,16 @@ public class WarriorScript : CharacterScript
         else if (Leaping)
         {
             // Updates leap
-            if (Mathf.Abs(transform.position.x - leapTargetX) < Constants.LEAP_TARGET_WINDOW && rbody.velocity.x != 0)
+            if (((leapTargetX > leapStartX && transform.position.x >= leapTargetX) || 
+                (leapTargetX < leapStartX && transform.position.x <= leapTargetX) || 
+                rbody.velocity.x == 0) && !animator.GetBool(Constants.LEAP_FLAG))
             {
-                rbody.velocity = Vector2.down * 10;
+                rbody.velocity = Vector2.down * 7;
                 Arm.SetActive(false);
                 animator.SetBool(Constants.LEAP_FLAG, true);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
-            else if (Grounded && !gCDTimer.IsRunning)
+            else if ((Grounded || rbody.velocity == Vector2.zero) && animator.GetBool(Constants.LEAP_FLAG))
             {
                 Arm.SetActive(true);
                 animator.SetBool(Constants.LEAP_FLAG, false);
@@ -177,6 +184,8 @@ public class WarriorScript : CharacterScript
                 ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE * 
                     DamageMult, targetTag, LeapDamageHandler);
             }
+            //Debug.Log(rbody.velocity);
+            Debug.Log(animator.GetBool(Constants.LEAP_FLAG));
         }
 
         // Updates boost bar
@@ -205,7 +214,8 @@ public class WarriorScript : CharacterScript
     {
         if (hasAxe && Controllable && !gCDTimer.IsRunning && !secondaryCDTimer.IsRunning)
         {
-            if (FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE * DamageMult, Constants.AXE_SPEED, AxeDamageHandler) != null)
+            if (FireStraightProjectileAttack(axe, Constants.AXE_ENERGY, gCDTimer, Constants.AXE_DAMAGE * DamageMult, 
+                Constants.AXE_SPEED, AxeDamageHandler) != null)
             {
                 hasAxe = false;
                 secondaryCDTimer.Start();
@@ -229,8 +239,9 @@ public class WarriorScript : CharacterScript
                 powerCDTimer.Start();
                 gCDTimer.Start();
 
+                leapStartX = transform.position.x;
                 leapTargetX = Utilities.MousePosition.x;
-                //transform.localRotation = Quaternion.Euler(0, 0, leapAngle);
+                transform.localRotation = Quaternion.Euler(0, 0, leapAngle - 90);
                 rbody.velocity = new Vector2(Mathf.Cos(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED,
                     Mathf.Sin(leapAngle * Mathf.Deg2Rad) * Constants.LEAP_SPEED);
             }
@@ -247,6 +258,7 @@ public class WarriorScript : CharacterScript
             gCDTimer.Finish();
             Energy = 99;
             GameManager.Instance.PlaySoundPitched(audioSource, specialAbilitySound);
+            GameManager.Instance.SpawnParticle(Constants.WARRIOR_BOOST_PART, Arm.transform.position).transform.SetParent(transform);
             boostTimer.Start();
             specialCDTimer.Start();
         }

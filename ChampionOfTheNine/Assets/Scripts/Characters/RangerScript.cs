@@ -64,6 +64,7 @@ public class RangerScript : CharacterScript
             boostBar = timerBars[1];
         }
         base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+        Energy = maxEnergy;
     }
 
     /// <summary>
@@ -154,6 +155,7 @@ public class RangerScript : CharacterScript
             arrowDamageMult = Constants.RANGER_BOOST_ARROW_DAMAGE_MULT;
             energyRegenMult = Constants.RANGER_BOOST_ENERGY_REGEN_MULT;
 
+            GameManager.Instance.SpawnParticle(Constants.RANGER_BOOST_PART, Arm.transform.position).transform.SetParent(transform);
             audioSource.PlayOneShot(specialAbilitySound);
             boostTimer.Start();
             specialCDTimer.Start();

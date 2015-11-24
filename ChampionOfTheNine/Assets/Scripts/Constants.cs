@@ -74,6 +74,7 @@ public static class Constants
     public const float RANGER_BOOST_ARROW_DAMAGE_MULT = 1.6f;
     public const float RANGER_BOOST_ENERGY_REGEN_MULT = 1.8f;
     public const string RANGER_BOOST_SND = "boost";
+    public const string RANGER_BOOST_PART = "RangerBoostParticle";
 
     #endregion
 
@@ -144,6 +145,7 @@ public static class Constants
     public const float WARRIOR_RECHARGE_TIME = 3;
     public const float WARRIOR_ADR_LOSS = 4;
     public const float WARRIOR_ADR_RECHARGE_LOSS = WARRIOR_ENERGY / WARRIOR_RECHARGE_TIME;
+    public const string RECHARGE_PART = "RechargeParticle";
 
     // Slash
     public const float SLASH_HALF_ANGLE = 60;
@@ -163,7 +165,6 @@ public static class Constants
     // Leap attack
     public const float LEAP_CD = 8;
     public const float LEAP_SPEED = 25;
-    public const float LEAP_TARGET_WINDOW = 0.3f;
     public const float LEAP_DAMAGE = 60;
     public const float LEAP_ADR = 20;
     public const string LEAP_SND = "leap";
@@ -171,6 +172,7 @@ public static class Constants
 
     // Boost
     public const string WARRIOR_BOOST_SND = "warriorBoost";
+    public const string WARRIOR_BOOST_PART = "WarriorBoostParticle";
     public const float WARRIOR_BOOST_TIME = 6f;
     public const float WARRIOR_BOOST_CD = 20f;
 
