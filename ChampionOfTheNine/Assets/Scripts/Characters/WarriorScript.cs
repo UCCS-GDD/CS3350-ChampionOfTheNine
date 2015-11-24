@@ -114,7 +114,7 @@ public class WarriorScript : CharacterScript
         gCDTimer = new Timer(Constants.WARRIOR_GCD);
         secondaryCDTimer = new Timer(Constants.LIGHTNING_CD);
         powerCDTimer = new Timer(Constants.LEAP_CD);
-        specialCDTimer = new Timer(Constants.DRAIN_CD);
+        specialCDTimer = new Timer(Constants.WARRIOR_BOOST_CD);
         boostTimer = new Timer(Constants.WARRIOR_BOOST_TIME);
         swordTransform = sword.transform;
         swordScript = sword.GetComponent<SwordScript>();
@@ -174,6 +174,10 @@ public class WarriorScript : CharacterScript
                     DamageMult, targetTag, LeapDamageHandler);
             }
         }
+
+        // Updates boost bar
+        try { boostBar.fillAmount = 1 - (boostTimer.ElapsedSeconds / boostTimer.TotalSeconds); }
+        catch (System.NullReferenceException) { }
     }
 
     /// <summary>
@@ -236,6 +240,7 @@ public class WarriorScript : CharacterScript
     {
         if (!specialCDTimer.IsRunning)
         {
+            gCDTimer.Finish();
             Energy = 99;
             GameManager.Instance.PlaySoundPitched(audioSource, specialAbilitySound);
             boostTimer.Start();

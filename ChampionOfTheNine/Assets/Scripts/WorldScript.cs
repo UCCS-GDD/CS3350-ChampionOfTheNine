@@ -29,6 +29,7 @@ public class WorldScript : MonoBehaviour
     [SerializeField]GameObject starrySky;
     [SerializeField]GameObject rangerHUD;
     [SerializeField]GameObject mageHUD;
+    [SerializeField]GameObject warriorHUD;
     [SerializeField]GameObject enemyCastlePrefab;
     [SerializeField]GameObject[] cloudPrefabs;
 
@@ -102,6 +103,9 @@ public class WorldScript : MonoBehaviour
             case CharacterType.Mage:
                 hud = Instantiate<GameObject>(mageHUD);
                 break;
+            case CharacterType.Warrior:
+                hud = Instantiate<GameObject>(warriorHUD);
+                break;
             default:
                 hud = Instantiate<GameObject>(rangerHUD);
                 break;
@@ -145,7 +149,6 @@ public class WorldScript : MonoBehaviour
 
         elevationWeight = Constants.ELEVATION_CHANGE_WEIGHT + Random.Range(-Constants.ELEVATION_CHANGE_OFFSET, Constants.ELEVATION_CHANGE_OFFSET); ;
         heightDifferenceWeight = Constants.HEIGHT_DIFFERENCE_WEIGHT + Random.Range(-Constants.HEIGHT_DIFFERENCE_OFFSET, Constants.HEIGHT_DIFFERENCE_OFFSET);
-
 
         if (debugMode)
         {
