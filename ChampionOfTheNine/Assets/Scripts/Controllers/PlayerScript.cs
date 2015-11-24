@@ -76,13 +76,13 @@ public class PlayerScript : CharacterControllerScript
         character.SetArmAngle(Utilities.GetAngleDegrees(character.Arm.transform.position, Utilities.MousePosition));
 
         // Handles firing
-        if (Input.GetAxis("SpecialFire") > 0)
+        if (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Special].Pressed)
         { character.FireSpecialAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("PowerFire") > 0)
+        if (!character.GCDTimer.IsRunning && GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Power].Pressed)
         { character.FirePowerAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("SecondaryFire") > 0)
+        if (!character.GCDTimer.IsRunning && GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Secondary].Pressed)
         { character.FireSecondaryAbility(); }
-        if (!character.GCDTimer.IsRunning && Input.GetAxis("MainFire") > 0)
+        if (!character.GCDTimer.IsRunning && GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Main].Pressed)
         { character.FireMainAbility(); }
 
         // Moves the camera

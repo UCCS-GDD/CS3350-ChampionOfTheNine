@@ -14,6 +14,7 @@ public class Savegame
 
     Dictionary<int, KingdomName> kingdomLocations;
     Dictionary<KingdomName, KingdomStatus> kingdomStatuses;
+    Dictionary<InputType, InputButton> inputs;
     CharacterType playerType;
 
     #endregion
@@ -27,6 +28,11 @@ public class Savegame
     {
         kingdomLocations = new Dictionary<int, KingdomName>();
         kingdomStatuses = new Dictionary<KingdomName, KingdomStatus>();
+        inputs = new Dictionary<InputType, InputButton>();
+        inputs.Add(InputType.Main, new InputButton(0));
+        inputs.Add(InputType.Secondary, new InputButton(1));
+        inputs.Add(InputType.Power, new InputButton("e"));
+        inputs.Add(InputType.Special, new InputButton("r"));
         this.playerType = playerType;
     }
 
@@ -48,7 +54,6 @@ public class Savegame
     public Dictionary<int, KingdomName> KingdomLocations
     {
         get { return kingdomLocations; }
-        set { kingdomLocations = value; }
     }
 
     /// <summary>
@@ -58,6 +63,12 @@ public class Savegame
     {
         get { return playerType; }
     }
+
+    /// <summary>
+    /// Gets the inputs dictionary
+    /// </summary>
+    public Dictionary<InputType, InputButton> Inputs
+    { get { return inputs; } }
 
     #endregion
 }

@@ -253,4 +253,13 @@ public static class Constants
     public const string TUTORIAL_SCENE = "Tutorial";
 
     #endregion
+
+    #region Input
+
+    public const string MAIN_AXIS = "MainFire";
+    public const string SECONDARY_AXIS = "SecondaryFire";
+    public const string POWER_AXIS = "PowerFire";
+    public const string SPECIAL_AXIS = "SpecialFire";
+
+    #endregion
 }

@@ -16,6 +16,8 @@ public class GameManager
     Dictionary<CharacterType, GameObject> playerPrefabs;
     Dictionary<string, AudioClip> gameSounds;
     Dictionary<string, GameObject> particles;
+    Dictionary<int, string> mouseButtonNames;
+    Dictionary<string, string> keyNames;
     string lastSound = "";
     Timer lastSoundTimer;
     Queue<ParticleSystem> activeParticles;
@@ -37,15 +39,19 @@ public class GameManager
         if (saves == null)
         {
             saves = new Dictionary<string, Savegame>();
-            Save();
-            CurrentSaveName = "";
+            //Save();
+            CurrentSaveName = "temp";
+            NewSavegame(CharacterType.Ranger);
         }
         else
         {
             if (saves.Count > 0)
             { CurrentSaveName = saves.First().Key; }
             else
-            { CurrentSaveName = ""; }
+            { 
+                CurrentSaveName = "temp";
+                NewSavegame(CharacterType.Ranger);
+            }
         }
 
         // Loads player prefabs
@@ -68,6 +74,16 @@ public class GameManager
         GameObject[] parts = Resources.LoadAll<GameObject>(Constants.PART_FOLDER);
         foreach (GameObject part in parts)
         { particles.Add(part.name, part); }
+
+        // Adds mouse button and key names
+        mouseButtonNames = new Dictionary<int, string>();
+        mouseButtonNames.Add(0, "Left Mouse Button");
+        mouseButtonNames.Add(1, "Right Mouse Button");
+        mouseButtonNames.Add(2, "Middle Mouse Button");
+        keyNames = new Dictionary<string, string>();
+        keyNames.Add(" ", "Spacebar");
+        keyNames.Add("\n", "Enter");
+        keyNames.Add("\b", "Backspace");
     }
 
     #endregion
@@ -93,6 +109,18 @@ public class GameManager
     /// </summary>
     public Dictionary<string, Savegame> Saves
     { get { return saves; } }
+
+    /// <summary>
+    /// Gets the special mouse button names dictionary
+    /// </summary>
+    public Dictionary<int, string> MouseButtonNames
+    { get { return mouseButtonNames; } }
+
+    /// <summary>
+    /// Gets the special key names dictionary
+    /// </summary>
+    public Dictionary<string, string> KeyNames
+    { get { return keyNames; } }
 
     /// <summary>
     /// Gets the player prefab dictionary
