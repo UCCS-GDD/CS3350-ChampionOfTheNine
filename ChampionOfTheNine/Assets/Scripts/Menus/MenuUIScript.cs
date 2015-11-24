@@ -74,13 +74,5 @@ public class MenuUIScript : MonoBehaviour
         GameManager.Instance.Paused = false;
     }
 
-    ///// <summary>
-    ///// Update is called once per frame
-    ///// </summary>
-    //private void Update()
-    //{
-
-    //}
-
     #endregion
 }

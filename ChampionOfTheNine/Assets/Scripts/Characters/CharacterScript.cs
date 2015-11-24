@@ -18,9 +18,9 @@ public abstract class CharacterScript : DamagableObjectScript
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
     [SerializeField]GameObject deadPrefab;
+    [SerializeField]Color energyColor;
 
     protected Animator animator;
-    protected Color energyColor;
     protected Rigidbody2D rbody;
     protected Timer gCDTimer;
     protected Timer secondaryCDTimer;
@@ -82,6 +82,12 @@ public abstract class CharacterScript : DamagableObjectScript
             controllable = value;
         }
     }
+
+    /// <summary>
+    /// Gets the character's energy color
+    /// </summary>
+    public Color EnergyColor
+    { get { return energyColor; } }
 
     /// <summary>
     /// Gets whether or not the character is grounded

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Script that handles the character creation screen
 /// </summary>
-public class CharacterCreationScript : MonoBehaviour
+public class CharacterCreationScript : MenuUIScript
 {
     #region Fields
 

@@ -171,7 +171,7 @@ public class WarriorScript : CharacterScript
                 (leapTargetX < leapStartX && transform.position.x <= leapTargetX) || 
                 rbody.velocity.x == 0) && !animator.GetBool(Constants.LEAP_FLAG))
             {
-                rbody.velocity = Vector2.down * 7;
+                rbody.velocity = Vector2.down * 5;
                 Arm.SetActive(false);
                 animator.SetBool(Constants.LEAP_FLAG, true);
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -181,11 +181,10 @@ public class WarriorScript : CharacterScript
                 Arm.SetActive(true);
                 animator.SetBool(Constants.LEAP_FLAG, false);
                 Leaping = false;
+                GameManager.Instance.PlaySoundPitched(audioSource, GameManager.Instance.GameSounds[Constants.EXP_ARROW_SND]);
                 ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE * 
                     DamageMult, targetTag, LeapDamageHandler);
             }
-            //Debug.Log(rbody.velocity);
-            Debug.Log(animator.GetBool(Constants.LEAP_FLAG));
         }
 
         // Updates boost bar
@@ -238,6 +237,7 @@ public class WarriorScript : CharacterScript
                 Leaping = true;
                 powerCDTimer.Start();
                 gCDTimer.Start();
+                GameManager.Instance.PlaySoundPitched(audioSource, powerAbilitySound);
 
                 leapStartX = transform.position.x;
                 leapTargetX = Utilities.MousePosition.x;

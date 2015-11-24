@@ -114,6 +114,7 @@ public class WorldScript : MonoBehaviour
         HUDScript hudScript = hud.GetComponent<HUDScript>();
         player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar, 
             hudScript.PowerCDBar, hudScript.SpecialCDBar);
+        energyBar.color = player.GetComponent<CharacterScript>().EnergyColor;
         playerLocation = player.transform.position;
 
         // Sets up the sky state dictionary

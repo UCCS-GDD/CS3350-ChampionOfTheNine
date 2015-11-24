@@ -79,7 +79,7 @@ public class InputButton
     {
         get
         {
-            string text = "<color=\"blue\"><b>" + Name;
+            string text = "<color=blue><b>" + Name;
             if (!blank && !mouse)
             { text += " key"; }
             return text + "</b></color>";

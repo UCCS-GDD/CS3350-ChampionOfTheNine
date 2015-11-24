@@ -53,7 +53,8 @@ public static class Constants
     public const float EXP_ARROW_SPEED = 10;
     public const float EXP_ARROW_DAMAGE = 20;
     public const float EXP_ARROW_COST = 30;
-    public const float EXP_ARROW_CD = 1.2f;
+    public const float EXP_ARROW_CD = 1f;
+    public const string EXP_ARROW_SND = "exArrowHit";
 
     // Boost
     public const float RANGER_BOOST_CD = 30f;
@@ -92,7 +93,7 @@ public static class Constants
     public const float METEOR_SPEED = 20;
     public const float METEOR_DAMAGE = 25;
     public const float METEOR_COST = 70;
-    public const float METEOR_CD = MAGE_GCD;
+    public const float METEOR_CD = 0.5f;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "meteorShoot";
     public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
@@ -132,7 +133,7 @@ public static class Constants
     public const float WARRIOR_JUMP_SPEED = 10;
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
-    public const float WARRIOR_MAX_DAMAGE_BOOST = 1.5f;
+    public const float WARRIOR_MAX_DAMAGE_BOOST = 1f;
     public const float WARRIOR_RECHARGE_TIME = 3;
     public const float WARRIOR_ADR_LOSS = 4;
     public const float WARRIOR_ADR_RECHARGE_LOSS = WARRIOR_ENERGY / WARRIOR_RECHARGE_TIME;
@@ -258,7 +259,7 @@ public static class Constants
     #region Files
 
     public const string FILE_SUFFIX = ".cotn";
-    public const string SAVES_FILE = "savegames";
+    public const string SAVES_FILE = "betasaves";
     public const string SND_FOLDER = "Sounds/";
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
