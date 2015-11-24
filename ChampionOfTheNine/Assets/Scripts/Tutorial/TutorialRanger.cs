@@ -12,7 +12,6 @@ public class TutorialRanger : Tutorial
 	protected override void Start()
 	{
 		base.Start ();
-
         // Creates the player and HUD
         GameObject player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[CharacterType.Ranger], new Vector2(0, 1), transform.rotation);
         GameObject hud = Instantiate<GameObject>(rangerHUD);

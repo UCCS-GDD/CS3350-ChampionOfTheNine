@@ -9,7 +9,7 @@ public class MenuUIScript : MonoBehaviour
 {
     #region Fields
 
-    string surveyLink = "https://docs.google.com/forms/d/1wrUk6xd1fKsOH9Im9-PP4UGJX8QgeOoIgbVhMdkbHtc/viewform";
+    string surveyLink = "https://docs.google.com/forms/d/1hu5R5tAJW5bNKXLF-g_WYmtkdFDxG7vqoQs3SRqTBqY/viewform";
 
     #endregion
 
