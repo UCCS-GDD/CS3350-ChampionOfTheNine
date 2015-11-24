@@ -87,7 +87,7 @@ public static class Constants
     public const float MAGE_ENERGY = 500;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
-    public const float MAGE_REGEN = 8;
+    public const float MAGE_REGEN = 10;
     public const float MAGE_GCD = 0.4f;
 
     // Ice
@@ -99,7 +99,7 @@ public static class Constants
     // Meteor
     public const float METEOR_SPEED = 20;
     public const float METEOR_DAMAGE = 25;
-    public const float METEOR_COST = 50;
+    public const float METEOR_COST = 70;
     public const float METEOR_CD = MAGE_GCD;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "meteorShoot";
@@ -107,7 +107,7 @@ public static class Constants
 
     // Lightning
     public const float LIGHTNING_DAMAGE = 2f;
-    public const float LIGHTNING_COST_PER_SEC = 150;
+    public const float LIGHTNING_COST_PER_SEC = 130;
     public const float LIGHTNING_CD = MAGE_GCD;
     public const float LIGHTNING_CAST_TIME = 0.1f;
     public const string LIGHTNING_CAST_SND = "lightning";
@@ -140,7 +140,7 @@ public static class Constants
     public const float WARRIOR_JUMP_SPEED = 10;
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
-    public const float WARRIOR_MAX_DAMAGE_BOOST = 1;
+    public const float WARRIOR_MAX_DAMAGE_BOOST = 1.5f;
     public const float WARRIOR_RECHARGE_TIME = 3;
     public const float WARRIOR_ADR_LOSS = 4;
     public const float WARRIOR_ADR_RECHARGE_LOSS = WARRIOR_ENERGY / WARRIOR_RECHARGE_TIME;
@@ -161,7 +161,7 @@ public static class Constants
     public const string AXE_PICKUP_TAG = "AxePickup";
 
     // Leap attack
-    public const float LEAP_CD = 10;
+    public const float LEAP_CD = 8;
     public const float LEAP_SPEED = 25;
     public const float LEAP_TARGET_WINDOW = 0.3f;
     public const float LEAP_DAMAGE = 60;
@@ -171,6 +171,7 @@ public static class Constants
     // Boost
     public const string WARRIOR_BOOST_SND = "warriorBoost";
     public const float WARRIOR_BOOST_TIME = 6f;
+    public const float WARRIOR_BOOST_CD = 20f;
 
     #endregion
 
@@ -251,15 +252,6 @@ public static class Constants
     public const string MAIN_MENU_SCENE = "MainMenu";
     public const string CHAR_CREATE_SCENE = "CharacterCreation";
     public const string TUTORIAL_SCENE = "Tutorial";
-
-    #endregion
-
-    #region Input
-
-    public const string MAIN_AXIS = "MainFire";
-    public const string SECONDARY_AXIS = "SecondaryFire";
-    public const string POWER_AXIS = "PowerFire";
-    public const string SPECIAL_AXIS = "SpecialFire";
 
     #endregion
 }

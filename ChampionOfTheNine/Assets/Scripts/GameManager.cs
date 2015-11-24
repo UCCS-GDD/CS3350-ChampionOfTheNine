@@ -82,7 +82,7 @@ public class GameManager
         mouseButtonNames.Add(2, "Middle Mouse Button");
         keyNames = new Dictionary<string, string>();
         keyNames.Add(" ", "Spacebar");
-        keyNames.Add("\n", "Enter");
+        keyNames.Add("\r", "Enter");
         keyNames.Add("\b", "Backspace");
     }
 

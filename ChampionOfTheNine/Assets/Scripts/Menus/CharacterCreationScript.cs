@@ -62,6 +62,7 @@ public class CharacterCreationScript : MonoBehaviour
     {
         //GameManager.Instance.CurrentSaveName = "temp";
         //GameManager.Instance.NewSavegame(selectedType);
+        GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType = selectedType;
         GameManager.Instance.Save();
         Application.LoadLevel(Constants.MAP_SCENE);
     }

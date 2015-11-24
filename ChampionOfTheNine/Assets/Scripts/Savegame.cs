@@ -62,6 +62,7 @@ public class Savegame
     public CharacterType PlayerType
     {
         get { return playerType; }
+        set { playerType = value; }
     }
 
     /// <summary>
