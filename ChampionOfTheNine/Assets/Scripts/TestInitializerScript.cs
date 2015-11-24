@@ -7,7 +7,7 @@ using System.Collections;
 /// </summary>
 public class TestInitializerScript : MonoBehaviour
 {
-    [SerializeField]RectTransform hudCanvas;
+    [SerializeField]RectTransform hudParent;
     [SerializeField]GameObject hudPrefab;
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
@@ -16,7 +16,7 @@ public class TestInitializerScript : MonoBehaviour
 	private void Start()
 	{
         GameObject hud = Instantiate<GameObject>(hudPrefab);
-        hud.transform.SetParent(hudCanvas, false);
+        hud.transform.SetParent(hudParent, false);
         HUDScript hudScript = hud.GetComponent<HUDScript>();
         player.Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar, hudScript.PowerCDBar, hudScript.SpecialCDBar);
 	}

@@ -4,7 +4,7 @@ using System.Collections;
 
 public class TutorialRanger : Tutorial 
 {
-    [SerializeField]RectTransform hudCanvas;
+    [SerializeField]RectTransform hudParent;
     [SerializeField]GameObject rangerHUD;
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
@@ -16,7 +16,7 @@ public class TutorialRanger : Tutorial
         // Creates the player and HUD
         GameObject player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[CharacterType.Ranger], new Vector2(0, 1), transform.rotation);
         GameObject hud = Instantiate<GameObject>(rangerHUD);
-        hud.transform.SetParent(hudCanvas, false);
+        hud.transform.SetParent(hudParent, false);
         HUDScript hudScript = hud.GetComponent<HUDScript>();
         player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar,
             hudScript.PowerCDBar, hudScript.SpecialCDBar);

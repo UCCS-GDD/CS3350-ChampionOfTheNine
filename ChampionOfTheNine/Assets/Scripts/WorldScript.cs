@@ -15,7 +15,7 @@ public class WorldScript : MonoBehaviour
 
     static WorldScript instance;
 
-    [SerializeField]RectTransform hudCanvas;
+    [SerializeField]RectTransform hudParent;
 	[SerializeField]AudioClip daySound;
 	[SerializeField]AudioClip nightSound;
     [SerializeField]Image healthBar;
@@ -110,7 +110,7 @@ public class WorldScript : MonoBehaviour
                 hud = Instantiate<GameObject>(rangerHUD);
                 break;
         }
-        hud.transform.SetParent(hudCanvas, false);
+        hud.transform.SetParent(hudParent, false);
         HUDScript hudScript = hud.GetComponent<HUDScript>();
         player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar, 
             hudScript.PowerCDBar, hudScript.SpecialCDBar);
