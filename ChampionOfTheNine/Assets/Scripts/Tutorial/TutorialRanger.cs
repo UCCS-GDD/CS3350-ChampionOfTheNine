@@ -57,7 +57,7 @@ public class TutorialRanger : Tutorial
 			"<b>Objectives:</b> " +
 			"\nMovement" +
 			"\nRanger Abilities" +
-			"\nUI elements", 
+			"\nInterface", 
 			"<b>Movement</b> " +
 			"\n[A] Move left" +
 			"\n[D] Move right" +
@@ -70,9 +70,10 @@ public class TutorialRanger : Tutorial
 	{
 		stage++;
 		TutorialDummy.PlayerMoved -= StageTwo;
-		ChangeText (new string[] {"Nice work. You now know the basics of movement so let's amp it up a bit.",
+        ChangeText(new string[] {"Nice work. Let's move on to your abilities.",
 			"<b>Basic Ability</b>" +
-			"\nThe left mouse button will make your avatar fire a basic arrow. Use it to attack the dummy."});
+			"\nThe " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Main].NameWithType + 
+            " will make you fire a basic arrow. Use it to attack the dummy."});
 		TutorialDummy.BasicAttack += StageThree;
 	}
 
@@ -80,10 +81,11 @@ public class TutorialRanger : Tutorial
 	{
 		stage++;
 		TutorialDummy.BasicAttack -= StageThree;
-		ChangeText (new string[] {"You shot the dummy!" +
-			"\nGood work, now let's try something more fun.",
+		ChangeText (new string[] {"Good work." +
+			"\nAttacks like arrows can also be used to hit attacks from enemies in the air and block them.",
 			"<b>Secondary Ability</b>" +
-			"\nThe right mouse button will make your avatar fire an explosive arrow. Blow up the dummy."});
+			"\nThe " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Secondary].NameWithType + 
+            " will make you fire an explosive arrow. Blow up the dummy."});
 		TutorialDummy.SecondaryAttack += StageFour;
 	}
 
@@ -92,9 +94,10 @@ public class TutorialRanger : Tutorial
 		stage++;
 		TutorialDummy.SecondaryAttack -= StageFour;
 		ChangeText (new string[] {"Woah! That was an epic explosion." +
-			"\nLet's get more advanced here shall we?",
+			"\nLet's get more advanced here, shall we?",
 			"<b>Special Ability</b>" +
-			"\nHolding down [E] will fire a barrage of penetrating arrows. Test it on these dummies"});
+			"\nHolding down the " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Power].NameWithType + 
+            " will fire a barrage of penetrating arrows. Test it on these dummies."});
 		TutorialDummy.SpecialAttack += StageFive;
 	}
 
@@ -103,9 +106,10 @@ public class TutorialRanger : Tutorial
 		stage++;
 		TutorialDummy.SpecialAttack -= StageFive;
 		ChangeText (new string[] {"Devastating! If you keep this up, you will become champion in no time. " +
-			"Every champion needs their boost ability though.",
+			"Every champion needs their boost ability, though.",
 			"<b>Boost Ability</b>" +
-			"\nIf you press [R] your champion gets increased mobility, power, and efficiency for a short period. Give it a shot."});
+			"\nPress the " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Special].NameWithType + 
+            " to gain increased mobility, power, and efficiency for a short period. Give it a shot."});
 		TutorialDummy.Booster += StageSix;
 	}
 
@@ -116,11 +120,11 @@ public class TutorialRanger : Tutorial
 		ChangeText (new string[] {
 			"Look at how fast and strong you are right now! Use this at the right time to throw the advantage your way.",
 			"Don't think you are going to spend all of your time attacking dummies. Your enemies will be actively trying to end your life.",
-			"Look at the bottom left corner of your screen. Here you can see the UI elements that you will need to be successful in your quests.",
-			"The red bar is your health. If this reaches zero you lose! Avoid enemy attacks to stay healthy and be triumphant.",
-			"The yellow bar is your energy bar. Each of your abilities use up energy, so you need to learn how to balance them and be as effective as possible.",
-			"The ability bars display the cooldown of each of your abilities. If you use your stronger abilities at un-opportune moments you will find yourself in a pickle.",
-			"If you press [ESC] it will open the pause menu. Now that you have graduated from the tutorial, use the pause menu to exit the tutorial."
+			"In the bottom left corner you can see the current status of your abilities and health.",
+			"The red bar is your health. If this reaches zero you lose, so be careful.",
+			"The yellow bar is your energy bar. Each of your abilities use up some energy, the more powerful abilities costing more.",
+			"The ability bars display the cooldowns of each of your abilities; watch them to see when your abilities are available.",
+			"Press the Escape key to open the pause menu. Use it to exit the tutorial."
 		});
 	}
 }

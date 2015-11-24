@@ -50,10 +50,10 @@ public class TutorialDummy : DamagableObjectScript
 			dummyTwo.SetActive (true);
 		}
 
-		if (GameObject.Find ("TutorialControl").GetComponent<TutorialRanger> ().GetStage () == 4) {
-			if (Input.GetKeyDown (KeyCode.R)) {
-				Booster();
-			}
+		if (GameObject.Find ("TutorialControl").GetComponent<TutorialRanger> ().GetStage () == 4) 
+        {
+            if (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Special].Pressed)
+            { Booster(); }
 		}
 	}
 

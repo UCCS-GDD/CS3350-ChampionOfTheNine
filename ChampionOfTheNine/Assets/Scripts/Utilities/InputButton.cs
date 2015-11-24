@@ -73,6 +73,20 @@ public class InputButton
     }
 
     /// <summary>
+    /// Gets the name of the button with its type and formatting
+    /// </summary>
+    public string NameWithType
+    {
+        get
+        {
+            string text = "<color=\"blue\"><b>" + Name;
+            if (!blank && !mouse)
+            { text += " key"; }
+            return text + "</b></color>";
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the input button as a mouse button
     /// </summary>
     public int MouseButton
