@@ -17,6 +17,7 @@ public abstract class CharacterScript : DamagableObjectScript
     [SerializeField]Transform groundCheck;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
+    [SerializeField]GameObject deadPrefab;
 
     protected Animator animator;
     protected Color energyColor;
@@ -302,7 +303,10 @@ public abstract class CharacterScript : DamagableObjectScript
     {
         AudioSource.PlayClipAtPoint(deathSound, transform.position);
         try
-        { GetComponent<CharacterControllerScript>().Death(); }
+        { 
+            Instantiate<GameObject>(deadPrefab).GetComponent<DeadScript>().Initialize(GetComponent<SpriteRenderer>().color, transform.localScale, transform.position);
+            GetComponent<CharacterControllerScript>().Death();
+        }
         catch (NullReferenceException) { }
     }
 

@@ -8,27 +8,18 @@ using System.Text;
 /// </summary>
 public static class Constants
 {
-    public const string FILE_SUFFIX = ".cotn";
-    public const string SAVES_FILE = "savegames";
     public const string ENEMY_TAG = "Enemy";
     public const string PLAYER_TAG = "Player";
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
-    public const float GROUND_CHECK_RADIUS = 0.05f;
-    public const float AI_SCAN_DELAY = 5;
     public const float PITCH_CHANGE = 0.2f;
     public const float DARKNESS_TIMER = 3f;
-    public const string SND_FOLDER = "Sounds/";
-    public const string PREFAB_FOLDER = "Prefabs/";
-    public const string PART_FOLDER = "Particles/";
-    public const float CHAR_GRAV_SCALE = 4;
-    public const float AI_MIN_SPAWN_TIME = 2;
-    public const float AI_MAX_SPAWN_TIME = 6;
     public const float PROJ_MAX_DIST = 20;
     public const string ATTACK_TAG = "Attack";
 
-    // Animator
-    public const string GROUNDED_FLAG = "Grounded";
-    public const string XVELOCTIY_FLAG = "XVelocity";
+    // AI
+    public const float AI_SCAN_DELAY = 4;
+    public const float AI_MIN_SPAWN_TIME = 2;
+    public const float AI_MAX_SPAWN_TIME = 6;
 
     #region Ranger
 
@@ -195,13 +186,19 @@ public static class Constants
 
     #endregion
 
-    #region Character sounds
+    #region Character
 
     public const string CHAR_HIT_SND = "hurt";
     public const string CHAR_DEATH_SND = "death";
     public const string CHAR_JUMP_SND = "jump";
     public const string CHAR_LAND_SND = "land";
     public const string CHAR_WALK_SND = "Walking";
+    public const string GROUNDED_FLAG = "Grounded";
+    public const string XVELOCTIY_FLAG = "XVelocity";
+    public const float CHAR_GRAV_SCALE = 4;
+    public const float GROUND_CHECK_RADIUS = 0.05f;
+    public const float DEATH_FALL_TIME = 0.25f;
+    public const float DEATH_FADE_TIME = 1.5f;
 
     #endregion
 
@@ -255,6 +252,16 @@ public static class Constants
     public const string MAIN_MENU_SCENE = "MainMenu";
     public const string CHAR_CREATE_SCENE = "CharacterCreation";
     public const string TUTORIAL_SCENE = "Tutorial";
+
+    #endregion
+
+    #region Files
+
+    public const string FILE_SUFFIX = ".cotn";
+    public const string SAVES_FILE = "savegames";
+    public const string SND_FOLDER = "Sounds/";
+    public const string PREFAB_FOLDER = "Prefabs/";
+    public const string PART_FOLDER = "Particles/";
 
     #endregion
 }
