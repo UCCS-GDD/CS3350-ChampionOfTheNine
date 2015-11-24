@@ -18,6 +18,7 @@ public abstract class CharacterScript : DamagableObjectScript
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]GameObject arm;
 
+    protected Animator animator;
     protected Color energyColor;
     protected Rigidbody2D rbody;
     protected Timer gCDTimer;
@@ -35,7 +36,6 @@ public abstract class CharacterScript : DamagableObjectScript
     
     AudioClip jumpSound;
     AudioClip landSound;
-    Animator animator;
     Vector3 baseScale;
     Vector3 flippedScale;
     EnergyChangedHandler energyChanged = Blank;

@@ -166,9 +166,13 @@ public class WarriorScript : CharacterScript
             if (Mathf.Abs(transform.position.x - leapTargetX) < Constants.LEAP_TARGET_WINDOW && rbody.velocity.x != 0)
             {
                 rbody.velocity = Vector2.down * 10;
+                Arm.SetActive(false);
+                animator.SetBool(Constants.LEAP_FLAG, true);
             }
             else if (Grounded && !gCDTimer.IsRunning)
             {
+                Arm.SetActive(true);
+                animator.SetBool(Constants.LEAP_FLAG, false);
                 Leaping = false;
                 ((GameObject)Instantiate(explosion, transform.position, transform.rotation)).GetComponent<ExplosionScript>().Initialize(Constants.LEAP_DAMAGE * 
                     DamageMult, targetTag, LeapDamageHandler);

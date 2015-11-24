@@ -167,6 +167,7 @@ public static class Constants
     public const float LEAP_DAMAGE = 60;
     public const float LEAP_ADR = 20;
     public const string LEAP_SND = "leap";
+    public const string LEAP_FLAG = "Slam";
 
     // Boost
     public const string WARRIOR_BOOST_SND = "warriorBoost";
