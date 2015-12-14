@@ -15,6 +15,7 @@ public static class Constants
     public const float DARKNESS_TIMER = 3f;
     public const float PROJ_MAX_DIST = 20;
     public const string ATTACK_TAG = "Attack";
+    public static Color ENEMY_COLOR = new Color(1, 0.51f, 0.51f);
 
     // AI
     public const float AI_SCAN_DELAY = 4;
@@ -24,6 +25,7 @@ public static class Constants
     #region Ranger
 
     public const string RANGER_PLAYER_PREFAB = "RangerPlayer";
+    public const string RANGER_AI_PREFAB = "RangerEnemy";
     public const float RANGER_AI_RANGE = 9;
     public const float RANGER_AI_ANGLE_RANGE = 15;
     public const int RANGER_AI_SHOT_THRESHOLD = 5;
@@ -73,6 +75,7 @@ public static class Constants
     #region Mage
 
     public const string MAGE_PLAYER_PREFAB = "MagePlayer";
+    public const string MAGE_AI_PREFAB = "MageEnemy";
     public const float MAGE_AI_RANGE = 9;
     public const float MAGE_AI_ANGLE_RANGE = 10;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
@@ -124,6 +127,7 @@ public static class Constants
     #region Warrior
 
     public const string WARRIOR_PLAYER_PREFAB = "WarriorPlayer";
+    public const string WARRIOR_AI_PREFAB = "WarriorEnemy";
     public const float WARRIOR_AI_RANGE = 1.2f;
     public const float WARRIOR_AI_ANGLE_RANGE = 5;
     public const int WARRIOR_AI_SHOT_THRESHOLD = 5;

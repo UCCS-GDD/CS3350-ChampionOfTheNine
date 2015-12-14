@@ -12,10 +12,10 @@ public class Savegame
 {
     #region Fields
 
-    Dictionary<int, KingdomName> kingdomLocations;
-    Dictionary<KingdomName, KingdomStatus> kingdomStatuses;
+    List<KingdomName> kingdoms;
     Dictionary<InputType, InputButton> inputs;
     CharacterType playerType;
+    int currentKingdom;
 
     #endregion
 
@@ -26,34 +26,42 @@ public class Savegame
     /// </summary>
     public Savegame(CharacterType playerType)
     {
-        kingdomLocations = new Dictionary<int, KingdomName>();
-        kingdomStatuses = new Dictionary<KingdomName, KingdomStatus>();
+        // Make kingdom locations
+        kingdoms = new List<KingdomName>();
+        HashSet<KingdomName> kingdomsAdded = new HashSet<KingdomName>();
+        for (int i = 0; i < 9; i++)
+        {
+            KingdomName nextName;
+            do { nextName = (KingdomName)UnityEngine.Random.Range(0, 9); }
+            while (kingdomsAdded.Contains(nextName));
+            kingdoms.Add(nextName);
+            kingdomsAdded = new HashSet<KingdomName>();
+        }
         inputs = new Dictionary<InputType, InputButton>();
         inputs.Add(InputType.Main, new InputButton(0));
         inputs.Add(InputType.Secondary, new InputButton(1));
         inputs.Add(InputType.Power, new InputButton("e"));
         inputs.Add(InputType.Special, new InputButton("r"));
         this.playerType = playerType;
+        currentKingdom = 0;
     }
 
     #endregion
 
     #region Properties
 
-    /// <summary>
-    /// Gets the saved kingdom statuses
-    /// </summary>
-    public Dictionary<KingdomName, KingdomStatus> KingdomStatuses
+    public int CurrentKingdom
     {
-        get { return kingdomStatuses; }
+        get { return currentKingdom; }
+        set { currentKingdom = value; }
     }
 
     /// <summary>
-    /// Gets the saved kingdom locations
+    /// Gets the saved kingdoms
     /// </summary>
-    public Dictionary<int, KingdomName> KingdomLocations
+    public List<KingdomName> Kingdoms
     {
-        get { return kingdomLocations; }
+        get { return kingdoms; }
     }
 
     /// <summary>

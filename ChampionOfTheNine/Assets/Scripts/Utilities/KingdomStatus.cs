@@ -11,7 +11,6 @@ public class KingdomStatus
 {
     #region Fields
 
-    
 
     #endregion
 
@@ -20,16 +19,17 @@ public class KingdomStatus
     /// <summary>
     /// Constructor
     /// </summary>
-    public KingdomStatus()
+    public KingdomStatus(KingdomName name)
     {
-        
+        Name = name;
     }
 
     #endregion
 
     #region Properties
 
-    
+    public KingdomName Name
+    { get; set; }
 
     #endregion
 

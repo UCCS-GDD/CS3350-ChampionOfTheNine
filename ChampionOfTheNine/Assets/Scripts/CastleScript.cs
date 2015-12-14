@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,17 +11,28 @@ public class CastleScript : DamagableObjectScript
     #region Fields
 
     [SerializeField]Sprite destroyedSprite;
+    [SerializeField]GameObject leftWall;
+    [SerializeField]GameObject rightWall;
     SpriteRenderer spriteRenderer;
 
     #endregion
 
-    #region Protected Methods
+    #region Public Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Initializes the castle
     /// </summary>
-    protected void Start()
+    /// <param name="healthBar">the castle's health bar</param>
+    /// <param name="tag">the castle's tag</param>
+    public virtual void Initialize(Image healthBar, string tag, Vector2 location)
     {
+        bool isEnemy = tag == Constants.ENEMY_TAG;
+        this.healthBar = healthBar;
+        gameObject.tag = tag;
+        transform.position = location;
+        GetComponent<EnemySpawner>().enabled = isEnemy;
+        rightWall.SetActive(isEnemy);
+        leftWall.SetActive(!isEnemy);
         maxHealth = Constants.CASTLE_HEALTH;
         hitSound = GameManager.Instance.GameSounds[Constants.CASTLE_HIT_SND];
         deathSound = GameManager.Instance.GameSounds[Constants.CASTLE_DEATH_SND];
@@ -29,6 +41,8 @@ public class CastleScript : DamagableObjectScript
     }
 
     #endregion
+
+    #region Protected Methods
 
     /// <summary>
     /// Handles the castle dying
@@ -43,4 +57,6 @@ public class CastleScript : DamagableObjectScript
         { gameObject.GetComponent<EnemySpawner>().enabled = false; }
         catch { }
     }
+
+    #endregion
 }

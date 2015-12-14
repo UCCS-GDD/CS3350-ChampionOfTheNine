@@ -18,6 +18,7 @@ public class GameManager
     Dictionary<string, GameObject> particles;
     Dictionary<int, string> mouseButtonNames;
     Dictionary<string, string> keyNames;
+    Dictionary<CharacterType, GameObject> enemyPrefabs;
     string lastSound = "";
     Timer lastSoundTimer;
     Queue<ParticleSystem> activeParticles;
@@ -59,6 +60,12 @@ public class GameManager
         playerPrefabs.Add(CharacterType.Ranger, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.RANGER_PLAYER_PREFAB));
         playerPrefabs.Add(CharacterType.Mage, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.MAGE_PLAYER_PREFAB));
         playerPrefabs.Add(CharacterType.Warrior, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.WARRIOR_PLAYER_PREFAB));
+
+        // Loads enemy prefabs
+        enemyPrefabs = new Dictionary<CharacterType, GameObject>();
+        enemyPrefabs.Add(CharacterType.Ranger, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.RANGER_AI_PREFAB));
+        enemyPrefabs.Add(CharacterType.Mage, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.MAGE_AI_PREFAB));
+        enemyPrefabs.Add(CharacterType.Warrior, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.WARRIOR_AI_PREFAB));
 
         // Loads the game sounds
         lastSoundTimer = new Timer(0);
@@ -103,6 +110,12 @@ public class GameManager
             return instance;
         }
     }
+
+    public Dictionary<CharacterType, GameObject> EnemyPrefabs
+    { get { return enemyPrefabs; } }
+
+    public KingdomName CurrentLoadedName
+    { get; set; }
 
     /// <summary>
     /// Gets the saves dictionary
@@ -177,6 +190,20 @@ public class GameManager
 
     #region Public Methods
 
+
+    public int GetPrevKingdomNum()
+    {
+        int i = GetKingdomNum();
+        if (i == 0)
+        { return 8; }
+        return i - 1;
+    }
+
+    public int GetKingdomNum()
+    {
+        return saves[CurrentSaveName].Kingdoms.IndexOf(CurrentLoadedName);
+    }
+
     /// <summary>
     /// Plays a sound with a randomly modified pitch
     /// </summary>
@@ -234,6 +261,12 @@ public class GameManager
     public void Save()
     {
         Serializer.Serialize(Constants.SAVES_FILE, saves);
+    }
+
+    public void LoadGameLevel(KingdomName name)
+    {
+        CurrentLoadedName = name;
+        Application.LoadLevel(Constants.LEVEL_SCENE);
     }
 
     #endregion

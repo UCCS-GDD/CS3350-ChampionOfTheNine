@@ -10,13 +10,13 @@ public class KingdomButtonScript : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]KingdomName kingdom;
 
     #endregion
 
-    #region Public Methods
+    #region Properties
 
-
+    public KingdomName Kingdom
+    { get; set; }
 
     #endregion
 
@@ -35,7 +35,7 @@ public class KingdomButtonScript : MonoBehaviour
     {
         // Replace interactable part of this code later
         Button buttonScript = GetComponent<Button>();
-        buttonScript.interactable = kingdom == KingdomName.One;
+        //buttonScript.interactable = Kingdom == KingdomName.One;
         buttonScript.onClick.AddListener(Pressed);
     }
 
@@ -52,8 +52,7 @@ public class KingdomButtonScript : MonoBehaviour
     /// </summary>
     private void Pressed()
     {
-        // Probably temporary
-        Application.LoadLevel(Constants.LEVEL_SCENE);
+        GameManager.Instance.LoadGameLevel(Kingdom);
     }
 
     #endregion

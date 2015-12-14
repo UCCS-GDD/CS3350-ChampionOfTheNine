@@ -21,17 +21,19 @@ public class WorldScript : MonoBehaviour
     [SerializeField]Image healthBar;
     [SerializeField]Image energyBar;
     [SerializeField]Image skyDarkness;
+    [SerializeField]Image playerCastleHealth;
+    [SerializeField]Image enemyCastleHealth;
     [SerializeField]Image defeatDarkness;
 	[SerializeField]SpriteRenderer sky;
     [SerializeField]GameObject victoryText;
     [SerializeField]GameObject loseText;
-    [SerializeField]GameObject playerCastle;
     [SerializeField]GameObject starrySky;
     [SerializeField]GameObject rangerHUD;
     [SerializeField]GameObject mageHUD;
     [SerializeField]GameObject warriorHUD;
-    [SerializeField]GameObject enemyCastlePrefab;
+    [SerializeField]Vector2 playerCastleLocation;
     [SerializeField]GameObject[] cloudPrefabs;
+    [SerializeField]GameObject[] castlePrefabs;
 
     Timer defeatDarknessTimer;
     Timer skyTimer;
@@ -91,32 +93,6 @@ public class WorldScript : MonoBehaviour
 
         instance = this;
 
-        // Creates the player and HUD
-        player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType], 
-            playerCastle.transform.position, transform.rotation);
-        GameObject hud;
-        switch (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType)
-	    {
-		    case CharacterType.Ranger:
-                hud = Instantiate<GameObject>(rangerHUD);
-                break;
-            case CharacterType.Mage:
-                hud = Instantiate<GameObject>(mageHUD);
-                break;
-            case CharacterType.Warrior:
-                hud = Instantiate<GameObject>(warriorHUD);
-                break;
-            default:
-                hud = Instantiate<GameObject>(rangerHUD);
-                break;
-        }
-        hud.transform.SetParent(hudParent, false);
-        HUDScript hudScript = hud.GetComponent<HUDScript>();
-        player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar, 
-            hudScript.PowerCDBar, hudScript.SpecialCDBar);
-        energyBar.color = player.GetComponent<CharacterScript>().EnergyColor;
-        playerLocation = player.transform.position;
-
         // Sets up the sky state dictionary
         currSkyState = SkyStateType.Day;
         skyStates = new Dictionary<SkyStateType, SkyState>();
@@ -161,13 +137,42 @@ public class WorldScript : MonoBehaviour
         GenerateTerrain();
         GenerateParallaxObjects();
 
-        // Spawns enemy castle
-        int castlePos = levels.Length - (Constants.PLATFORM_LENGTH - 3);
-        Instantiate(enemyCastlePrefab, new Vector2(castlePos, levels[castlePos] + 1), transform.rotation);
+        // Spawns castles
+        int enemyCastlePos = levels.Length - (Constants.PLATFORM_LENGTH - 3);
+        Instantiate(castlePrefabs[GameManager.Instance.GetKingdomNum()]).GetComponent<CastleScript>().Initialize(playerCastleHealth,
+            Constants.ENEMY_TAG, new Vector2(enemyCastlePos, levels[enemyCastlePos] + 1));
+        Instantiate(castlePrefabs[GameManager.Instance.GetPrevKingdomNum()]).GetComponent<CastleScript>().Initialize(playerCastleHealth, 
+            Constants.PLAYER_TAG, playerCastleLocation);
 
         // Sets up the defeat darkness
         defeatDarknessTimer = new Timer(Constants.DARKNESS_TIMER);
         defeatDarknessTimer.Register(DefeatDarknessTimerFinished);
+
+        // Creates the player and HUD
+        player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType],
+            playerCastleLocation, transform.rotation);
+        GameObject hud;
+        switch (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType)
+        {
+            case CharacterType.Ranger:
+                hud = Instantiate<GameObject>(rangerHUD);
+                break;
+            case CharacterType.Mage:
+                hud = Instantiate<GameObject>(mageHUD);
+                break;
+            case CharacterType.Warrior:
+                hud = Instantiate<GameObject>(warriorHUD);
+                break;
+            default:
+                hud = Instantiate<GameObject>(rangerHUD);
+                break;
+        }
+        hud.transform.SetParent(hudParent, false);
+        HUDScript hudScript = hud.GetComponent<HUDScript>();
+        player.GetComponent<PlayerScript>().Initialize(healthBar, energyBar, hudScript.GcdBars, hudScript.TimerBars, hudScript.SecondaryCDBar,
+            hudScript.PowerCDBar, hudScript.SpecialCDBar);
+        energyBar.color = player.GetComponent<CharacterScript>().EnergyColor;
+        playerLocation = player.transform.position;
     }
 
     /// <summary>

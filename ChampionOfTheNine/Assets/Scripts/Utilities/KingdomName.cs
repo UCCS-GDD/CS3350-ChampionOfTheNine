@@ -9,6 +9,13 @@ using System.Text;
 /// </summary>
 public enum KingdomName
 {
-    One,
-    NotOne
+    MedOne,
+    MedTwo,
+    Asian,
+    Viking,
+    Desert,
+    Six,
+    Seven,
+    Eight,
+    Nine
 }
