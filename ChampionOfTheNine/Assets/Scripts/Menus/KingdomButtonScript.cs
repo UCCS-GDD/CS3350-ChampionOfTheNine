@@ -10,49 +10,33 @@ public class KingdomButtonScript : MonoBehaviour
 {
     #region Fields
 
+    KingdomName kingdom;
 
     #endregion
 
-    #region Properties
+    #region Public Methods
 
-    public KingdomName Kingdom
-    { get; set; }
-
-    #endregion
-
-    #region Protected Methods
-
-
+    /// <summary>
+    /// Initializes the button
+    /// </summary>
+    public void Initialize(int kingdomNum)
+    {
+        kingdom = GameManager.Instance.CurrentSave.Kingdoms[kingdomNum];
+        Button buttonScript = GetComponent<Button>();
+        buttonScript.interactable = kingdomNum <= GameManager.Instance.CurrentSave.CurrentKingdom;
+        buttonScript.onClick.AddListener(Pressed);
+    }
 
     #endregion
 
     #region Private Methods
 
     /// <summary>
-    /// Start is called once on object creation
-    /// </summary>
-    private void Start()
-    {
-        // Replace interactable part of this code later
-        Button buttonScript = GetComponent<Button>();
-        //buttonScript.interactable = Kingdom == KingdomName.One;
-        buttonScript.onClick.AddListener(Pressed);
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update()
-    {
-
-    }
-
-    /// <summary>
     /// Handles the kingdom button being pressed
     /// </summary>
     private void Pressed()
     {
-        GameManager.Instance.LoadGameLevel(Kingdom);
+        GameManager.Instance.LoadGameLevel(kingdom);
     }
 
     #endregion

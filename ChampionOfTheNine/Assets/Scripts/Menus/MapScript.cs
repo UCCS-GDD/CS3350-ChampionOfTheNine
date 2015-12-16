@@ -40,9 +40,7 @@ public class MapScript : MenuUIScript
     private void Start()
     {
         for (int i = 0; i < kingdomButtons.Length; i++)
-        {
-            kingdomButtons[i].Kingdom = GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Kingdoms[i];
-        }
+        { kingdomButtons[i].Initialize(i); }
     }
 
     /// <summary>

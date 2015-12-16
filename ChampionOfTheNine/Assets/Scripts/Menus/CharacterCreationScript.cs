@@ -62,7 +62,7 @@ public class CharacterCreationScript : MenuUIScript
     {
         //GameManager.Instance.CurrentSaveName = "temp";
         //GameManager.Instance.NewSavegame(selectedType);
-        GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType = selectedType;
+        GameManager.Instance.CurrentSave.PlayerType = selectedType;
         GameManager.Instance.Save();
         Application.LoadLevel(Constants.MAP_SCENE);
     }
@@ -113,12 +113,12 @@ public class CharacterCreationScript : MenuUIScript
             if (Input.inputString != "")
             { 
                 string key = Input.inputString[0].ToString();
-                foreach (KeyValuePair<InputType, InputButton> input in GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs)
+                foreach (KeyValuePair<InputType, InputButton> input in GameManager.Instance.CurrentSave.Inputs)
                 {
                     if (input.Value.Key == key)
                     { input.Value.SetBlank(); }
                 }
-                GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[currentRemap].Key = key;
+                GameManager.Instance.CurrentSave.Inputs[currentRemap].Key = key;
                 UpdateMapping();
             }
             else
@@ -128,12 +128,12 @@ public class CharacterCreationScript : MenuUIScript
                 {
                     if (Input.GetMouseButtonDown(i))
                     {
-                        foreach (KeyValuePair<InputType, InputButton> input in GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs)
+                        foreach (KeyValuePair<InputType, InputButton> input in GameManager.Instance.CurrentSave.Inputs)
                         {
                             if (input.Value.MouseButton == i)
                             { input.Value.SetBlank(); }
                         }
-                        GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[currentRemap].MouseButton = i;
+                        GameManager.Instance.CurrentSave.Inputs[currentRemap].MouseButton = i;
                         UpdateMapping();
                         break;
                     }
@@ -150,7 +150,7 @@ public class CharacterCreationScript : MenuUIScript
         foreach (KeyValuePair<InputType, Text[]> texts in abilityTexts)
         {
             foreach (Text txt in texts.Value)
-            { txt.text = GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[texts.Key].Name; }
+            { txt.text = GameManager.Instance.CurrentSave.Inputs[texts.Key].Name; }
         }
         remapPanel.SetActive(false);
     }

@@ -21,7 +21,7 @@ public class MenuUIScript : MonoBehaviour
     public void PlayButtonPressed()
     {
         // Go to tutorial if no save, otherwise go to map
-        if (GameManager.Instance.Saves.Count == 0)
+        if (!GameManager.Instance.HasSaves)
         { Application.LoadLevel(Constants.TUTORIAL_SCENE); }
         else
         { 

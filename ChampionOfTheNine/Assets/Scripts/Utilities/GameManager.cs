@@ -14,11 +14,12 @@ public class GameManager
     static GameManager instance;
     Dictionary<string, Savegame> saves;
     Dictionary<CharacterType, GameObject> playerPrefabs;
+    Dictionary<CharacterType, GameObject> enemyPrefabs;
+    Dictionary<KingdomName, GameObject> castlePrefabs;
     Dictionary<string, AudioClip> gameSounds;
     Dictionary<string, GameObject> particles;
     Dictionary<int, string> mouseButtonNames;
     Dictionary<string, string> keyNames;
-    Dictionary<CharacterType, GameObject> enemyPrefabs;
     string lastSound = "";
     Timer lastSoundTimer;
     Queue<ParticleSystem> activeParticles;
@@ -67,6 +68,19 @@ public class GameManager
         enemyPrefabs.Add(CharacterType.Mage, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.MAGE_AI_PREFAB));
         enemyPrefabs.Add(CharacterType.Warrior, Resources.Load<GameObject>(Constants.PREFAB_FOLDER + Constants.WARRIOR_AI_PREFAB));
 
+        // Loads castle prefabs
+        string folder = Constants.PREFAB_FOLDER + Constants.CASTLE_FOLDER;
+        castlePrefabs = new Dictionary<KingdomName, GameObject>();
+        castlePrefabs.Add(KingdomName.Asian, Resources.Load<GameObject>(folder + Constants.ASIAN_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Bandit, Resources.Load<GameObject>(folder + Constants.BANDIT_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Crystal, Resources.Load<GameObject>(folder + Constants.CRYSTAL_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Dark, Resources.Load<GameObject>(folder + Constants.DARK_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Desert, Resources.Load<GameObject>(folder + Constants.DESERT_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.MedOne, Resources.Load<GameObject>(folder + Constants.MED_ONE_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.MedTwo, Resources.Load<GameObject>(folder + Constants.MED_TWO_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Viking, Resources.Load<GameObject>(folder + Constants.VIKING_CASTLE_PREFAB));
+        castlePrefabs.Add(KingdomName.Village, Resources.Load<GameObject>(folder + Constants.VILLAGE_CASTLE_PREFAB));
+
         // Loads the game sounds
         lastSoundTimer = new Timer(0);
         lastSoundTimer.Register(LastSoundTimerFinished);
@@ -114,14 +128,20 @@ public class GameManager
     public Dictionary<CharacterType, GameObject> EnemyPrefabs
     { get { return enemyPrefabs; } }
 
-    public KingdomName CurrentLoadedName
+    public Dictionary<KingdomName, GameObject> CastlePrefabs
+    { get { return castlePrefabs; } }
+
+    public KingdomName CurrentLoadedKingdom
     { get; set; }
 
+    public bool HasSaves
+    { get { return saves.Count != 0; } }
+
     /// <summary>
-    /// Gets the saves dictionary
+    /// Gets the currently loaded save
     /// </summary>
-    public Dictionary<string, Savegame> Saves
-    { get { return saves; } }
+    public Savegame CurrentSave
+    { get { return saves[CurrentSaveName]; } }
 
     /// <summary>
     /// Gets the special mouse button names dictionary
@@ -190,18 +210,12 @@ public class GameManager
 
     #region Public Methods
 
-
-    public int GetPrevKingdomNum()
+    public KingdomName GetPrevKingdom()
     {
-        int i = GetKingdomNum();
+        int i = saves[CurrentSaveName].Kingdoms.IndexOf(CurrentLoadedKingdom);
         if (i == 0)
-        { return 8; }
-        return i - 1;
-    }
-
-    public int GetKingdomNum()
-    {
-        return saves[CurrentSaveName].Kingdoms.IndexOf(CurrentLoadedName);
+        { return saves[CurrentSaveName].Kingdoms[Constants.NUM_KINGDOMS - 1]; }
+        return saves[CurrentSaveName].Kingdoms[i - 1];
     }
 
     /// <summary>
@@ -265,7 +279,7 @@ public class GameManager
 
     public void LoadGameLevel(KingdomName name)
     {
-        CurrentLoadedName = name;
+        CurrentLoadedKingdom = name;
         Application.LoadLevel(Constants.LEVEL_SCENE);
     }
 

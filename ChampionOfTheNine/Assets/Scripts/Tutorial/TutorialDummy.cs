@@ -52,7 +52,7 @@ public class TutorialDummy : DamagableObjectScript
 
 		if (GameObject.Find ("TutorialControl").GetComponent<TutorialRanger> ().GetStage () == 4) 
         {
-            if (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Special].Pressed)
+            if (GameManager.Instance.CurrentSave.Inputs[InputType.Special].Pressed)
             { Booster(); }
 		}
 	}

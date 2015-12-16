@@ -33,7 +33,6 @@ public class WorldScript : MonoBehaviour
     [SerializeField]GameObject warriorHUD;
     [SerializeField]Vector2 playerCastleLocation;
     [SerializeField]GameObject[] cloudPrefabs;
-    [SerializeField]GameObject[] castlePrefabs;
 
     Timer defeatDarknessTimer;
     Timer skyTimer;
@@ -71,7 +70,11 @@ public class WorldScript : MonoBehaviour
         if (!victoryText.activeSelf && !loseText.activeSelf)
         {
             if (tag == Constants.ENEMY_TAG)
-            { victoryText.SetActive(true); }
+            { 
+                victoryText.SetActive(true);
+                if (GameManager.Instance.CurrentLoadedKingdom == GameManager.Instance.CurrentSave.Kingdoms[GameManager.Instance.CurrentSave.CurrentKingdom])
+                { GameManager.Instance.CurrentSave.CurrentKingdom++; }
+            }
             else
             { loseText.SetActive(true); }
             defeatDarknessTimer.Start();
@@ -139,9 +142,9 @@ public class WorldScript : MonoBehaviour
 
         // Spawns castles
         int enemyCastlePos = levels.Length - (Constants.PLATFORM_LENGTH - 3);
-        Instantiate(castlePrefabs[GameManager.Instance.GetKingdomNum()]).GetComponent<CastleScript>().Initialize(playerCastleHealth,
+        Instantiate(GameManager.Instance.CastlePrefabs[GameManager.Instance.CurrentLoadedKingdom]).GetComponent<CastleScript>().Initialize(enemyCastleHealth,
             Constants.ENEMY_TAG, new Vector2(enemyCastlePos, levels[enemyCastlePos] + 1));
-        Instantiate(castlePrefabs[GameManager.Instance.GetPrevKingdomNum()]).GetComponent<CastleScript>().Initialize(playerCastleHealth, 
+        Instantiate(GameManager.Instance.CastlePrefabs[GameManager.Instance.GetPrevKingdom()]).GetComponent<CastleScript>().Initialize(playerCastleHealth, 
             Constants.PLAYER_TAG, playerCastleLocation);
 
         // Sets up the defeat darkness
@@ -149,10 +152,10 @@ public class WorldScript : MonoBehaviour
         defeatDarknessTimer.Register(DefeatDarknessTimerFinished);
 
         // Creates the player and HUD
-        player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType],
+        player = (GameObject)Instantiate(GameManager.Instance.PlayerPrefabs[GameManager.Instance.CurrentSave.PlayerType],
             playerCastleLocation, transform.rotation);
         GameObject hud;
-        switch (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType)
+        switch (GameManager.Instance.CurrentSave.PlayerType)
         {
             case CharacterType.Ranger:
                 hud = Instantiate<GameObject>(rangerHUD);

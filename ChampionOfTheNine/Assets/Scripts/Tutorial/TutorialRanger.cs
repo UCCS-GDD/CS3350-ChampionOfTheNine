@@ -72,7 +72,7 @@ public class TutorialRanger : Tutorial
 		TutorialDummy.PlayerMoved -= StageTwo;
         ChangeText(new string[] {"Nice work. Let's move on to your abilities.",
 			"<b>Basic Ability</b>" +
-			"\nThe " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Main].NameWithType + 
+			"\nThe " + GameManager.Instance.CurrentSave.Inputs[InputType.Main].NameWithType + 
             " will make you fire a basic arrow. Use it to attack the dummy."});
 		TutorialDummy.BasicAttack += StageThree;
 	}
@@ -84,7 +84,7 @@ public class TutorialRanger : Tutorial
 		ChangeText (new string[] {"Good work." +
 			"\nAttacks like arrows can also be used to hit attacks from enemies in the air and block them.",
 			"<b>Secondary Ability</b>" +
-			"\nThe " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Secondary].NameWithType + 
+			"\nThe " + GameManager.Instance.CurrentSave.Inputs[InputType.Secondary].NameWithType + 
             " will make you fire an explosive arrow. Blow up the dummy."});
 		TutorialDummy.SecondaryAttack += StageFour;
 	}
@@ -96,7 +96,7 @@ public class TutorialRanger : Tutorial
 		ChangeText (new string[] {"Woah! That was an epic explosion." +
 			"\nLet's get more advanced here, shall we?",
 			"<b>Special Ability</b>" +
-			"\nHolding down the " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Power].NameWithType + 
+			"\nHolding down the " + GameManager.Instance.CurrentSave.Inputs[InputType.Power].NameWithType + 
             " will fire a barrage of penetrating arrows. Test it on these dummies."});
 		TutorialDummy.SpecialAttack += StageFive;
 	}
@@ -108,7 +108,7 @@ public class TutorialRanger : Tutorial
 		ChangeText (new string[] {"Devastating! If you keep this up, you will become champion in no time. " +
 			"Every champion needs their boost ability, though.",
 			"<b>Boost Ability</b>" +
-			"\nPress the " + GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].Inputs[InputType.Special].NameWithType + 
+			"\nPress the " + GameManager.Instance.CurrentSave.Inputs[InputType.Special].NameWithType + 
             " to gain increased mobility, power, and efficiency for a short period. Give it a shot."});
 		TutorialDummy.Booster += StageSix;
 	}

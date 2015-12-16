@@ -23,7 +23,7 @@ public class PortraitScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        switch (GameManager.Instance.Saves[GameManager.Instance.CurrentSaveName].PlayerType)
+        switch (GameManager.Instance.CurrentSave.PlayerType)
         {
             case CharacterType.Ranger:
                 ranger.SetActive(true);

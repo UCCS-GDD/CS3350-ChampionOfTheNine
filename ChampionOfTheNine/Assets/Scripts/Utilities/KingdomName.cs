@@ -5,17 +5,16 @@ using System.Text;
 
 /// <summary>
 /// Enumeration for the different kingdoms
-/// Needs nine, just using this setup temporarily
 /// </summary>
 public enum KingdomName
 {
+    Asian,
+    Bandit,
+    Crystal,
+    Dark,
+    Desert,
     MedOne,
     MedTwo,
-    Asian,
     Viking,
-    Desert,
-    Six,
-    Seven,
-    Eight,
-    Nine
+    Village
 }

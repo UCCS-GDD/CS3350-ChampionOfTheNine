@@ -29,13 +29,13 @@ public class Savegame
         // Make kingdom locations
         kingdoms = new List<KingdomName>();
         HashSet<KingdomName> kingdomsAdded = new HashSet<KingdomName>();
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < Constants.NUM_KINGDOMS; i++)
         {
             KingdomName nextName;
-            do { nextName = (KingdomName)UnityEngine.Random.Range(0, 9); }
+            do { nextName = (KingdomName)UnityEngine.Random.Range(0, Constants.NUM_KINGDOMS); }
             while (kingdomsAdded.Contains(nextName));
             kingdoms.Add(nextName);
-            kingdomsAdded = new HashSet<KingdomName>();
+            kingdomsAdded.Add(nextName);
         }
         inputs = new Dictionary<InputType, InputButton>();
         inputs.Add(InputType.Main, new InputButton(0));

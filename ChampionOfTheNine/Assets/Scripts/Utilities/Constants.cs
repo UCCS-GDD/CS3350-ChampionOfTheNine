@@ -8,6 +8,7 @@ using System.Text;
 /// </summary>
 public static class Constants
 {
+    public const int NUM_KINGDOMS = 9;
     public const string ENEMY_TAG = "Enemy";
     public const string PLAYER_TAG = "Player";
     public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
@@ -176,9 +177,19 @@ public static class Constants
 
     #region Castles
 
+    public const string CASTLE_FOLDER = "Castles/";
     public const float CASTLE_HEALTH = 600;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
+    public const string ASIAN_CASTLE_PREFAB = "Asian";
+    public const string BANDIT_CASTLE_PREFAB = "Bandit";
+    public const string CRYSTAL_CASTLE_PREFAB = "Crystal";
+    public const string DARK_CASTLE_PREFAB = "Dark";
+    public const string DESERT_CASTLE_PREFAB = "Desert";
+    public const string MED_ONE_CASTLE_PREFAB = "MedOne";
+    public const string MED_TWO_CASTLE_PREFAB = "MedTwo";
+    public const string VIKING_CASTLE_PREFAB = "Viking";
+    public const string VILLAGE_CASTLE_PREFAB = "Village";
 
     #endregion
 
@@ -263,7 +274,7 @@ public static class Constants
     #region Files
 
     public const string FILE_SUFFIX = ".cotn";
-    public const string SAVES_FILE = "betasaves";
+    public const string SAVES_FILE = "finalsaves";
     public const string SND_FOLDER = "Sounds/";
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
