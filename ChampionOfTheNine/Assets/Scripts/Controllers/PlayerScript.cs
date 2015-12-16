@@ -49,7 +49,7 @@ public class PlayerScript : CharacterControllerScript
         Image specialCDBar)
     {
         this.energyBar = energyBar;
-        base.Initialize(healthBar, timerBars);
+        base.Initialize(healthBar, timerBars, Constants.PLAYER_HEALTH_MULT);
         this.gcdBars = gcdBars;
         this.secondaryCDBar = secondaryCDBar;
         this.powerCDBar = powerCDBar;

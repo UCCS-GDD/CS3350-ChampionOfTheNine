@@ -64,6 +64,10 @@ public abstract class PauseableObjectScript : MonoBehaviour
     {
         if (!paused)
         { NotPausedUpdate(); }
+        if (rbody == null)
+        {
+            int i = 0;
+        }
     }
 
     /// <summary>

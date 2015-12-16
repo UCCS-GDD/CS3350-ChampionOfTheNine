@@ -174,8 +174,10 @@ public abstract class CharacterScript : DamagableObjectScript
     /// <param name="energyChanged">the handler for when the energy changes</param>
     /// <param name="healthBar">the health bar</param>
     /// <param name="timerBars">the array of timer bars</param>
-    public virtual void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
+    /// <param name="healthMult">the health multiplier</param>
+    public virtual void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars, float healthMult = 1)
     {
+        maxHealth *= healthMult;
         this.energyChanged = energyChanged;
         this.targetTag = targetTag;
         if (healthBar != null)
@@ -310,9 +312,9 @@ public abstract class CharacterScript : DamagableObjectScript
         AudioSource.PlayClipAtPoint(deathSound, transform.position);
         try
         { 
-            GetComponent<CharacterControllerScript>().Death();
             Instantiate<GameObject>(deadPrefab).GetComponent<DeadScript>().Initialize(GetComponent<SpriteRenderer>().color, 
                 transform.localScale, transform.position);
+            GetComponent<CharacterControllerScript>().Death();
         }
         catch (NullReferenceException) { }
     }

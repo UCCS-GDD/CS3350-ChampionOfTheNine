@@ -11,17 +11,18 @@ public static class Constants
     public const int NUM_KINGDOMS = 9;
     public const string ENEMY_TAG = "Enemy";
     public const string PLAYER_TAG = "Player";
-    public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
+    public const string ATTACK_TAG = "Attack";
     public const float PITCH_CHANGE = 0.2f;
     public const float DARKNESS_TIMER = 3f;
     public const float PROJ_MAX_DIST = 20;
-    public const string ATTACK_TAG = "Attack";
+    public const float PLAYER_HEALTH_MULT = 3;
+    public static int GROUND_LAYER = LayerMask.NameToLayer("Ground");
     public static Color ENEMY_COLOR = new Color(1, 0.51f, 0.51f);
 
     // AI
     public const float AI_SCAN_DELAY = 4;
     public const float AI_MIN_SPAWN_TIME = 2;
-    public const float AI_MAX_SPAWN_TIME = 6;
+    public const float AI_MAX_SPAWN_TIME = 11;
 
     #region Ranger
 
@@ -35,32 +36,32 @@ public static class Constants
     public const float RANGER_MOVE_SPEED = 5;
     public const float RANGER_JUMP_SPEED = 11;
     public const float RANGER_REGEN = 20;
-    public const float RANGER_GCD = 0.4f;
+    public const float RANGER_GCD = 0.37f;
     public const string RANGER_SHOOT_SND = "arrowShoot";
     public const string ARROW_HIT_SND = "arrowHit";
 
     // Basic arrow
     public const float BASIC_ARROW_SPEED = 13;
-    public const float BASIC_ARROW_DAMAGE = 15;
-    public const float BASIC_ARROW_COST = 5;
+    public const float BASIC_ARROW_DAMAGE = 14;
+    public const float BASIC_ARROW_COST = 6;
 
     // Piercing arrow
     public const float PIERCE_ARROW_SPEED = 25;
     public const float PIERCE_ARROW_DAMAGE = 17;
-    public const float PIERCE_ARROW_COST = 12;
+    public const float PIERCE_ARROW_COST = 13;
     public const float PIERCE_SHOOT_WINDOW = 0.7f;
     public const float PIERCE_SHOOT_CD = 0.1f;
-    public const float PIERCE_ABILITY_CD = 10f;
+    public const float PIERCE_ABILITY_CD = 8f;
 
     // Exploding arrow
     public const float EXP_ARROW_SPEED = 10;
     public const float EXP_ARROW_DAMAGE = 20;
     public const float EXP_ARROW_COST = 30;
-    public const float EXP_ARROW_CD = 1f;
+    public const float EXP_ARROW_CD = 1.5f;
     public const string EXP_ARROW_SND = "exArrowHit";
 
     // Boost
-    public const float RANGER_BOOST_CD = 30f;
+    public const float RANGER_BOOST_CD = 20f;
     public const float RANGER_BOOST_TIME = 6f;
     public const float RANGER_BOOST_MOVE_MULT = 1.5f;
     public const float RANGER_BOOST_JUMP_MULT = 1.2f;
@@ -81,10 +82,10 @@ public static class Constants
     public const float MAGE_AI_ANGLE_RANGE = 10;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 90;
-    public const float MAGE_ENERGY = 500;
+    public const float MAGE_ENERGY = 550;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
-    public const float MAGE_REGEN = 10;
+    public const float MAGE_REGEN = 11;
     public const float MAGE_GCD = 0.4f;
 
     // Ice
@@ -96,7 +97,7 @@ public static class Constants
     // Meteor
     public const float METEOR_SPEED = 20;
     public const float METEOR_DAMAGE = 25;
-    public const float METEOR_COST = 70;
+    public const float METEOR_COST = 75;
     public const float METEOR_CD = 0.5f;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "meteorShoot";
@@ -112,8 +113,8 @@ public static class Constants
     // Drain
     public const float DRAIN_TIME = MAGE_GCD;
     public const float DRAIN_DAMAGE = 80f;
-    public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.2f;
-    public const float DRAIN_CD = 15f;
+    public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.25f;
+    public const float DRAIN_CD = 10f;
     public const float DRAIN_RANGE = 12f;
     public const float DRAIN_MIN_HEIGHT = 1f;
     public const float DRAIN_MAX_HEIGHT = 6f;
@@ -139,8 +140,8 @@ public static class Constants
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
     public const float WARRIOR_MAX_DAMAGE_BOOST = 1f;
-    public const float WARRIOR_RECHARGE_TIME = 3;
-    public const float WARRIOR_ADR_LOSS = 4;
+    public const float WARRIOR_RECHARGE_TIME = 2.5f;
+    public const float WARRIOR_ADR_LOSS = 4.2f;
     public const float WARRIOR_ADR_RECHARGE_LOSS = WARRIOR_ENERGY / WARRIOR_RECHARGE_TIME;
     public const string RECHARGE_PART = "RechargeParticle";
 
@@ -177,10 +178,10 @@ public static class Constants
 
     #region Castles
 
-    public const string CASTLE_FOLDER = "Castles/";
     public const float CASTLE_HEALTH = 600;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
+    public const string CASTLE_FOLDER = "Castles/";
     public const string ASIAN_CASTLE_PREFAB = "Asian";
     public const string BANDIT_CASTLE_PREFAB = "Bandit";
     public const string CRYSTAL_CASTLE_PREFAB = "Crystal";

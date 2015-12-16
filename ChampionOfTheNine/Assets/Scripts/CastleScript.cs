@@ -30,7 +30,7 @@ public class CastleScript : DamagableObjectScript
         this.healthBar = healthBar;
         gameObject.tag = tag;
         transform.position = location;
-        GetComponent<EnemySpawner>().enabled = isEnemy;
+        GetComponent<EnemySpawner>().Initialize(isEnemy);
         rightWall.SetActive(isEnemy);
         leftWall.SetActive(!isEnemy);
         maxHealth = Constants.CASTLE_HEALTH;

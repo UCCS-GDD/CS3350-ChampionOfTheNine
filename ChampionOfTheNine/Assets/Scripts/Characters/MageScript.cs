@@ -35,7 +35,8 @@ public class MageScript : CharacterScript
     /// <param name="energyChanged">the handler for when the energy changes</param>
     /// <param name="healthBar">the health bar</param>
     /// <param name="timerBars">the array of timer bars</param>
-    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
+    /// <param name="healthMult">the health multiplier</param>
+    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars, float healthMult = 1)
     {
         // Sets fields
         maxHealth = Constants.MAGE_HEALTH;
@@ -61,7 +62,7 @@ public class MageScript : CharacterScript
         secondaryAbilitySound = GameManager.Instance.GameSounds[Constants.LIGHTNING_CAST_SND];
         powerAbilitySound = GameManager.Instance.GameSounds[Constants.METEOR_CAST_SND];
         specialAbilitySound = GameManager.Instance.GameSounds[Constants.DRAIN_SND];
-        base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+        base.Initialize(targetTag, energyChanged, healthBar, timerBars, healthMult);
         Energy = maxEnergy;
     }
 

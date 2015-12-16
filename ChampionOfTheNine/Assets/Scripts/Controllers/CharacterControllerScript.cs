@@ -38,11 +38,14 @@ public abstract class CharacterControllerScript : PauseableObjectScript
     /// <summary>
     /// Initializes the character controller
     /// </summary>
-    protected virtual void Initialize(Image healthBar, Image[] timerBars)
+    /// <param name="healthBar">the health bar</param>
+    /// <param name="timerBars">the timer bar array</param>
+    /// <param name="healthMult">the health multiplier</param>
+    protected virtual void Initialize(Image healthBar, Image[] timerBars, float healthMult = 1)
     {
         base.Initialize();
         character = GetComponent<CharacterScript>();
-        character.Initialize(TargetTag, CharacterEnergyChanged, healthBar, timerBars);
+        character.Initialize(TargetTag, CharacterEnergyChanged, healthBar, timerBars, healthMult);
     }
 
     /// <summary>

@@ -36,7 +36,8 @@ public class RangerScript : CharacterScript
     /// <param name="energyChanged">the handler for when the energy changes</param>
     /// <param name="healthBar">the health bar</param>
     /// <param name="timerBars">the array of timer bars</param>
-    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars)
+    /// <param name="healthMult">the health multiplier</param>
+    public override void Initialize(string targetTag, EnergyChangedHandler energyChanged, Image healthBar, Image[] timerBars, float healthMult = 1)
     {
         // Sets fields
         maxHealth = Constants.RANGER_HEALTH;
@@ -63,7 +64,7 @@ public class RangerScript : CharacterScript
             pierceBar = timerBars[0];
             boostBar = timerBars[1];
         }
-        base.Initialize(targetTag, energyChanged, healthBar, timerBars);
+        base.Initialize(targetTag, energyChanged, healthBar, timerBars, healthMult);
         Energy = maxEnergy;
     }
 

@@ -14,19 +14,28 @@ public class EnemySpawner : PauseableObjectScript
 
     #endregion
 
-    #region Protected Methods
+    #region Public Methods
 
     /// <summary>
-    /// Start is called once on object creation
+    /// Initializes the spawner
     /// </summary>
-    protected void Start()
+    public void Initialize(bool active)
     {
         Initialize();
-        spawnTimer = new Timer(Constants.AI_MIN_SPAWN_TIME);
-        spawnTimer.Register(SpawnEnemy);
-        spawnTimer.Start();
-        GetComponent<SpriteRenderer>().color = Constants.ENEMY_COLOR;
+        if (active)
+        {
+            spawnTimer = new Timer(Constants.AI_MIN_SPAWN_TIME);
+            spawnTimer.Register(SpawnEnemy);
+            spawnTimer.Start();
+            GetComponent<SpriteRenderer>().color = Constants.ENEMY_COLOR;
+        }
+        else
+        { this.enabled = false; }
     }
+
+    #endregion
+
+    #region Protected Methods
 
     /// <summary>
     /// Updates the object when it isn't paused
@@ -44,7 +53,7 @@ public class EnemySpawner : PauseableObjectScript
         Instantiate(GameManager.Instance.EnemyPrefabs[(CharacterType)Random.Range(0, 3)], spawnLocation.position, transform.rotation);
 
         // Resets the spawn timer
-        spawnTimer.TotalSeconds = Random.Range(Constants.AI_MIN_SPAWN_TIME, Constants.AI_MAX_SPAWN_TIME);
+        spawnTimer.TotalSeconds = Random.Range(Constants.AI_MIN_SPAWN_TIME, Constants.AI_MAX_SPAWN_TIME - GameManager.Instance.CurrentSave.CurrentKingdom);
         spawnTimer.Start();
     }
 
