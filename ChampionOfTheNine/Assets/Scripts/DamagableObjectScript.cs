@@ -19,6 +19,7 @@ public abstract class DamagableObjectScript : MonoBehaviour
     protected AudioClip deathSound;
     protected float maxHealth;
     float health;
+    bool alive = true;
     
     #endregion
 
@@ -53,15 +54,19 @@ public abstract class DamagableObjectScript : MonoBehaviour
     {
         try
         {
-            // Subtracts from the health and plays sound
-            Health -= amount;
-            GameManager.Instance.PlaySoundPitched(audioSource, hitSound);
+            if (alive)
+            {
+                // Subtracts from the health and plays sound
+                Health -= amount;
+                GameManager.Instance.PlaySoundPitched(audioSource, hitSound);
 
-            // Checks for death
-            if (health <= 0)
-            { 
-                Death();
-                return false;
+                // Checks for death
+                if (health <= 0)
+                {
+                    Death();
+                    alive = false;
+                    return false;
+                }
             }
         }
         catch (MissingReferenceException)
