@@ -21,8 +21,8 @@ public static class Constants
 
     // AI
     public const float AI_SCAN_DELAY = 4;
-    public const float AI_MIN_SPAWN_TIME = 4.8f;
-    public const float AI_MAX_SPAWN_TIME = 9.2f;
+    public const float AI_MIN_SPAWN_TIME = 4.5f;
+    public const float AI_MAX_SPAWN_TIME = 9f;
 
     #region Ranger
 
@@ -82,7 +82,7 @@ public static class Constants
     public const float MAGE_AI_ANGLE_RANGE = 10;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 90;
-    public const float MAGE_ENERGY = 600;
+    public const float MAGE_ENERGY = 550;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
     public const float MAGE_REGEN = 10;
@@ -178,7 +178,7 @@ public static class Constants
 
     #region Castles
 
-    public const float CASTLE_HEALTH = 600;
+    public const float CASTLE_HEALTH = 650;
     public const string CASTLE_HIT_SND = "hit";
     public const string CASTLE_DEATH_SND = "explosion";
     public const string CASTLE_FOLDER = "Castles/";

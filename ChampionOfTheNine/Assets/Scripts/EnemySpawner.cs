@@ -24,7 +24,7 @@ public class EnemySpawner : PauseableObjectScript
         Initialize();
         if (active)
         {
-            spawnTimer = new Timer(Constants.AI_MIN_SPAWN_TIME);
+            spawnTimer = new Timer(2);
             spawnTimer.Register(SpawnEnemy);
             spawnTimer.Start();
             GetComponent<SpriteRenderer>().color = Constants.ENEMY_COLOR;

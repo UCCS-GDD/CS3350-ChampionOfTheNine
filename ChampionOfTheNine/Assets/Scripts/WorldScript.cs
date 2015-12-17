@@ -74,7 +74,10 @@ public class WorldScript : MonoBehaviour
                 victoryText.SetActive(true);
                 if (GameManager.Instance.CurrentSave.CurrentKingdom < Constants.NUM_KINGDOMS &&
                     GameManager.Instance.CurrentLoadedKingdom == GameManager.Instance.CurrentSave.Kingdoms[GameManager.Instance.CurrentSave.CurrentKingdom])
-                { GameManager.Instance.CurrentSave.CurrentKingdom++; }
+                { 
+                    GameManager.Instance.CurrentSave.CurrentKingdom++;
+                    GameManager.Instance.Save();
+                }
             }
             else
             { loseText.SetActive(true); }
