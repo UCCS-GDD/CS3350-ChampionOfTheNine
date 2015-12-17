@@ -21,8 +21,8 @@ public static class Constants
 
     // AI
     public const float AI_SCAN_DELAY = 4;
-    public const float AI_MIN_SPAWN_TIME = 4.5f;
-    public const float AI_MAX_SPAWN_TIME = 9;
+    public const float AI_MIN_SPAWN_TIME = 4.8f;
+    public const float AI_MAX_SPAWN_TIME = 9.2f;
 
     #region Ranger
 
@@ -140,7 +140,7 @@ public static class Constants
     public const float WARRIOR_REGEN = 8;
     public const float WARRIOR_GCD = 0.4f;
     public const float WARRIOR_MAX_DAMAGE_BOOST = 1f;
-    public const float WARRIOR_RECHARGE_TIME = 2.5f;
+    public const float WARRIOR_RECHARGE_TIME = 2f;
     public const float WARRIOR_ADR_LOSS = 4.2f;
     public const float WARRIOR_ADR_RECHARGE_LOSS = WARRIOR_ENERGY / WARRIOR_RECHARGE_TIME;
     public const string RECHARGE_PART = "RechargeParticle";
@@ -149,7 +149,7 @@ public static class Constants
     public const float SLASH_HALF_ANGLE = 60;
     public const float SLASH_SWORD_ANGLE = 10;
     public const float SLASH_DAMAGE = 1;
-    public const float SLASH_ADR = 0.3f;
+    public const float SLASH_ADR = 0.25f;
 
     // Throwing axe
     public const float AXE_CD = WARRIOR_GCD;
@@ -161,7 +161,7 @@ public static class Constants
     public const string AXE_PICKUP_TAG = "AxePickup";
 
     // Leap attack
-    public const float LEAP_CD = 8;
+    public const float LEAP_CD = 6;
     public const float LEAP_SPEED = 25;
     public const float LEAP_DAMAGE = 60;
     public const float LEAP_ADR = 15;

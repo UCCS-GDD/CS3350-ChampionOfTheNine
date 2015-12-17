@@ -72,7 +72,8 @@ public class WorldScript : MonoBehaviour
             if (tag == Constants.ENEMY_TAG)
             { 
                 victoryText.SetActive(true);
-                if (GameManager.Instance.CurrentLoadedKingdom == GameManager.Instance.CurrentSave.Kingdoms[GameManager.Instance.CurrentSave.CurrentKingdom])
+                if (GameManager.Instance.CurrentSave.CurrentKingdom < Constants.NUM_KINGDOMS &&
+                    GameManager.Instance.CurrentLoadedKingdom == GameManager.Instance.CurrentSave.Kingdoms[GameManager.Instance.CurrentSave.CurrentKingdom])
                 { GameManager.Instance.CurrentSave.CurrentKingdom++; }
             }
             else
