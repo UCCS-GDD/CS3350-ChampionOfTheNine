@@ -21,8 +21,8 @@ public static class Constants
 
     // AI
     public const float AI_SCAN_DELAY = 4;
-    public const float AI_MIN_SPAWN_TIME = 2;
-    public const float AI_MAX_SPAWN_TIME = 11;
+    public const float AI_MIN_SPAWN_TIME = 4.5f;
+    public const float AI_MAX_SPAWN_TIME = 9;
 
     #region Ranger
 
@@ -82,10 +82,10 @@ public static class Constants
     public const float MAGE_AI_ANGLE_RANGE = 10;
     public const int MAGE_AI_SHOT_THRESHOLD = 5;
     public const float MAGE_HEALTH = 90;
-    public const float MAGE_ENERGY = 550;
+    public const float MAGE_ENERGY = 600;
     public const float MAGE_MOVE_SPEED = 4;
     public const float MAGE_JUMP_SPEED = 10;
-    public const float MAGE_REGEN = 11;
+    public const float MAGE_REGEN = 10;
     public const float MAGE_GCD = 0.4f;
 
     // Ice
@@ -96,25 +96,25 @@ public static class Constants
 
     // Meteor
     public const float METEOR_SPEED = 20;
-    public const float METEOR_DAMAGE = 25;
-    public const float METEOR_COST = 75;
-    public const float METEOR_CD = 0.5f;
+    public const float METEOR_DAMAGE = 35;
+    public const float METEOR_COST = 95;
+    public const float METEOR_CD = 0.45f;
     public const float METEOR_ROT_SPEED = 360;
     public const string METEOR_CAST_SND = "meteorShoot";
     public static Vector2 METEOR_START_LOC = new Vector2(0, 9);
 
     // Lightning
-    public const float LIGHTNING_DAMAGE = 2f;
-    public const float LIGHTNING_COST_PER_SEC = 130;
+    public const float LIGHTNING_DAMAGE = 3f;
+    public const float LIGHTNING_COST_PER_SEC = 250;
     public const float LIGHTNING_CD = MAGE_GCD;
     public const float LIGHTNING_CAST_TIME = 0.1f;
     public const string LIGHTNING_CAST_SND = "lightning";
 
     // Drain
     public const float DRAIN_TIME = MAGE_GCD;
-    public const float DRAIN_DAMAGE = 80f;
-    public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.25f;
-    public const float DRAIN_CD = 10f;
+    public const float DRAIN_DAMAGE = 30f;
+    public const float DRAIN_MANA_PER_TARGET = MAGE_ENERGY * 0.3f;
+    public const float DRAIN_CD = 7f;
     public const float DRAIN_RANGE = 12f;
     public const float DRAIN_MIN_HEIGHT = 1f;
     public const float DRAIN_MAX_HEIGHT = 6f;
@@ -149,7 +149,7 @@ public static class Constants
     public const float SLASH_HALF_ANGLE = 60;
     public const float SLASH_SWORD_ANGLE = 10;
     public const float SLASH_DAMAGE = 1;
-    public const float SLASH_ADR = 0.5f;
+    public const float SLASH_ADR = 0.3f;
 
     // Throwing axe
     public const float AXE_CD = WARRIOR_GCD;
@@ -157,14 +157,14 @@ public static class Constants
     public const float AXE_DAMAGE = 65;
     public const float AXE_ENERGY = 0;
     public const float AXE_ROT_SPEED = -1000;
-    public const float AXE_ADR = 20;
+    public const float AXE_ADR = 15;
     public const string AXE_PICKUP_TAG = "AxePickup";
 
     // Leap attack
     public const float LEAP_CD = 8;
     public const float LEAP_SPEED = 25;
     public const float LEAP_DAMAGE = 60;
-    public const float LEAP_ADR = 20;
+    public const float LEAP_ADR = 15;
     public const string LEAP_SND = "leap";
     public const string LEAP_FLAG = "Slam";
 
@@ -172,7 +172,7 @@ public static class Constants
     public const string WARRIOR_BOOST_SND = "warriorBoost";
     public const string WARRIOR_BOOST_PART = "WarriorBoostParticle";
     public const float WARRIOR_BOOST_TIME = 6f;
-    public const float WARRIOR_BOOST_CD = 20f;
+    public const float WARRIOR_BOOST_CD = 18f;
 
     #endregion
 

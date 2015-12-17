@@ -141,7 +141,7 @@ public class WorldScript : MonoBehaviour
         GenerateParallaxObjects();
 
         // Spawns castles
-        int enemyCastlePos = levels.Length - (Constants.PLATFORM_LENGTH - 3);
+        int enemyCastlePos = levels.Length - (Constants.PLATFORM_LENGTH - 4);
         Instantiate(GameManager.Instance.CastlePrefabs[GameManager.Instance.CurrentLoadedKingdom]).GetComponent<CastleScript>().Initialize(enemyCastleHealth,
             Constants.ENEMY_TAG, new Vector2(enemyCastlePos, levels[enemyCastlePos] + 1));
         Instantiate(GameManager.Instance.CastlePrefabs[GameManager.Instance.GetPrevKingdom()]).GetComponent<CastleScript>().Initialize(playerCastleHealth, 

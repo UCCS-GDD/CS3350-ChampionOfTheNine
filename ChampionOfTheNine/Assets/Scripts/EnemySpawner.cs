@@ -53,7 +53,8 @@ public class EnemySpawner : PauseableObjectScript
         Instantiate(GameManager.Instance.EnemyPrefabs[(CharacterType)Random.Range(0, 3)], spawnLocation.position, transform.rotation);
 
         // Resets the spawn timer
-        spawnTimer.TotalSeconds = Random.Range(Constants.AI_MIN_SPAWN_TIME, Constants.AI_MAX_SPAWN_TIME - GameManager.Instance.CurrentSave.CurrentKingdom);
+        spawnTimer.TotalSeconds = Random.Range(Constants.AI_MIN_SPAWN_TIME - ((float)GameManager.Instance.CurrentSave.CurrentKingdom / 2), 
+            Constants.AI_MAX_SPAWN_TIME - GameManager.Instance.CurrentSave.CurrentKingdom);
         spawnTimer.Start();
     }
 
