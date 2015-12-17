@@ -10,6 +10,8 @@ public class MenuUIScript : MonoBehaviour
     #region Fields
 
     string surveyLink = "https://docs.google.com/forms/d/1hu5R5tAJW5bNKXLF-g_WYmtkdFDxG7vqoQs3SRqTBqY/viewform";
+    [SerializeField]GameObject saveMenu;
+    [SerializeField]GameObject loadMenu;
 
     #endregion
 
@@ -20,14 +22,15 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        // Go to tutorial if no save, otherwise go to map
-        if (!GameManager.Instance.HasSaves)
-        { Application.LoadLevel(Constants.TUTORIAL_SCENE); }
-        else
-        { 
-            //Application.LoadLevel(Constants.MAP_SCENE);
-            Application.LoadLevel(Constants.CHAR_CREATE_SCENE);
-        }
+        //// Go to tutorial if no save, otherwise go to map
+        //if (!GameManager.Instance.HasSaves)
+        //{ Application.LoadLevel(Constants.TUTORIAL_SCENE); }
+        //else
+        //{ 
+        //    //Application.LoadLevel(Constants.MAP_SCENE);
+        //    Application.LoadLevel(Constants.CHAR_CREATE_SCENE);
+        //}
+        saveMenu.SetActive(true);
     }
 
     /// <summary>

@@ -125,6 +125,9 @@ public class GameManager
         }
     }
 
+    public Dictionary<string, Savegame> Saves
+    { get { return saves; } }
+
     public Dictionary<CharacterType, GameObject> EnemyPrefabs
     { get { return enemyPrefabs; } }
 
