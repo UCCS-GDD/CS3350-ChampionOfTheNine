@@ -21,7 +21,7 @@ public class RemapButtonScript : MonoBehaviour
     /// </summary>
     public void Pressed()
     {
-        CharacterCreationScript.Instance.RemapAxisPressed(inputType);
+        ControlSelectScript.Instance.RemapAxisPressed(inputType);
     }
 
     #endregion

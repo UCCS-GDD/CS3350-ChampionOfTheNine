@@ -270,6 +270,7 @@ public static class Constants
     public const string CHAR_CREATE_SCENE = "CharacterCreation";
     public const string TUTORIAL_SCENE = "Tutorial";
     public const string CREDITS_SCENE = "Credits";
+    public const string CONTROLS_SCENE = "Controls";
 
     #endregion
 

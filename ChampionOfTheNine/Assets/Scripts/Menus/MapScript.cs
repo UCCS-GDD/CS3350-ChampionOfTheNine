@@ -16,39 +16,23 @@ public class MapScript : MenuUIScript
 
     #region Public Methods
 
-
+    public void ControlsButtonPressed()
+    {
+        GameManager.Instance.LoadLevel(Constants.CONTROLS_SCENE);
+    }
 
     #endregion
 
     #region Protected Methods
 
-
-
-    #endregion
-
-    #region Properties
-
-
-
-    #endregion
-
-    #region Private Methods
-
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    private void Start()
+    protected override void Start()
     {
         for (int i = 0; i < kingdomButtons.Length; i++)
         { kingdomButtons[i].Initialize(i); }
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update()
-    {
-
+        base.Start();
     }
 
     #endregion

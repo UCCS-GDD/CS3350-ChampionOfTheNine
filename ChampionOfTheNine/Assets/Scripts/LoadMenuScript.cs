@@ -21,7 +21,7 @@ public class LoadMenuScript : PauseMenuWFilesScript
             gameObject.SetActive(false);
 
             // Loads the level
-            //GameManager.Instance.LoadSave(audioSource, clickSound);
+            GameManager.Instance.LoadLevel(Constants.MAP_SCENE, audioSource);
         }
     }
 
