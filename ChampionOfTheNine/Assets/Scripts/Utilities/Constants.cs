@@ -269,6 +269,7 @@ public static class Constants
     public const string MAIN_MENU_SCENE = "MainMenu";
     public const string CHAR_CREATE_SCENE = "CharacterCreation";
     public const string TUTORIAL_SCENE = "Tutorial";
+    public const string CREDITS_SCENE = "Credits";
 
     #endregion
 
@@ -279,6 +280,7 @@ public static class Constants
     public const string SND_FOLDER = "Sounds/";
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
+    public const string CLICK_SND = "Menubutton";
 
     #endregion
 }

@@ -28,7 +28,7 @@ public class SaveMenuScript : PauseMenuWFilesScript
             gameObject.SetActive(false);
 
             // Saves the level
-            //GameManager.Instance.NewSavegame(audioSource, clickSound);
+            GameManager.Instance.NewSavegame(CharacterType.Ranger, audioSource);
         }
     }
 
@@ -56,17 +56,6 @@ public class SaveMenuScript : PauseMenuWFilesScript
         // Updates the input field text
         inputField.text = GameManager.Instance.CurrentSaveName;
     }
-
-    ///// <summary>
-    ///// Updates the menu on enable
-    ///// </summary>
-    //protected override void OnEnable()
-    //{
-    //    base.OnEnable();
-
-    //    // Sets default selection
-    //    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
-    //}
 
     #endregion
 }

@@ -24,6 +24,8 @@ public class GameManager
     Timer lastSoundTimer;
     Queue<ParticleSystem> activeParticles;
     bool paused = false;
+    Timer loadDelayTimer;
+    string currLoad = "";
     
     #endregion
 
@@ -82,6 +84,8 @@ public class GameManager
         castlePrefabs.Add(KingdomName.Village, Resources.Load<GameObject>(folder + Constants.VILLAGE_CASTLE_PREFAB));
 
         // Loads the game sounds
+        loadDelayTimer = new Timer(0.1f);
+        loadDelayTimer.Register(LoadTimerFinished);
         lastSoundTimer = new Timer(0);
         lastSoundTimer.Register(LastSoundTimerFinished);
         gameSounds = new Dictionary<string, AudioClip>();
@@ -263,13 +267,17 @@ public class GameManager
     /// <summary>
     /// Creates a new savegame
     /// </summary>
-    public void NewSavegame(CharacterType playerType)
+    public void NewSavegame(CharacterType playerType, AudioSource source = null)
     {
         if (!saves.ContainsKey(CurrentSaveName))
         { saves.Add(CurrentSaveName, new Savegame(playerType)); }
         else
         { saves[CurrentSaveName] = new Savegame(playerType); }
         Save();
+        if (saves.Count == 1)
+        { LoadLevel(Constants.TUTORIAL_SCENE, source); }
+        else
+        { LoadLevel(Constants.CHAR_CREATE_SCENE, source); }
     }
 
     /// <summary>
@@ -280,10 +288,23 @@ public class GameManager
         Serializer.Serialize(Constants.SAVES_FILE, saves);
     }
 
-    public void LoadGameLevel(KingdomName name)
+    public void LoadGameLevel(KingdomName name, AudioSource source = null)
     {
         CurrentLoadedKingdom = name;
-        Application.LoadLevel(Constants.LEVEL_SCENE);
+        LoadLevel(Constants.LEVEL_SCENE, source);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="source"></param>
+    public void LoadLevel(string name, AudioSource source = null)
+    {
+        if (source != null)
+        { LoadLevelWithSound(name, source); }
+        else
+        { Application.LoadLevel(name); }
     }
 
     #endregion
@@ -310,6 +331,7 @@ public class GameManager
             { activeParticles.Dequeue(); }
         }
         lastSoundTimer.Update();
+        loadDelayTimer.Update();
     }
 
     /// <summary>
@@ -318,6 +340,18 @@ public class GameManager
     private void LastSoundTimerFinished()
     {
         lastSound = "";
+    }
+
+    private void LoadLevelWithSound(string name, AudioSource source)
+    {
+        source.PlayOneShot(gameSounds[Constants.CLICK_SND]);
+        currLoad = name;
+        loadDelayTimer.Start();
+    }
+
+    private void LoadTimerFinished()
+    {
+        Application.LoadLevel(currLoad);
     }
 
     #endregion

@@ -26,7 +26,6 @@ public class PauseMenuWFilesScript : MonoBehaviour
 
     ToggleGroup toggleGroup;        // The toggle group for the file display
     List<Toggle> levelFileOptions;  // The list of level file option toggles
-    Timer timer;
 
     #endregion
 
@@ -54,14 +53,7 @@ public class PauseMenuWFilesScript : MonoBehaviour
         // Initializes fields
         levelFileOptions = new List<Toggle>();
         toggleGroup = GetComponent<ToggleGroup>();
-        //clickSound = Resources.Load<AudioClip>(Constants.SOUND_FOLDER + "/" + Constants.CLICK_SOUND);
-        timer = new Timer(0.1f);
-        timer.Register(HandleTimer);
-    }
-
-    void HandleTimer()
-    {
-        EventSystem.current.SetSelectedGameObject(confButton);
+        clickSound = Resources.Load<AudioClip>(Constants.SND_FOLDER + Constants.CLICK_SND);
     }
 
     /// <summary>
@@ -72,6 +64,7 @@ public class PauseMenuWFilesScript : MonoBehaviour
         // Checks for initialize
         if (levelFileOptions == null)
         { Initialize(); }
+        GameManager.Instance.CurrentSaveName = "";
 
         // Creates the level file options
         foreach (KeyValuePair<string, Savegame> level in GameManager.Instance.Saves)
@@ -127,11 +120,6 @@ public class PauseMenuWFilesScript : MonoBehaviour
                 break;
             }
         }
-    }
-
-    void Update()
-    {
-        timer.Update();
     }
 
     #endregion

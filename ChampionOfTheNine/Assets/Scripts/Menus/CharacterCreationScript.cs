@@ -48,6 +48,7 @@ public class CharacterCreationScript : MenuUIScript
     /// <param name="type">the type</param>
     public void SetCharacterType(CharacterType type)
     {
+        audioSource.PlayOneShot(GameManager.Instance.GameSounds[Constants.CLICK_SND]);
         previewObjects[selectedType].SetActive(false);
         previewObjects[type].SetActive(true);
         selectedType = type;
@@ -60,11 +61,9 @@ public class CharacterCreationScript : MenuUIScript
     /// </summary>
     public void SelectButtonPressed()
     {
-        //GameManager.Instance.CurrentSaveName = "temp";
-        //GameManager.Instance.NewSavegame(selectedType);
         GameManager.Instance.CurrentSave.PlayerType = selectedType;
         GameManager.Instance.Save();
-        Application.LoadLevel(Constants.MAP_SCENE);
+        GameManager.Instance.LoadLevel(Constants.MAP_SCENE, audioSource);
     }
 
     /// <summary>
@@ -73,6 +72,7 @@ public class CharacterCreationScript : MenuUIScript
     /// <param name="axis">the axis name</param>
     public void RemapAxisPressed(InputType inputType)
     {
+        audioSource.PlayOneShot(GameManager.Instance.GameSounds[Constants.CLICK_SND]);
         remapPanel.SetActive(true);
         currentRemap = inputType;
     }
@@ -84,7 +84,7 @@ public class CharacterCreationScript : MenuUIScript
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    private void Start()
+    protected override void Start()
     {
         instance = this;
         previewObjects = new Dictionary<CharacterType, GameObject>();
@@ -101,6 +101,7 @@ public class CharacterCreationScript : MenuUIScript
         classNames.Add(CharacterType.Mage, "MAGE");
         classNames.Add(CharacterType.Warrior, "WARRIOR");
         UpdateMapping();
+        base.Start();
     }
 
     /// <summary>

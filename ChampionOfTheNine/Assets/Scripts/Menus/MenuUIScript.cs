@@ -12,6 +12,7 @@ public class MenuUIScript : MonoBehaviour
     string surveyLink = "https://docs.google.com/forms/d/1hu5R5tAJW5bNKXLF-g_WYmtkdFDxG7vqoQs3SRqTBqY/viewform";
     [SerializeField]GameObject saveMenu;
     [SerializeField]GameObject loadMenu;
+    protected AudioSource audioSource;
 
     #endregion
 
@@ -22,15 +23,17 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void PlayButtonPressed()
     {
-        //// Go to tutorial if no save, otherwise go to map
-        //if (!GameManager.Instance.HasSaves)
-        //{ Application.LoadLevel(Constants.TUTORIAL_SCENE); }
-        //else
-        //{ 
-        //    //Application.LoadLevel(Constants.MAP_SCENE);
-        //    Application.LoadLevel(Constants.CHAR_CREATE_SCENE);
-        //}
+        audioSource.PlayOneShot(GameManager.Instance.GameSounds[Constants.CLICK_SND]);
         saveMenu.SetActive(true);
+    }
+
+    /// <summary>
+    /// Handles the load button being pressed
+    /// </summary>
+    public void LoadButtonPressed()
+    {
+        audioSource.PlayOneShot(GameManager.Instance.GameSounds[Constants.CLICK_SND]);
+        loadMenu.SetActive(true);
     }
 
     /// <summary>
@@ -38,6 +41,7 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void QuitButtonPressed()
     {
+        audioSource.PlayOneShot(GameManager.Instance.GameSounds[Constants.CLICK_SND]);
         Application.Quit();
     }
 
@@ -46,7 +50,7 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void BackButtonPressed()
     {
-        Application.LoadLevel(Constants.MAIN_MENU_SCENE);
+        GameManager.Instance.LoadLevel(Constants.MAIN_MENU_SCENE, audioSource);
     }
 
     /// <summary>
@@ -54,7 +58,15 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void TutorialButtonPressed()
     {
-        Application.LoadLevel(Constants.TUTORIAL_SCENE);
+        GameManager.Instance.LoadLevel(Constants.TUTORIAL_SCENE, audioSource);
+    }
+
+    /// <summary>
+    /// Handles the credits button being pressed
+    /// </summary>
+    public void CreditsButtonPressed()
+    {
+        GameManager.Instance.LoadLevel(Constants.CREDITS_SCENE, audioSource);
     }
 
     /// <summary>
@@ -72,9 +84,10 @@ public class MenuUIScript : MonoBehaviour
     /// <summary>
     /// Start is called once on object creation
     /// </summary>
-    private void Start()
+    protected virtual void Start()
     {
         GameManager.Instance.Paused = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     #endregion
