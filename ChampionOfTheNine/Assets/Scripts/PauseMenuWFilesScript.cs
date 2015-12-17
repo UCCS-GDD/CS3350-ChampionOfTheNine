@@ -69,21 +69,24 @@ public class PauseMenuWFilesScript : MonoBehaviour
         // Creates the level file options
         foreach (KeyValuePair<string, Savegame> level in GameManager.Instance.Saves)
         {
-            // Creates a new toggle
-            Toggle newToggle = Instantiate(levelFilePrefab);
+            if (level.Key != Constants.TUT_SAVE)
+            {
+                // Creates a new toggle
+                Toggle newToggle = Instantiate(levelFilePrefab);
 
-            // Sets the toggle's data
-            RectTransform newToggleRect = newToggle.GetComponent<RectTransform>();
-            newToggleRect.SetParent(scrollFieldContent, false);
-            newToggle.GetComponentInChildren<Text>().text = level.Key;
-            newToggle.group = toggleGroup;
-            newToggle.onValueChanged.AddListener(LevelFileValueChanged);
+                // Sets the toggle's data
+                RectTransform newToggleRect = newToggle.GetComponent<RectTransform>();
+                newToggleRect.SetParent(scrollFieldContent, false);
+                newToggle.GetComponentInChildren<Text>().text = level.Key;
+                newToggle.group = toggleGroup;
+                newToggle.onValueChanged.AddListener(LevelFileValueChanged);
 
-            // Positions the toggle
-            newToggleRect.anchoredPosition = new Vector2(5, levelFileSpacing * levelFileOptions.Count);
+                // Positions the toggle
+                newToggleRect.anchoredPosition = new Vector2(5, levelFileSpacing * levelFileOptions.Count);
 
-            // Adds the new toggle to the list
-            levelFileOptions.Add(newToggle);
+                // Adds the new toggle to the list
+                levelFileOptions.Add(newToggle);
+            }
         }
 
         // Updates scroll field height

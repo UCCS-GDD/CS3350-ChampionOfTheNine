@@ -22,9 +22,15 @@ public class PauseQuitButtonScript : MonoBehaviour
     private void OnMouseDown()
     {
         if (tutorial)
-        { Application.LoadLevel(Constants.CHAR_CREATE_SCENE); }
+        {
+            if (GameManager.Instance.CurrentSaveName != Constants.TUT_SAVE)
+            { Application.LoadLevel(Constants.CHAR_CREATE_SCENE); }
+            else
+            { Application.LoadLevel(Constants.MAIN_MENU_SCENE); }
+        }
         else
-        { Application.LoadLevel(Constants.MAIN_MENU_SCENE); }
+        { Application.LoadLevel(Constants.MAP_SCENE); }
+        
     }
 
     #endregion

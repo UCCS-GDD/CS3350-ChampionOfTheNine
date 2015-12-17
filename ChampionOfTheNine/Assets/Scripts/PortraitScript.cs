@@ -23,17 +23,22 @@ public class PortraitScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        switch (GameManager.Instance.CurrentSave.PlayerType)
+        if (GameManager.Instance.CurrentSaveName == "")
+        { ranger.SetActive(true); }
+        else
         {
-            case CharacterType.Ranger:
-                ranger.SetActive(true);
-                break;
-            case CharacterType.Mage:
-                mage.SetActive(true);
-                break;
-            case CharacterType.Warrior:
-                warrior.SetActive(true);
-                break;
+            switch (GameManager.Instance.CurrentSave.PlayerType)
+            {
+                case CharacterType.Ranger:
+                    ranger.SetActive(true);
+                    break;
+                case CharacterType.Mage:
+                    mage.SetActive(true);
+                    break;
+                case CharacterType.Warrior:
+                    warrior.SetActive(true);
+                    break;
+            }
         }
     }
 

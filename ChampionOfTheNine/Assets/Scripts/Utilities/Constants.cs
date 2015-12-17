@@ -282,6 +282,7 @@ public static class Constants
     public const string PREFAB_FOLDER = "Prefabs/";
     public const string PART_FOLDER = "Particles/";
     public const string CLICK_SND = "Menubutton";
+    public const string TUT_SAVE = "Tutorial";
 
     #endregion
 }

@@ -28,7 +28,7 @@ public class SaveMenuScript : PauseMenuWFilesScript
             gameObject.SetActive(false);
 
             // Saves the level
-            GameManager.Instance.NewSavegame(CharacterType.Ranger, audioSource);
+            GameManager.Instance.CreateNewSavegame(CharacterType.Ranger, audioSource);
         }
     }
 

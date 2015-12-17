@@ -58,6 +58,8 @@ public class MenuUIScript : MonoBehaviour
     /// </summary>
     public void TutorialButtonPressed()
     {
+        GameManager.Instance.CurrentSaveName = Constants.TUT_SAVE;
+        GameManager.Instance.AddSave(CharacterType.Ranger);
         GameManager.Instance.LoadLevel(Constants.TUTORIAL_SCENE, audioSource);
     }
 

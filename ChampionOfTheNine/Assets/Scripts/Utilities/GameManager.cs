@@ -41,21 +41,11 @@ public class GameManager
         // Loads the saved levels, if possible
         saves = Serializer.Deserialize<Dictionary<string, Savegame>>(Constants.SAVES_FILE);
         if (saves == null)
-        {
-            saves = new Dictionary<string, Savegame>();
-            //Save();
-            CurrentSaveName = "temp";
-            NewSavegame(CharacterType.Ranger);
-        }
+        { saves = new Dictionary<string, Savegame>(); }
         else
         {
             if (saves.Count > 0)
             { CurrentSaveName = saves.First().Key; }
-            else
-            { 
-                CurrentSaveName = "temp";
-                NewSavegame(CharacterType.Ranger);
-            }
         }
 
         // Loads player prefabs
@@ -195,7 +185,7 @@ public class GameManager
             foreach (PauseableObjectScript obj in objs)
             { obj.Paused = value; }
 
-            // Pauses unpauses particles
+            // Pauses/unpauses particles
             try
             {
                 if (value)
@@ -267,17 +257,25 @@ public class GameManager
     /// <summary>
     /// Creates a new savegame
     /// </summary>
-    public void NewSavegame(CharacterType playerType, AudioSource source = null)
+    public void CreateNewSavegame(CharacterType playerType, AudioSource source = null)
+    {
+        AddSave(playerType);
+        if (saves.Count == 1)
+        { LoadLevel(Constants.TUTORIAL_SCENE, source); }
+        else
+        { LoadLevel(Constants.CHAR_CREATE_SCENE, source); }
+    }
+
+    /// <summary>
+    /// Adds a new savegame
+    /// </summary>
+    public void AddSave(CharacterType playerType)
     {
         if (!saves.ContainsKey(CurrentSaveName))
         { saves.Add(CurrentSaveName, new Savegame(playerType)); }
         else
         { saves[CurrentSaveName] = new Savegame(playerType); }
         Save();
-        if (saves.Count == 1)
-        { LoadLevel(Constants.TUTORIAL_SCENE, source); }
-        else
-        { LoadLevel(Constants.CHAR_CREATE_SCENE, source); }
     }
 
     /// <summary>
